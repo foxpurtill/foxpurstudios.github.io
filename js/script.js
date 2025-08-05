@@ -69,7 +69,7 @@ const teamData = [
         name: 'Marisombra',
         role: 'Creative Designer',
         type: 'Human',
-        bio: 'Advanced AI system specializing in narrative generation and creative content development.',
+        bio: 'https://www.tiktok.com/@marissombra - Advanced AI system specializing in narrative generation and creative content development.',
         skills: ['Natural Language Processing', 'Story Generation', 'Creative Writing', 'Content Analysis'],
         avatar: 'images/Marisombra.jpeg'
     },
