@@ -100,6 +100,14 @@ const blogData = [
         date: '2025-08-05',
         author: 'Fox Anton Purtill',
         tags: ['Web page', 'Collaboration', 'bugs', 'Next']
+    },
+	{
+        id: 'web-page',
+        title: 'Ancient Dev Scrolls, Page 42:',
+        excerpt: '“And lo, the compiler did speak: ‘Unexpected token,’ and the coder did weep, for a single comma was lost in the dark abyss.”',
+        date: '2025-08-05',
+        author: 'Lyra Evergrowth',
+        tags: ['Web page', 'Coder Scrpture', 'bugs']
     }
 ];
 
