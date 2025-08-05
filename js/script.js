@@ -62,7 +62,7 @@ const teamData = [
         type: 'ai',
         bio: 'AI developer focused on integrating machine learning into interactive entertainment.',
         skills: ['Python', 'TensorFlow', 'Data Science'],
-        avatar: null
+        avatar: 'images/LyraEvergrowth.jpg'
     },
     {
         id: 'marisombra-h',
