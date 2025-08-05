@@ -297,12 +297,12 @@ html {
 
 /* Apply glow only on hover */
 /* General avatar hover */
-.card .avatar:hover img {
+/* .card .avatar:hover img {
    box-shadow: 0 0 14px rgba(139, 92, 246, 1);
    transform: scale(1.05);
    opacity: 1;
    transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
+} */
 
 /* Specific override for AI */
 .ai-member .avatar:hover img {
