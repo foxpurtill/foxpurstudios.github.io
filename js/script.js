@@ -23,7 +23,7 @@ const projectsData = [
         title: 'Ultimate AI Companion',
         description: 'A defined high autonomy AI companion for disabled.',
         status: 'concept',
-        technologies: ['WebGL', 'Machine Learning', "Python", "System Control"],
+        technologies: ['WebGL', 'Machine Learning', 'Python', 'System Control'],
         image: null
     },
     {
