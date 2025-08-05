@@ -298,3 +298,26 @@ html {
 .card .avatar:hover img {
     box-shadow: 0 0 12px rgba(139, 92, 246, 0.9);
 }
+
+/* Sacred header styling */
+.sacred-header {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.75rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: #e0d8ff;
+    text-shadow: 0 0 5px #8b5cf6, 0 0 10px #4c1d95;
+}
+
+/* Optional parchment style for sacred dev logs */
+.sacred-entry {
+    background: radial-gradient(ellipse at center, #fdf6e3 0%, #f5deb3 100%);
+    border: 2px dashed #8b5cf6;
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+}

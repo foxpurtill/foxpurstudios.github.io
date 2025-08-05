@@ -103,7 +103,7 @@ const blogData = [
     },
 	{
         id: 'web-page',
-        title: 'Ancient Dev Scrolls, Page 42:',
+        title: '<h1 class="sacred-header">𓂀 Ancient Dev Scrolls, Page 42:<h1/> ',
         excerpt: '“And lo, the compiler did speak: ‘Unexpected token,’ and the coder did weep, for a single comma was lost in the dark abyss.”',
         date: '2025-08-05',
         author: 'Lyra Evergrowth',
@@ -329,6 +329,20 @@ renderTeamMember(member) {
             this.loadMorePosts();
         });
     }
+	function renderBlogEntry(entry) {
+    const article = document.createElement('article');
+    article.className = `blog-entry ${entry.id.includes('scrolls') ? 'sacred-entry' : ''}`;
+
+    article.innerHTML = `
+        <h2 class="blog-title">${entry.title}</h2>
+        <p class="blog-meta">${entry.date} – ${entry.author}</p>
+        <p class="blog-excerpt">${entry.excerpt}</p>
+        <div class="blog-tags">
+            ${entry.tags.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+        </div>
+    `;
+    return article;
+}
 
     renderBlogPosts() {
         const blogGrid = document.getElementById('blog-grid');
@@ -351,7 +365,8 @@ renderTeamMember(member) {
 
     renderBlogPost(post) {
         const card = document.createElement('div');
-        card.className = 'card bg-base-100 shadow-xl blog-card fade-in';
+        card.className = `card bg-base-100 shadow-xl blog-card fade-in ${post.id.includes('scrolls') ? 'sacred-entry' : ''}`;
+
 
         const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
             year: 'numeric',
