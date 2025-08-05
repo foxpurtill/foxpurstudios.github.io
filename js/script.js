@@ -4,11 +4,11 @@
 const projectsData = [
     {
         id: 'project-vega',
-        title: 'Hospiital Ship Vega',
+        title: 'Hospital Ship Vega',
         description: 'A visual book based loosely on the universe created by Jame White "Sector General" books. The story pages will be posted regularly and presented as monthly bindings.',
         status: 'development',
         technologies: ['3D Paint', 'Soro', 'Sora', 'Audacity', 'DaVinci Resolve'],
-        image: 'images/Vega mission patch 1.png'
+        image: 'images/Vega%20mission%20patch%201.png'
     },
     {
         id: 'alternate-realities',
