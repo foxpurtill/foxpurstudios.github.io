@@ -93,6 +93,14 @@ const blogData = [
         author: 'Fox Anton Purtill',
         tags: ['AI', 'Collaboration', 'Game Development']
     }
+	    {
+        id: 'web-page',
+        title: 'Fixing the web page bugs',
+        excerpt: 'Today is getting the web page pretty. I got the current projects on. I got buttons for social media going to the right place. I have the team listed.',
+        date: '2025-08-05',
+        author: 'Fox Anton Purtill',
+        tags: ['Web page', 'Collaboration', 'bugs', 'Next']
+    }
 ];
 
 // Main application class
