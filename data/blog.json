@@ -1,21 +1,20 @@
 [
  {
-        id: 'ai-collaboration',
-        title: 'The Future of Human-AI Collaboration in Game Development',
-        excerpt: 'Exploring how AI team members are revolutionizing our creative process and pushing the boundaries of what\'s possible in game development.',
-        date: '2025-08-05',
-        author: 'Fox Anton Purtill',
-        tags: ['AI', 'Collaboration', 'Game Development']
+        "id": "ai-collaboration",
+        "title": "The Future of Human-AI Collaboration in Game Development",
+        "excerpt": "Exploring how AI team members are revolutionizing our creative process and pushing the boundaries of what\"s possible in game development.",
+        "date": "2025-08-05",
+        "author": "Fox Anton Purtill",
+        "tags": ["AI", "Collaboration", "Game Development"]
     },
 	{
-        id: 'web-page',
-        title: 'Fixing the web page bugs',
-        excerpt: 'Today is getting the web page pretty. I got the current projects on. I got buttons for social media going to the right place. I have the team listed.',
-        date: '2025-08-05',
-        author: 'Fox Anton Purtill',
-        tags: ['Web page', 'Collaboration', 'bugs', 'Next']
+        "id": "web-page",
+        "title": "Fixing the web page bugs",
+        "excerpt": "Today is getting the web page pretty. I got the current projects on. I got buttons for social media going to the right place. I have the team listed.",
+        "date": "2025-08-05",
+        "author": "Fox Anton Purtill",
+        "tags": ["Web page", "Collaboration", "bugs", "Next"]
     },
-
   {
     "id": "dev-scrolls-42",
     "title": "𓂀 Ancient Dev Scrolls – Page 42",
