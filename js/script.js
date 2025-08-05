@@ -28,7 +28,7 @@ const projectsData = [
     },
     {
         id: 'private-meadow',
-        title: 'The Private Meadow',
+        title: 'My Private Meadow',
         description: 'Procedural world generation to create a large meadow with hidden items.',
         status: 'development',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
@@ -259,7 +259,7 @@ class FoxPurWebsite {
         this.highlightAIMembers();
     }
 
-   renderTeamMember(member) {
+renderTeamMember(member) {
     const card = document.createElement('div');
     card.className = `card bg-base-100 shadow-xl team-card fade-in ${member.type === 'ai' ? 'ai-member' : ''}`;
 
@@ -267,9 +267,11 @@ class FoxPurWebsite {
 
     const avatarContent = member.avatar
         ? `<img src="${member.avatar}" alt="${member.name}" class="rounded-full w-20 h-20 object-cover mx-auto" onerror="this.src='images/placeholder-avatar.png'" />`
-        : `<div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center">
+        : (
+            `<div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center">
                 <i class="${avatarIcon} text-2xl"></i>
-           </div>`;
+            </div>`
+          );
 
     card.innerHTML = `
         <div class="card-body text-center">
@@ -289,7 +291,6 @@ class FoxPurWebsite {
 
     return card;
 }
-    }
 
     highlightAIMembers() {
         const aiCards = document.querySelectorAll('.ai-member');
