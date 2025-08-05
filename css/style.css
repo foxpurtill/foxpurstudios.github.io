@@ -292,14 +292,22 @@ html {
     animation: pulse-glow 2s ease-in-out infinite;
 }
 .ai-member .avatar:hover img {
-    box-shadow: 0 0 14px rgba(139, 92, 246, 1);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.8), 0 0 30px rgba(99, 102, 241, 0.6);
+    transform: scale(1.07);
 }
-/* Unified hover for all avatars */
+.card .avatar img {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+    transform: scale(1);
+    filter: none;
+}
+
+/* Apply glow only on hover */
 .card .avatar:hover img {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    filter: none !important;
+    box-shadow: 0 0 14px rgba(139, 92, 246, 1);
+    transform: scale(1.05);
+}
 }
 /* Sacred header styling */
 .sacred-header {
