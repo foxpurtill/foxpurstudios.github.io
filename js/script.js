@@ -14,7 +14,7 @@ const projectsData = [
         id: 'alternate-realities',
         title: 'Alternate Of Realities',
         description: 'a game based loosely on "Alternate Reality" for the C=64 in 1986. This will encorporate all the never completed DLCs using modern technology.',
-        status: 'concept',
+        status: 'development',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Story Generation by AI'],
         image: 'images/AoRcover.png'
     },
@@ -69,7 +69,7 @@ const teamData = [
         name: 'Marisombra',
         role: 'Creative Designer',
         type: 'Human',
-        bio: 'https://www.tiktok.com/@marissombra - Advanced AI system specializing in narrative generation and creative content development.',
+        bio: '<a href="https://www.tiktok.com/@marissombra">Marisombra Tiktok</a> - Advanced AI system specializing in narrative generation and creative content development.',
         skills: ['Natural Language Processing', 'Story Generation', 'Creative Writing', 'Content Analysis'],
         avatar: 'images/Marisombra.jpeg'
     },
