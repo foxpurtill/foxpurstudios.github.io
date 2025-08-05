@@ -434,4 +434,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Export for potential module usage
-export { FoxPurWebsite };
+// export { FoxPurWebsite };
