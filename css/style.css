@@ -217,12 +217,12 @@ html {
 
 /* Avatar image sizing and shape */
 .avatar img {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 9999px; /* perfect circle */
-    object-fit: cover;
     display: block;
     margin: 0 auto;
+    border-radius: 50%; /* optional, for circle style */
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
 }
 
 /* Override placeholder-style for AI members (removes icon-only styles) */
@@ -243,6 +243,11 @@ html {
     box-shadow: 0 0 12px rgba(139, 92, 246, 0.9);
     transition: box-shadow 0.3s ease;
 }
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .card .avatar {
     width: 96px;
     height: 96px;
@@ -260,9 +265,36 @@ html {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    pointer-events: none;
+    transition: box-shadow 0.3s ease;
 }
 
-.ai-member .avatar {
+/* AI Member Styling */
+.ai-member {
+    position: relative;
+    border: 2px solid #10b981;
+}
+
+.ai-member::before {
+    content: '🤖 AI';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #10b981;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.ai-member .avatar img {
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
     animation: pulse-glow 2s ease-in-out infinite;
+}
+.ai-member .avatar:hover img {
+    box-shadow: 0 0 14px rgba(139, 92, 246, 1);
+}
+/* Unified hover for all avatars */
+.card .avatar:hover img {
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.9);
 }
