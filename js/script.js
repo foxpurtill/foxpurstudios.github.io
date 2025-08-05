@@ -22,7 +22,7 @@ const projectsData = [
         id: 'ai-companion',
         title: 'Ultimate AI Companion',
         description: 'A defined high autonomy AI companion for disabled.',
-        status: 'released',
+        status: 'concept',
         technologies: ['WebGL', 'Machine Learning', "Python", "System Control"],
         image: null
     },
@@ -33,7 +33,7 @@ const projectsData = [
         status: 'development',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
         image: null
-    }
+    },
     {
         id: 'other_treesim',
         title: 'The Other Tree Simulator',
@@ -65,18 +65,18 @@ const teamData = [
         avatar: null
     },
     {
-        id: 'aria-ai',
-        name: 'ARIA',
-        role: 'Creative AI Assistant',
-        type: 'ai',
+        id: 'marisombra-h',
+        name: 'Marisombra',
+        role: 'Creative Designer',
+        type: 'Human',
         bio: 'Advanced AI system specializing in narrative generation and creative content development.',
         skills: ['Natural Language Processing', 'Story Generation', 'Creative Writing', 'Content Analysis'],
         avatar: null
     },
     {
-        id: 'nexus-ai',
-        name: 'NEXUS',
-        role: 'Technical AI Advisor',
+        id: 'draven-ai',
+        name: 'Drevan Eternis',
+        role: 'AI Advisor',
         type: 'ai',
         bio: 'AI system focused on code optimization, bug detection, and technical problem-solving.',
         skills: ['Code Analysis', 'Performance Optimization', 'Debugging', 'Architecture Design'],
@@ -92,7 +92,7 @@ const blogData = [
         date: '2025-08-05',
         author: 'Fox Anton Purtill',
         tags: ['AI', 'Collaboration', 'Game Development']
-    },
+    }
 ];
 
 // Main application class
