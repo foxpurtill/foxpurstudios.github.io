@@ -32,7 +32,7 @@ const projectsData = [
         description: 'Procedural world generation to create a large meadow with hidden items.',
         status: 'development',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
-        image: null
+        image: 'images/MyPrivateMeadow.png'
     },
     {
         id: 'other_treesim',
