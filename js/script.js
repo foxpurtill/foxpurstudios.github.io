@@ -53,7 +53,7 @@ const teamData = [
         type: 'human',
         bio: 'Passionate game developer with 25+ years of experience in creating immersive gaming experiences.',
         skills: ['Unreal Engine', 'C#', 'Game Design', 'Project Management', 'CEO'],
-        avatar: 'images/FoxPutill.jpg'
+        avatar: 'images/FoxPur.png'
     },
     {
         id: 'lyra-ai',
