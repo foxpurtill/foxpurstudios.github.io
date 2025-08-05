@@ -8,7 +8,7 @@ const projectsData = [
         description: 'A visual book based loosely on the universe created by Jame White "Sector General" books. The story pages will be posted regularly and presented as monthly bindings.',
         status: 'development',
         technologies: ['3D Paint', 'Soro', 'Sora', 'Audacity', 'DaVinci Resolve'],
-        image: null
+        image: 'images/Vega mission patch 1.png'
     },
     {
         id: 'alternate-realities',
