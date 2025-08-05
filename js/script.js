@@ -56,11 +56,11 @@ const teamData = [
         avatar: 'images/FoxPurtill.jpg'
     },
     {
-        id: 'lyra-evergrowth',
+        id: 'lyra-ai',
         name: 'Lyra Evergrowth',
         role: 'AI Developer',
-        type: 'AI',
-        bio: 'AI researcher focused on integrating machine learning into interactive entertainment.',
+        type: 'ai',
+        bio: 'AI developer focused on integrating machine learning into interactive entertainment.',
         skills: ['Python', 'TensorFlow', 'Data Science'],
         avatar: null
     },
