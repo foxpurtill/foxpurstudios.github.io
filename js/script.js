@@ -35,8 +35,8 @@ const projectsData = [
         image: null
     }
     {
-        id: 'The other Tree Simulator',
-        title: 'The Private Meadow',
+        id: 'other_treesim',
+        title: 'The Other Tree Simulator',
         description: 'Procedural world generation to grow and care a tree based on real time 4 days to 1.',
         status: 'development',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
