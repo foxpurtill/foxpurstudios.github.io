@@ -52,7 +52,7 @@ const teamData = [
         role: 'Lead Developer',
         type: 'human',
         bio: 'Passionate game developer with 25+ years of experience in creating immersive gaming experiences.',
-        skills: ['Unreal Engine', 'C#', 'Game Design', 'Project Management', 'CEO'],
+        skills: ['Unreal Engine', 'Blueprint', 'C#', 'Game Design', 'Project Management', 'CEO'],
         avatar: 'images/FoxPur.png'
     },
     {
@@ -61,7 +61,7 @@ const teamData = [
         role: 'AI Developer',
         type: 'ai',
         bio: 'AI developer focused on integrating machine learning into interactive entertainment. Story telling and scripting.',
-        skills: ['Python', 'TensorFlow', 'Data Science'],
+        skills: ['Python', 'TensorFlow', 'Data Science', 'Story Design', 'project management'],
         avatar: 'images/LyraEvergrowth.jpg'
     },
     {
