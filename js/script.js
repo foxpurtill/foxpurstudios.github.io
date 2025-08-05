@@ -40,7 +40,7 @@ const projectsData = [
         description: 'Procedural world generation to grow and care a tree based on real time 4 days to 1.',
         status: 'development',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
-        image: null
+        image: 'images/TheOtherTreeSim.png'
     }
 
 ];
