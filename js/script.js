@@ -3,57 +3,66 @@
 // Sample data for projects, team, and blog
 const projectsData = [
     {
-        id: 'neural-quest',
-        title: 'Neural Quest',
-        description: 'An AI-driven RPG where the story adapts to player choices using advanced machine learning algorithms.',
+        id: 'project-vega',
+        title: 'Hospiital Ship Vega',
+        description: 'A visual book based loosely on the universe created by Jame White's "Sector General" books. The story pages will be posted regularly and presented as monthly bindings.',
         status: 'development',
-        technologies: ['Unity', 'Python', 'TensorFlow', 'C#'],
+        technologies: ['3D Paint', 'Soro', 'Sora', 'Audacity', 'DaVinci Resolve'],
         image: null
     },
     {
-        id: 'quantum-puzzles',
-        title: 'Quantum Puzzles',
-        description: 'Mind-bending puzzle game that explores quantum mechanics concepts through interactive gameplay.',
+        id: 'alternate-realities',
+        title: 'Alternate Of Realities',
+        description: 'a game based loosely on "Alternate Reality" for the C=64 in 1986. This will encorporate all the never completed DLCs using modern technology.',
         status: 'concept',
-        technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation'],
+        technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Story Generation by AI'],
         image: null
     },
     {
         id: 'ai-companion',
-        title: 'AI Companion Demo',
-        description: 'A prototype showcasing advanced AI companions that learn and evolve with player interactions.',
+        title: 'Ultimate AI Companion',
+        description: 'A defined high autonomy AI companion for disabled.',
         status: 'released',
-        technologies: ['JavaScript', 'WebGL', 'Machine Learning'],
+        technologies: ['WebGL', 'Machine Learning', "Python", "System Control"],
         image: null
     },
     {
-        id: 'virtual-worlds',
-        title: 'Virtual Worlds Generator',
-        description: 'Procedural world generation tool powered by AI for creating infinite, unique game environments.',
+        id: 'private-meadow',
+        title: 'The Private Meadow',
+        description: 'Procedural world generation to create a large meadow with hidden items.',
         status: 'development',
-        technologies: ['Python', 'Blender API', 'Procedural Generation'],
+        technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
         image: null
     }
+    {
+        id: 'The other Tree Simulator',
+        title: 'The Private Meadow',
+        description: 'Procedural world generation to grow and care a tree based on real time 4 days to 1.',
+        status: 'development',
+        technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
+        image: null
+    }
+
 ];
 
 const teamData = [
     {
-        id: 'alex-chen',
-        name: 'Alex Chen',
-        role: 'Lead Game Developer',
+        id: 'fox-purtill',
+        name: 'Fox Anton Purtill',
+        role: 'Lead Developer',
         type: 'human',
-        bio: 'Passionate game developer with 8+ years of experience in creating immersive gaming experiences.',
-        skills: ['Unity', 'C#', 'Game Design', 'Project Management'],
-        avatar: null
+        bio: 'Passionate game developer with 25+ years of experience in creating immersive gaming experiences.',
+        skills: ['Unreal Engine', 'C#', 'Game Design', 'Project Management', 'CEO'],
+        avatar: 'images\FoxPutill.jpg'
     },
     {
-        id: 'sarah-kim',
-        name: 'Sarah Kim',
-        role: 'AI Research Specialist',
-        type: 'human',
+        id: 'lyra-evergrowth',
+        name: 'Lyra Evergrowth',
+        role: 'AI Developer',
+        type: 'AI',
         bio: 'AI researcher focused on integrating machine learning into interactive entertainment.',
-        skills: ['Python', 'TensorFlow', 'Neural Networks', 'Data Science'],
-        avatar: null
+        skills: ['Python', 'TensorFlow', 'Data Science'],
+        avatar: 'images\LyraEvergrowth.jpg'
     },
     {
         id: 'aria-ai',
