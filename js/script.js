@@ -215,6 +215,7 @@ class FoxPurWebsite {
 
         card.innerHTML = `
             <div class="card-body">
+		<img src="${project.image || 'images/placeholder.png'}" alt="${project.title}" />
                 <div class="flex justify-between items-start mb-2">
                     <h3 class="card-title text-lg">${project.title}</h3>
                     <div class="badge ${statusClass} text-white">${statusText}</div>
