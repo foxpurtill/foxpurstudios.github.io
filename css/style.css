@@ -238,11 +238,6 @@ html {
 }
 
 /* Optional: Remove weirdness on hover */
-.avatar:hover img {
-    opacity: 1;
-    box-shadow: 0 0 12px rgba(139, 92, 246, 0.9);
-    transition: box-shadow 0.3s ease;
-}
 .card-body {
     display: flex;
     flex-direction: column;
@@ -291,10 +286,7 @@ html {
     box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
     animation: pulse-glow 2s ease-in-out infinite;
 }
-.ai-member .avatar:hover img {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.8), 0 0 30px rgba(99, 102, 241, 0.6);
-    transform: scale(1.07);
-}
+
 .card .avatar img {
     opacity: 1;
     visibility: visible;
@@ -304,11 +296,23 @@ html {
 }
 
 /* Apply glow only on hover */
+/* General avatar hover */
 .card .avatar:hover img {
-    box-shadow: 0 0 14px rgba(139, 92, 246, 1);
-    transform: scale(1.05);
+   box-shadow: 0 0 14px rgba(139, 92, 246, 1);
+   transform: scale(1.05);
+   opacity: 1;
+   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+
+/* Specific override for AI */
+.ai-member .avatar:hover img {
+   box-shadow: 0 0 14px rgba(139, 92, 246, 1);
+   transform: scale(1.05);
+   opacity: 1;
+   visibility: visible;
+   filter: none;
 }
+
 /* Sacred header styling */
 .sacred-header {
     font-family: 'Cinzel Decorative', serif;
