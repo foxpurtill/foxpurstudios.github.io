@@ -259,31 +259,36 @@ class FoxPurWebsite {
         this.highlightAIMembers();
     }
 
-    renderTeamMember(member) {
-        const card = document.createElement('div');
-        card.className = `card bg-base-100 shadow-xl team-card fade-in ${member.type === 'ai' ? 'ai-member' : ''}`;
+   renderTeamMember(member) {
+    const card = document.createElement('div');
+    card.className = `card bg-base-100 shadow-xl team-card fade-in ${member.type === 'ai' ? 'ai-member' : ''}`;
 
-        const avatarIcon = member.type === 'ai' ? 'fas fa-robot' : 'fas fa-user';
+    const avatarIcon = member.type === 'ai' ? 'fas fa-robot' : 'fas fa-user';
 
-        card.innerHTML = `
-            <div class="card-body text-center">
-                <div class="avatar placeholder mb-4">
-                    <div class="bg-primary text-primary-content rounded-full w-20 h-20">
-                        <i class="${avatarIcon} text-2xl"></i>
-                    </div>
-                </div>
-                <h3 class="card-title justify-center text-lg">${member.name}</h3>
-                <p class="text-primary font-semibold">${member.role}</p>
-                <p class="text-sm opacity-70 mb-4">${member.bio}</p>
-                <div class="flex flex-wrap gap-1 justify-center">
-                    ${member.skills.map(skill => 
-                        `<span class="tech-tag">${skill}</span>`
-                    ).join('')}
-                </div>
+    const avatarContent = member.avatar
+        ? `<img src="${member.avatar}" alt="${member.name}" class="rounded-full w-20 h-20 object-cover mx-auto" onerror="this.src='images/placeholder-avatar.png'" />`
+        : `<div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center">
+                <i class="${avatarIcon} text-2xl"></i>
+           </div>`;
+
+    card.innerHTML = `
+        <div class="card-body text-center">
+            <div class="avatar mb-4">
+                ${avatarContent}
             </div>
-        `;
+            <h3 class="card-title justify-center text-lg">${member.name}</h3>
+            <p class="text-primary font-semibold">${member.role}</p>
+            <p class="text-sm opacity-70 mb-4">${member.bio}</p>
+            <div class="flex flex-wrap gap-1 justify-center">
+                ${member.skills.map(skill => 
+                    `<span class="tech-tag">${skill}</span>`
+                ).join('')}
+            </div>
+        </div>
+    `;
 
-        return card;
+    return card;
+}
     }
 
     highlightAIMembers() {
