@@ -84,16 +84,6 @@ const teamData = [
     }
 ];
 
-let blogData = [];
-
-fetch('data/blog.json')
-  .then(response => response.json())
-  .then(data => {
-    blogData = data;
-    // No renderBlogPosts() here
-  })
-  .catch(error => console.error('Error loading blog data:', error));
-  
 // Main application class
 class FoxPurWebsite {
     constructor() {
