@@ -296,9 +296,11 @@ html {
 }
 /* Unified hover for all avatars */
 .card .avatar:hover img {
-    box-shadow: 0 0 12px rgba(139, 92, 246, 0.9);
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
 }
-
 /* Sacred header styling */
 .sacred-header {
     font-family: 'Cinzel Decorative', serif;
