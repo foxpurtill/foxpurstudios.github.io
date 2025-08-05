@@ -86,11 +86,12 @@ const teamData = [
 
 // Main application class
 class FoxPurWebsite {
-    constructor() {
-        this.currentProjectFilter = 'all';
-        this.visibleBlogPosts = 3;
-        this.init();
-    }
+constructor() {
+    this.currentProjectFilter = 'all';
+    this.visibleBlogPosts = 3;
+    this.blogData = []; // <-- ADD THIS LINE
+    this.init();
+}
 
     async init() {
         this.initNavigation();
@@ -295,13 +296,21 @@ renderTeamMember(member) {
 
     // Blog Module
     async initBlogSection() {
+    try {
+        const response = await fetch('data/blog.json');
+        const data = await response.json();
+        this.blogData = data; // <-- STORE DATA on `this`
         this.renderBlogPosts();
-        
-        const loadMoreBtn = document.getElementById('load-more-posts');
-        loadMoreBtn.addEventListener('click', () => {
-            this.loadMorePosts();
-        });
+    } catch (error) {
+        console.error('Error loading blog data:', error);
     }
+
+    const loadMoreBtn = document.getElementById('load-more-posts');
+    loadMoreBtn.addEventListener('click', () => {
+        this.loadMorePosts();
+    });
+}
+
 renderBlogEntry(blog) {
     const blogCard = document.createElement('div');
     blogCard.className = 'card bg-base-100 shadow-md blog-card fade-in';
@@ -323,7 +332,7 @@ renderBlogPosts() {
     const blogContainer = document.getElementById('blog-posts');
     blogContainer.innerHTML = '';
 
-    blogData.slice(0, this.visibleBlogPosts).forEach(entry => {
+    this.blogData.slice(0, this.visibleBlogPosts).forEach(entry => {
         const blogCard = this.renderBlogEntry(entry);
         blogContainer.appendChild(blogCard);
     });
