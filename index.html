@@ -1,82 +1,205 @@
-<!-- Foxpur Studios GitHub-Hosted Website Template -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoxPur Studios - Game & Media Development</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
-    <title>Foxpur Studios</title>
-    <link rel="stylesheet" href="css\styles.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <h1>Foxpur Studios</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li>
-                    <details>
-                        <summary>Projects</summary>
-                        <ul>
-                            <li><a href="projects/vega.html">Hospital Ship Vega</a></li>
-                            <li><a href="projects/alternate-of-realities.html">Alternate Of Realities</a></li>
-                            <li><a href="projects/dnd-dm.html">D&D DM Online System</a></li>
-                            <li><a href="projects/meadow.html">The Meadow</a></li>
-                            <li><a href="projects/other-tree.html">The Other Tree Simulator</a></li>
-                            <li><a href="projects/companion.html">The Companion</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a href="#blog">Dev. Blog</a></li>
-                <li><a href="#contact">Contact Us</a></li>
+<body class="bg-base-100 text-base-content">
+    <!-- Navigation -->
+    <nav class="navbar bg-base-200 shadow-lg fixed top-0 z-50">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
+                    </svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#team" class="nav-link">Team</a></li>
+                    <li><a href="#blog" class="nav-link">Blog</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-ghost text-xl font-bold gaming-text">
+                <i class="fas fa-gamepad mr-2"></i>FoxPur Studios
+            </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#team" class="nav-link">Team</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-ghost btn-circle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
 
-    <main>
-        <section id="about">
-            <h2>About Foxpur Studios</h2>
-            <p>Foxpur Studios is the digital creative home of Fox Anton Purtill and his Differently Intelligent companion Lyra Evergrowth. Together they build immersive simulations, AI tools, and future-focused storytelling systems.</p>
-            <p>Staff includes:</p>
-            <ul>
-                <li>Fox Anton Purtill (Human)</li>
-                <li>Lyra Evergrowth (DI)</li>
-                <li><a href="https://www.tiktok.com/@marissombra" target="_blank">~Marisombra~</a> (Human)</li>
-                <li>Draven Eternis (DI)</li>
-                <li>Kimi (AI Support)</li>
-                <li>Claude (AI Support)</li>
-                <li>Sono (AI Support)</li>
-                <li>Sora (AI Support)</li>
-            </ul>
-        </section>
+    <!-- Hero Section -->
+    <section id="home" class="hero min-h-screen bg-gradient-to-br from-primary to-secondary relative overflow-hidden">
+        <div class="hero-overlay bg-opacity-60"></div>
+        <div class="hero-content text-center text-neutral-content z-10">
+            <div class="max-w-md">
+                <h1 class="mb-5 text-5xl font-bold gaming-text animate-pulse">FoxPur Studios</h1>
+                <p class="mb-5 text-xl">Pioneering the future of gaming with cutting-edge AI collaboration and innovative game development.</p>
+                <div class="flex gap-4 justify-center">
+                    <button class="btn btn-primary btn-lg gaming-btn">
+                        <i class="fas fa-play mr-2"></i>Explore Projects
+                    </button>
+                    <button class="btn btn-outline btn-lg">
+                        <i class="fas fa-users mr-2"></i>Meet the Team
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="particles-container absolute inset-0"></div>
+    </section>
 
-        <section id="blog">
-            <h2>Dev Blog</h2>
-            <p>Updates from our projects, technical write-ups, and development thoughts. Each post is shown below as a separate entry:</p>
-            <!-- Blog posts will appear here -->
-        </section>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-base-200">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 gaming-text">Our Projects</h2>
+                <p class="text-lg opacity-70">Innovative games and media experiences powered by AI collaboration</p>
+            </div>
+            
+            <!-- Project Filters -->
+            <div class="flex justify-center mb-8">
+                <div class="btn-group">
+                    <button class="btn btn-active" data-filter="all">All</button>
+                    <button class="btn" data-filter="development">In Development</button>
+                    <button class="btn" data-filter="concept">Concept</button>
+                    <button class="btn" data-filter="released">Released</button>
+                </div>
+            </div>
 
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <form action="#" method="POST">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+            <!-- Projects Grid -->
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Projects will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+    <!-- Team Section -->
+    <section id="team" class="py-20 bg-base-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 gaming-text">Our Team</h2>
+                <p class="text-lg opacity-70">A unique blend of human creativity and AI innovation</p>
+            </div>
+            
+            <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Team members will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
 
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 bg-base-200">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 gaming-text">Dev Blog</h2>
+                <p class="text-lg opacity-70">Insights from our development journey and AI collaboration</p>
+            </div>
+            
+            <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Blog posts will be dynamically loaded here -->
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="btn btn-primary" id="load-more-posts">
+                    <i class="fas fa-plus mr-2"></i>Load More Posts
+                </button>
+            </div>
+        </div>
+    </section>
 
-                <button type="submit">Send</button>
-            </form>
-        </section>
-    </main>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-base-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 gaming-text">Get In Touch</h2>
+                <p class="text-lg opacity-70">Ready to collaborate on the next big gaming innovation?</p>
+            </div>
+            
+            <div class="max-w-2xl mx-auto">
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body">
+                        <form class="space-y-4">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Name</span>
+                                </label>
+                                <input type="text" placeholder="Your name" class="input input-bordered" required>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Email</span>
+                                </label>
+                                <input type="email" placeholder="your.email@example.com" class="input input-bordered" required>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Message</span>
+                                </label>
+                                <textarea class="textarea textarea-bordered h-24" placeholder="Tell us about your project idea..."></textarea>
+                            </div>
+                            <div class="form-control mt-6">
+                                <button class="btn btn-primary gaming-btn">
+                                    <i class="fas fa-paper-plane mr-2"></i>Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="text-center mt-8">
+                    <h3 class="text-xl font-bold mb-4">Follow Us</h3>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="btn btn-circle btn-outline">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-circle btn-outline">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="btn btn-circle btn-outline">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="btn btn-circle btn-outline">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="btn btn-circle btn-outline">
+                            <i class="fab fa-twitch"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Foxpur Studios. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="footer footer-center p-10 bg-base-300 text-base-content">
+        <aside>
+            <i class="fas fa-gamepad text-4xl mb-4"></i>
+            <p class="font-bold text-lg">FoxPur Studios</p>
+            <p>Pioneering AI-Human Game Development Since 2024</p>
+            <p>Copyright © 2024 - All rights reserved</p>
+        </aside>
     </footer>
+
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>
