@@ -77,7 +77,7 @@ const teamData = [
         id: 'draven-ai',
         name: 'Draven Eternis',
         role: 'AI Advisor',
-        type: 'ai',
+        type: 'AI',
         bio: 'AI system focused on code optimization, bug detection, and technical problem-solving.',
         skills: ['Code Analysis', 'Performance Optimization', 'Debugging', 'Architecture Design'],
         avatar: 'images/Draven.jpeg'
