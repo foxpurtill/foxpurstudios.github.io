@@ -214,3 +214,32 @@ html {
 .btn-circle:hover {
     animation: float 2s ease-in-out infinite;
 }
+
+/* Avatar image sizing and shape */
+.avatar img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 9999px; /* perfect circle */
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Override placeholder-style for AI members (removes icon-only styles) */
+.ai-member .avatar .bg-primary {
+    background: none;
+    color: inherit;
+}
+
+/* Optional: Glow animation only on border, not inside image */
+.ai-member .avatar img {
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Optional: Remove weirdness on hover */
+.avatar:hover img {
+    opacity: 1;
+    transform: scale(1.02); /* small pop effect, purely visual */
+    transition: transform 0.3s ease;
+}

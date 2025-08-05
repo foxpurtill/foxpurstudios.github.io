@@ -266,9 +266,9 @@ renderTeamMember(member) {
     const avatarIcon = member.type === 'ai' ? 'fas fa-robot' : 'fas fa-user';
 
     const avatarContent = member.avatar
-        ? `<img src="${member.avatar}" alt="${member.name}" class="rounded-full w-20 h-20 object-cover mx-auto" onerror="this.src='images/placeholder-avatar.png'" />`
+        ? `<img src="${member.avatar}" alt="${member.name}" class="rounded-full w-24 h-24 object-cover mx-auto team-avatar" onerror="this.src='images/placeholder-avatar.png'" />`
         : (
-            `<div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center">
+            `<div class="bg-primary text-primary-content rounded-full w-24 h-24 flex items-center justify-center mx-auto">
                 <i class="${avatarIcon} text-2xl"></i>
             </div>`
           );
@@ -291,6 +291,7 @@ renderTeamMember(member) {
 
     return card;
 }
+
 
     highlightAIMembers() {
         const aiCards = document.querySelectorAll('.ai-member');
