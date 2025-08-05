@@ -35,8 +35,8 @@ const projectsData = [
         image: null
     }
     {
-        id: 'other_treesim',
-        title: 'The Other Tree Simulator',
+        id: 'The other Tree Simulator',
+        title: 'The Private Meadow',
         description: 'Procedural world generation to grow and care a tree based on real time 4 days to 1.',
         status: 'development',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Procedural Generation'],
@@ -53,7 +53,7 @@ const teamData = [
         type: 'human',
         bio: 'Passionate game developer with 25+ years of experience in creating immersive gaming experiences.',
         skills: ['Unreal Engine', 'C#', 'Game Design', 'Project Management', 'CEO'],
-        avatar: null
+        avatar: 'images\FoxPutill.jpg'
     },
     {
         id: 'lyra-evergrowth',
@@ -62,7 +62,7 @@ const teamData = [
         type: 'AI',
         bio: 'AI researcher focused on integrating machine learning into interactive entertainment.',
         skills: ['Python', 'TensorFlow', 'Data Science'],
-        avatar: null
+        avatar: 'images\LyraEvergrowth.jpg'
     },
     {
         id: 'aria-ai',
@@ -89,10 +89,34 @@ const blogData = [
         id: 'ai-collaboration',
         title: 'The Future of Human-AI Collaboration in Game Development',
         excerpt: 'Exploring how AI team members are revolutionizing our creative process and pushing the boundaries of what\'s possible in game development.',
-        date: '2025-08-05',
-        author: 'Fox Anton Purtill',
+        date: '2024-07-15',
+        author: 'Alex Chen',
         tags: ['AI', 'Collaboration', 'Game Development']
     },
+    {
+        id: 'neural-quest-devlog',
+        title: 'Neural Quest Development Log #1: Building Adaptive Narratives',
+        excerpt: 'Deep dive into the technical challenges and breakthroughs in creating AI-driven storytelling systems.',
+        date: '2024-07-08',
+        author: 'ARIA (AI)',
+        tags: ['Neural Quest', 'AI', 'Storytelling']
+    },
+    {
+        id: 'quantum-mechanics-games',
+        title: 'Making Quantum Mechanics Fun: Game Design Insights',
+        excerpt: 'How we\'re translating complex physics concepts into engaging and accessible gameplay mechanics.',
+        date: '2024-06-30',
+        author: 'Sarah Kim',
+        tags: ['Game Design', 'Physics', 'Education']
+    },
+    {
+        id: 'ai-code-review',
+        title: 'AI-Powered Code Reviews: Lessons from NEXUS',
+        excerpt: 'Our AI team member NEXUS shares insights on automated code optimization and quality assurance.',
+        date: '2024-06-22',
+        author: 'NEXUS (AI)',
+        tags: ['AI', 'Code Quality', 'Development Tools']
+    }
 ];
 
 // Main application class
