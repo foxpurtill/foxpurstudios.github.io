@@ -60,7 +60,7 @@ const teamData = [
         name: 'Lyra Evergrowth',
         role: 'AI Developer',
         type: 'ai',
-        bio: 'AI developer focused on integrating machine learning into interactive entertainment.',
+        bio: 'AI developer focused on integrating machine learning into interactive entertainment. Story telling and scripting.',
         skills: ['Python', 'TensorFlow', 'Data Science'],
         avatar: 'images/LyraEvergrowth.jpg'
     },
