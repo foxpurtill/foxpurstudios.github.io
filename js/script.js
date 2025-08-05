@@ -93,7 +93,7 @@ const blogData = [
         author: 'Fox Anton Purtill',
         tags: ['AI', 'Collaboration', 'Game Development']
     }
-	    {
+	{
         id: 'web-page',
         title: 'Fixing the web page bugs',
         excerpt: 'Today is getting the web page pretty. I got the current projects on. I got buttons for social media going to the right place. I have the team listed.',
@@ -274,16 +274,14 @@ renderTeamMember(member) {
     const avatarIcon = member.type === 'ai' ? 'fas fa-robot' : 'fas fa-user';
 
     const avatarContent = member.avatar
-    ? `<img src="${member.avatar}" alt="${member.name}" />`
-    : `<i class="${avatarIcon} text-2xl"></i>`;
-            `<div class="bg-primary text-primary-content rounded-full w-24 h-24 flex items-center justify-center mx-auto">
+        ? `<img src="${member.avatar}" alt="${member.name}" />`
+        : `<div class="bg-primary text-primary-content rounded-full w-24 h-24 flex items-center justify-center mx-auto">
                 <i class="${avatarIcon} text-2xl"></i>
-            </div>`
-          );
+           </div>`;
 
     card.innerHTML = `
-    <div class="card-body text-center">
-        <div class="avatar mb-4">
+        <div class="card-body text-center">
+            <div class="avatar mb-4">
                 ${avatarContent}
             </div>
             <h3 class="card-title justify-center text-lg">${member.name}</h3>
@@ -299,6 +297,7 @@ renderTeamMember(member) {
 
     return card;
 }
+
 
 
     highlightAIMembers() {
