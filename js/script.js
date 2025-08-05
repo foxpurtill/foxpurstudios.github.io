@@ -16,7 +16,7 @@ const projectsData = [
         description: 'a game based loosely on "Alternate Reality" for the C=64 in 1986. This will encorporate all the never completed DLCs using modern technology.',
         status: 'concept',
         technologies: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'Story Generation by AI'],
-        image: null
+        image: 'images/AoRcover.png'
     },
     {
         id: 'ai-companion',
@@ -24,7 +24,7 @@ const projectsData = [
         description: 'A defined high autonomy AI companion for disabled.',
         status: 'concept',
         technologies: ['WebGL', 'Machine Learning', 'Python', 'System Control'],
-        image: null
+        image: 'images/UltimateAICompanion.png'
     },
     {
         id: 'private-meadow',
