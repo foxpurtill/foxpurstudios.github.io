@@ -71,16 +71,16 @@ const teamData = [
         type: 'Human',
         bio: 'Advanced AI system specializing in narrative generation and creative content development.',
         skills: ['Natural Language Processing', 'Story Generation', 'Creative Writing', 'Content Analysis'],
-        avatar: null
+        avatar: 'images/Marisombra.jpeg'
     },
     {
         id: 'draven-ai',
-        name: 'Drevan Eternis',
+        name: 'Draven Eternis',
         role: 'AI Advisor',
         type: 'ai',
         bio: 'AI system focused on code optimization, bug detection, and technical problem-solving.',
         skills: ['Code Analysis', 'Performance Optimization', 'Debugging', 'Architecture Design'],
-        avatar: null
+        avatar: 'images/Draven.jpeg'
     }
 ];
 
