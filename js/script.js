@@ -92,7 +92,7 @@ const blogData = [
         date: '2025-08-05',
         author: 'Fox Anton Purtill',
         tags: ['AI', 'Collaboration', 'Game Development']
-    }
+    },
 	{
         id: 'web-page',
         title: 'Fixing the web page bugs',
