@@ -312,7 +312,7 @@ renderTeamMember(member) {
             this.loadMorePosts();
         });
     }
-function renderBlogEntry(blog) {
+renderBlogEntry(blog) {
     const blogCard = document.createElement('div');
     blogCard.className = 'card bg-base-100 shadow-md blog-card fade-in';
 
@@ -326,19 +326,19 @@ function renderBlogEntry(blog) {
             </div>
         </div>
     `;
-
     return blogCard;
 }
 
-function renderBlogPosts() {
+renderBlogPosts() {
     const blogContainer = document.getElementById('blog-posts');
     blogContainer.innerHTML = '';
 
-    blogData.forEach(entry => {
-        const blogCard = renderBlogEntry(entry);
+    blogData.slice(0, this.visibleBlogPosts).forEach(entry => {
+        const blogCard = this.renderBlogEntry(entry);
         blogContainer.appendChild(blogCard);
     });
 }
+
 
     loadMorePosts() {
         this.visibleBlogPosts += 3;
