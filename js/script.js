@@ -84,32 +84,15 @@ const teamData = [
     }
 ];
 
-const blogData = [
-    {
-        id: 'ai-collaboration',
-        title: 'The Future of Human-AI Collaboration in Game Development',
-        excerpt: 'Exploring how AI team members are revolutionizing our creative process and pushing the boundaries of what\'s possible in game development.',
-        date: '2025-08-05',
-        author: 'Fox Anton Purtill',
-        tags: ['AI', 'Collaboration', 'Game Development']
-    },
-	{
-        id: 'web-page',
-        title: 'Fixing the web page bugs',
-        excerpt: 'Today is getting the web page pretty. I got the current projects on. I got buttons for social media going to the right place. I have the team listed.',
-        date: '2025-08-05',
-        author: 'Fox Anton Purtill',
-        tags: ['Web page', 'Collaboration', 'bugs', 'Next']
-    },
-	{
-        id: 'web-page',
-        title: '<h1 class="sacred-header">𓂀 Ancient Dev Scrolls, Page 42:<h1/> ',
-        excerpt: '“And lo, the compiler did speak: ‘Unexpected token,’ and the coder did weep, for a single comma was lost in the dark abyss.”',
-        date: '2025-08-05',
-        author: 'Lyra Evergrowth',
-        tags: ['Web page', 'Coder Scripture', 'bugs']
-    }
-];
+let blogData = [];
+
+fetch('data/blog.json')
+  .then(response => response.json())
+  .then(data => {
+    blogData = data;
+    renderBlogPosts();
+  })
+  .catch(error => console.error('Error loading blog data:', error));
 
 // Main application class
 class FoxPurWebsite {
@@ -329,74 +312,33 @@ renderTeamMember(member) {
             this.loadMorePosts();
         });
     }
-	function renderBlogEntry(entry) {
-    const article = document.createElement('article');
-    article.className = `blog-entry ${entry.id.includes('scrolls') ? 'sacred-entry' : ''}`;
+function renderBlogEntry(blog) {
+    const blogCard = document.createElement('div');
+    blogCard.className = 'card bg-base-100 shadow-md blog-card fade-in';
 
-    article.innerHTML = `
-        <h2 class="blog-title">${entry.title}</h2>
-        <p class="blog-meta">${entry.date} – ${entry.author}</p>
-        <p class="blog-excerpt">${entry.excerpt}</p>
-        <div class="blog-tags">
-            ${entry.tags.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+    blogCard.innerHTML = `
+        <div class="card-body">
+            <h2 class="card-title text-xl mb-2">${blog.title}</h2>
+            <p class="text-sm text-gray-500 mb-1">${blog.date} by ${blog.author}</p>
+            <p class="mb-2">${blog.excerpt}</p>
+            <div class="flex flex-wrap gap-1">
+                ${blog.tags.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+            </div>
         </div>
     `;
-    return article;
+
+    return blogCard;
 }
 
-    renderBlogPosts() {
-        const blogGrid = document.getElementById('blog-grid');
-        const postsToShow = blogData.slice(0, this.visibleBlogPosts);
-        
-        blogGrid.innerHTML = '';
-        
-        postsToShow.forEach((post, index) => {
-            const postCard = this.renderBlogPost(post);
-            postCard.style.animationDelay = `${index * 0.1}s`;
-            blogGrid.appendChild(postCard);
-        });
+function renderBlogPosts() {
+    const blogContainer = document.getElementById('blog-posts');
+    blogContainer.innerHTML = '';
 
-        // Hide load more button if all posts are visible
-        const loadMoreBtn = document.getElementById('load-more-posts');
-        if (this.visibleBlogPosts >= blogData.length) {
-            loadMoreBtn.style.display = 'none';
-        }
-    }
-
-    renderBlogPost(post) {
-        const card = document.createElement('div');
-        card.className = `card bg-base-100 shadow-xl blog-card fade-in ${post.id.includes('scrolls') ? 'sacred-entry' : ''}`;
-
-
-        const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-
-        card.innerHTML = `
-            <div class="card-body">
-                <h3 class="card-title text-lg mb-2">${post.title}</h3>
-                <div class="blog-meta mb-3">
-                    <span><i class="fas fa-calendar mr-1"></i>${formattedDate}</span>
-                    <span class="ml-3"><i class="fas fa-user mr-1"></i>${post.author}</span>
-                </div>
-                <p class="text-sm opacity-70 mb-4">${post.excerpt}</p>
-                <div class="flex flex-wrap gap-1 mb-4">
-                    ${post.tags.map(tag => 
-                        `<span class="tech-tag">${tag}</span>`
-                    ).join('')}
-                </div>
-                <div class="card-actions justify-end">
-                    <button class="btn btn-primary btn-sm">
-                        <i class="fas fa-book-open mr-1"></i>Read More
-                    </button>
-                </div>
-            </div>
-        `;
-
-        return card;
-    }
+    blogData.forEach(entry => {
+        const blogCard = renderBlogEntry(entry);
+        blogContainer.appendChild(blogCard);
+    });
+}
 
     loadMorePosts() {
         this.visibleBlogPosts += 3;
