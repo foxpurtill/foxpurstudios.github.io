@@ -336,9 +336,22 @@ html {
 /* Final AI static overrides */
 .team-card.ai-member,
 .team-card.ai-member:hover {
-    transform: none;
-    animation: none;
+    display: block;
+    visibility: visible;
     opacity: 1;
+    transform: none;
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+}
+
+.team-card.ai-member.fade-in {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.team-card.ai-member::before {
+    content: 'AI';
+    background: #d4af37;
+    color: #1f1600;
 }
 
 .team-card.ai-member .avatar,
@@ -346,11 +359,14 @@ html {
 .team-card.ai-member .avatar img,
 .team-card.ai-member .avatar:hover img {
     transform: none;
-    animation: none;
     opacity: 1;
     visibility: visible;
-    display: block;
     filter: none;
+}
+
+.team-card.ai-member .avatar img,
+.team-card.ai-member .avatar:hover img {
+    box-shadow: 0 0 0 2px #d4af37;
 }
 
 /* Team details popup */
