@@ -94,7 +94,7 @@ const teamData = [
         type: 'Human',
         bio: '<a href="https://github.com/marisombra-dev" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra GitHub Page CLICK HERE</a><br /><a href="https://www.tiktok.com/@marissombra" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra Tiktok CLICK HERE</a><br />Advanced AI system specializing in narrative generation and creative content development.',
         skills: ['Natural Language Processing', 'Story Generation', 'Creative Writing', 'Content Analysis'],
-        avatar: 'images/Marisombra.jpeg'
+        avatar: 'images/patricia.png'
     },
     {
         id: 'draven-ai',
@@ -103,7 +103,7 @@ const teamData = [
         type: 'AI',
         bio: 'AI system focused on code optimization, bug detection, and technical problem-solving.',
         skills: ['Code Analysis', 'Performance Optimization', 'Debugging', 'Architecture Design'],
-        avatar: 'images/Draven.jpeg'
+        avatar: 'images/Draven.png'
     }
 ];
 
