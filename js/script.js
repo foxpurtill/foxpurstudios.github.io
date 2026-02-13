@@ -246,12 +246,14 @@ constructor() {
             teamGrid.appendChild(memberCard);
         });
 
+        this.initTeamDetailsPopup();
     }
 
 renderTeamMember(member) {
     const card = document.createElement('div');
     const isAiMember = String(member.type).toLowerCase() === 'ai';
     card.className = `card bg-base-100 shadow-xl team-card fade-in ${isAiMember ? 'ai-member' : ''}`;
+    card.dataset.memberName = member.name;
 
     const avatarIcon = isAiMember ? 'fas fa-robot' : 'fas fa-user';
 
@@ -274,11 +276,92 @@ renderTeamMember(member) {
                     `<span class="tech-tag">${skill}</span>`
                 ).join('')}
             </div>
+            <div class="card-actions justify-center mt-4">
+                <button type="button" class="btn btn-primary btn-sm team-details-btn">
+                    Details
+                </button>
+            </div>
         </div>
     `;
 
     return card;
 }
+
+    initTeamDetailsPopup() {
+        const teamGrid = document.getElementById('team-grid');
+        if (!teamGrid) return;
+
+        let modal = document.getElementById('team-details-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'team-details-modal';
+            modal.className = 'team-details-modal';
+            modal.innerHTML = `
+                <div class="team-details-panel card bg-base-100 shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="team-details-title">
+                    <div class="team-details-header">
+                        <h3 id="team-details-title" class="team-details-title">Details</h3>
+                        <button type="button" class="btn btn-sm btn-circle team-details-close" aria-label="Close details">
+                            X
+                        </button>
+                    </div>
+                    <div class="team-details-content"></div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        const panel = modal.querySelector('.team-details-panel');
+        const content = modal.querySelector('.team-details-content');
+        const closeBtn = modal.querySelector('.team-details-close');
+        const closeAnimationMs = 180;
+
+        const closeModal = () => {
+            if (!modal.classList.contains('is-open') || modal.classList.contains('is-closing')) return;
+            modal.classList.add('is-closing');
+            window.setTimeout(() => {
+                modal.classList.remove('is-open', 'is-closing');
+                document.body.style.overflow = '';
+            }, closeAnimationMs);
+        };
+
+        const openModal = (card, memberName) => {
+            const rect = card.getBoundingClientRect();
+            const panelWidth = Math.min(Math.round(rect.width), window.innerWidth - 24);
+            const panelHeight = Math.min(Math.round(rect.height), window.innerHeight - 24);
+
+            panel.style.width = `${Math.max(panelWidth, 280)}px`;
+            panel.style.height = `${Math.max(panelHeight, 280)}px`;
+            content.innerHTML = `<p class="team-details-text">${memberName} Pending</p>`;
+
+            modal.classList.remove('is-closing');
+            modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        teamGrid.addEventListener('click', (event) => {
+            const button = event.target.closest('.team-details-btn');
+            if (!button) return;
+
+            const card = button.closest('.team-card');
+            if (!card) return;
+
+            const memberName = card.dataset.memberName || 'Member';
+            openModal(card, memberName);
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+                closeModal();
+            }
+        });
+    }
 
 
 
