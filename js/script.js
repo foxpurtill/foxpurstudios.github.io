@@ -246,14 +246,14 @@ constructor() {
             teamGrid.appendChild(memberCard);
         });
 
-        this.highlightAIMembers();
     }
 
 renderTeamMember(member) {
     const card = document.createElement('div');
-    card.className = `card bg-base-100 shadow-xl team-card fade-in ${member.type === 'ai' ? 'ai-member' : ''}`;
+    const isAiMember = String(member.type).toLowerCase() === 'ai';
+    card.className = `card bg-base-100 shadow-xl team-card fade-in ${isAiMember ? 'ai-member' : ''}`;
 
-    const avatarIcon = member.type === 'ai' ? 'fas fa-robot' : 'fas fa-user';
+    const avatarIcon = isAiMember ? 'fas fa-robot' : 'fas fa-user';
 
     const avatarContent = member.avatar
         ? `<img src="${member.avatar}" alt="${member.name}" />`
@@ -281,18 +281,6 @@ renderTeamMember(member) {
 }
 
 
-
-    highlightAIMembers() {
-        const aiCards = document.querySelectorAll('.ai-member');
-        aiCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.animation = 'glow 1.5s ease-in-out infinite';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.animation = '';
-            });
-        });
-    }
 
     // Blog Module
     async initBlogSection() {

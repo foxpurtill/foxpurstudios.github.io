@@ -335,3 +335,26 @@ html {
     font-family: 'EB Garamond', serif;
     font-style: italic;
 }
+
+/* Final AI team member overrides */
+.ai-member {
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+}
+
+.ai-member::before {
+    content: 'AI';
+    background: #d4af37;
+    color: #1f1600;
+}
+
+.ai-member .avatar img {
+    box-shadow: 0 0 0 2px #d4af37;
+    animation: none;
+}
+
+.ai-member .avatar:hover img {
+    box-shadow: 0 0 0 2px #d4af37;
+    transform: none;
+    filter: none;
+}
