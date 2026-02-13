@@ -272,7 +272,7 @@ renderTeamMember(member) {
             <p class="text-primary font-semibold">${member.role}</p>
             <p class="text-sm opacity-70 mb-4">${member.bio}</p>
             <div class="flex flex-wrap gap-1 justify-center">
-                ${member.skills.map(skill => 
+                ${(Array.isArray(member.skills) ? member.skills : []).map(skill => 
                     `<span class="tech-tag">${skill}</span>`
                 ).join('')}
             </div>
