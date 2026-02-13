@@ -219,6 +219,7 @@ constructor() {
     }
 
     renderProject(project) {
+        console.log('Project render:', project.title, project.image);
         const card = document.createElement('div');
         card.className = 'card bg-base-100 shadow-xl project-card fade-in';
         card.setAttribute('data-status', project.status);
