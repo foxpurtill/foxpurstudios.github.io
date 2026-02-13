@@ -424,3 +424,15 @@ html {
 .team-details-text {
     margin: 0;
 }
+
+/* Ensure team details trigger is always visible */
+.team-card .card-actions {
+    display: flex;
+    width: 100%;
+}
+
+.team-card .team-details-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

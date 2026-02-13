@@ -276,13 +276,16 @@ renderTeamMember(member) {
                     `<span class="tech-tag">${skill}</span>`
                 ).join('')}
             </div>
-            <div class="card-actions justify-center mt-4">
-                <button type="button" class="btn btn-primary btn-sm team-details-btn">
-                    Details
-                </button>
-            </div>
         </div>
     `;
+
+    const cardBody = card.querySelector('.card-body');
+    const actions = document.createElement('div');
+    actions.className = 'card-actions justify-center mt-4';
+    actions.innerHTML = `
+        <button type="button" class="btn btn-primary btn-sm team-details-btn">Details</button>
+    `;
+    cardBody.appendChild(actions);
 
     return card;
 }
