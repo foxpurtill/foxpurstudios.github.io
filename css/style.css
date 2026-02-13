@@ -453,3 +453,49 @@ html {
     align-items: center;
     justify-content: center;
 }
+
+/* Contact form layout */
+#contact .container {
+    overflow: visible;
+}
+
+#contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+}
+
+#contactForm input,
+#contactForm select,
+#contactForm textarea,
+#contactForm button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    border-radius: 0.5rem;
+    background: rgba(15, 23, 42, 0.25);
+}
+
+#contactForm textarea {
+    min-height: 7rem;
+    resize: vertical;
+}
+
+#contactForm button {
+    cursor: pointer;
+}
+
+#status {
+    min-height: 1.25rem;
+}
+
+@media (max-width: 640px) {
+    #contact {
+        overflow: visible;
+        min-height: auto;
+    }
+}
