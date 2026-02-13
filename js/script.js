@@ -22,7 +22,7 @@ const projectsData = [
     },
     {
         id: 'ai-companion',
-        title: 'Ultimate AI',
+        title: 'Ultimate AI Companion',
         slug: 'UltimateAI',
         description: 'A defined high autonomy AI companion for disabled.',
         status: 'concept',
@@ -51,19 +51,19 @@ const projectsData = [
         id: 'omega-revisited',
         title: 'Omega Revisited',
         slug: 'OmegaRevisited',
-        description: 'Project details are pending.',
-        status: 'concept',
+        description: 'A reimagining of Omega with updated gameplay, visuals, and narrative depth.',
+        status: 'pending',
         technologies: ['TBD'],
-        image: 'images/placeholder.png'
+        image: 'images/OmegaRev.png'
     },
     {
         id: 'the-scopes',
         title: 'The Scopes',
         slug: 'TheScopes',
-        description: 'Project details are pending.',
-        status: 'concept',
-        technologies: ['TBD'],
-        image: 'images/placeholder.png'
+        description: 'AI-powered horoscopes, numerology, and planetary biorhythms presented daily.',
+        status: 'pending',
+        technologies: ['AI', 'Astrology', 'Numerology'],
+        image: 'images/Scopes.png'
     }
 
 ];
@@ -240,7 +240,7 @@ constructor() {
                     ).join('')}
                 </div>
                 <div class="card-actions justify-end">
-                    <a href="/${project.slug}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                    <a href="/${project.slug}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
                         <i class="fas fa-eye mr-1"></i>View Details
                     </a>
                 </div>
