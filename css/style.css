@@ -338,6 +338,7 @@ html {
 .team-card.ai-member:hover {
     transform: none;
     animation: none;
+    opacity: 1;
 }
 
 .team-card.ai-member .avatar,
