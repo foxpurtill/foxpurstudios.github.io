@@ -33,11 +33,7 @@
       margin: 0;
       font-family: var(--font);
       color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 15% 10%, rgba(119,212,255,.14), transparent 60%),
-        radial-gradient(900px 520px at 80% 20%, rgba(167,255,203,.10), transparent 55%),
-        radial-gradient(900px 520px at 65% 95%, rgba(255,204,122,.08), transparent 55%),
-        linear-gradient(180deg, #050713 0%, #070a12 45%, #050713 100%);
+      background: #050713; /* solid base, no banding */
       overflow-x: hidden;
     }
 
@@ -55,13 +51,16 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 1; /* sits above stars, below content */
-      opacity: .38;
+      z-index: 1; /* above stars, below content */
+      opacity: .36;
       background:
         radial-gradient(1200px 700px at 18% 8%, rgba(119,212,255,.16), transparent 60%),
         radial-gradient(900px 520px at 80% 18%, rgba(167,255,203,.10), transparent 55%),
         radial-gradient(900px 520px at 65% 95%, rgba(255,204,122,.07), transparent 55%),
         linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.40));
+      background-repeat: no-repeat;
+      background-size: 140% 140%, 120% 120%, 120% 120%, 100% 100%;
+      background-position: center center, center center, center center, center center;
     }
 
     /* make sure your real content floats above background layers */
