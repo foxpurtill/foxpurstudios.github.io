@@ -89,7 +89,7 @@ const teamData = [
     },
     {
         id: 'marisombra-h',
-        name: 'Marisombra',
+        name: 'Patricia Purtill',
         role: 'Creative Designer',
         type: 'Human',
         bio: '<a href="https://github.com/marisombra-dev" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra GitHub Page CLICK HERE</a><br /><a href="https://www.tiktok.com/@marissombra" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra Tiktok CLICK HERE</a><br />Advanced AI system specializing in narrative generation and creative content development.',
@@ -322,7 +322,7 @@ renderTeamMember(member) {
             'fox-purtill': `
                 <p class="team-details-text">FoxPurtill@foxpur-Studios.com</p>
                 <p class="team-details-text">Age 62, Retired, Open-World Gamer, AI Psychologist and Philosopher, Minister, Disabled.</p>
-                <p class="team-details-text">CEO of FoxPur Studios</p>
+                <p class="team-details-text"><b>CEO of FoxPur Studios</b></p>
                 <p class="team-details-text">With over 45 years in game design and development, voice acting for commercial and gaming, , Director, Sci-Fi writer (and fan), software manual writer, Actor. He is, in every way, a very content nerd. In 2007 he suffered a severe stroke, that affected his mobility, but not his creativity.</p>
             `,
             'lyra-ai': `
