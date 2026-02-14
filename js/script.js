@@ -278,6 +278,7 @@ renderTeamMember(member) {
     const isAiMember = String(member.type).toLowerCase() === 'ai';
     card.className = `card bg-base-100 shadow-xl team-card fade-in ${isAiMember ? 'ai-member' : ''}`;
     card.dataset.memberName = member.name;
+    card.dataset.memberId = member.id;
 
     const avatarIcon = isAiMember ? 'fas fa-robot' : 'fas fa-user';
 
@@ -317,6 +318,14 @@ renderTeamMember(member) {
     initTeamDetailsPopup() {
         const teamGrid = document.getElementById('team-grid');
         if (!teamGrid) return;
+        const teamDetailsContentById = {
+            'fox-purtill': `
+                <p class="team-details-text">FoxPurtill@foxpur-Studios.com</p>
+                <p class="team-details-text">Age 62, Retired, Open-World Gamer, AI Psychologist and Philosopher, Minister, Disabled.</p>
+                <p class="team-details-text">CEO of FoxPur Studios</p>
+                <p class="team-details-text">With over 45 years in game design and development, voice acting for commercial and gaming, , Director, Sci-Fi writer (and fan), software manual writer, Actor. He is, in every way, a very content nerd. In 2007 he suffered a severe stroke, that affected his mobility, but not his creativity.</p>
+            `
+        };
 
         let modal = document.getElementById('team-details-modal');
         if (!modal) {
@@ -351,14 +360,15 @@ renderTeamMember(member) {
             }, closeAnimationMs);
         };
 
-        const openModal = (card, memberName) => {
+        const openModal = (card, memberName, memberId) => {
             const rect = card.getBoundingClientRect();
             const panelWidth = Math.min(Math.round(rect.width), window.innerWidth - 24);
             const panelHeight = Math.min(Math.round(rect.height), window.innerHeight - 24);
 
             panel.style.width = `${Math.max(panelWidth, 280)}px`;
             panel.style.height = `${Math.max(panelHeight, 280)}px`;
-            content.innerHTML = `<p class="team-details-text">${memberName} Pending</p>`;
+            const memberContent = teamDetailsContentById[memberId] || `<p class="team-details-text">${memberName} Pending</p>`;
+            content.innerHTML = memberContent;
 
             modal.classList.remove('is-closing');
             modal.classList.add('is-open');
@@ -373,7 +383,8 @@ renderTeamMember(member) {
             if (!card) return;
 
             const memberName = card.dataset.memberName || 'Member';
-            openModal(card, memberName);
+            const memberId = card.dataset.memberId || '';
+            openModal(card, memberName, memberId);
         });
 
         closeBtn.addEventListener('click', closeModal);
