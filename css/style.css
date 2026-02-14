@@ -503,3 +503,24 @@ html {
         min-height: auto;
     }
 }
+
+/* Blog controls and cards */
+.blog-filters .label-text {
+    font-weight: 600;
+}
+
+.blog-excerpt-scroll {
+    max-height: 8.75rem;
+    overflow-y: auto;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* Manage page */
+.manage-page .selected-tags .remove-tag {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}

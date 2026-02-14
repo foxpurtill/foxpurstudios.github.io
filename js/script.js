@@ -107,12 +107,23 @@ const teamData = [
     }
 ];
 
+const BLOG_STORAGE_KEY = 'foxpur_blog_entries_v1';
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Main application class
 class FoxPurWebsite {
 constructor() {
     this.currentProjectFilter = 'all';
-    this.visibleBlogPosts = 3;
-    this.blogData = []; // <-- ADD THIS LINE
+    this.blogData = [];
+    this.blogFilters = { search: '', tag: '', author: '' };
     this.init();
 }
 
@@ -431,17 +442,130 @@ renderTeamMember(member) {
     // Blog Module
     async initBlogSection() {
     try {
-        const response = await fetch('data/blog.json');
-        const data = await response.json();
-        this.blogData = data; // <-- STORE DATA on `this`
+        this.blogData = await this.loadBlogData();
+        this.initBlogFilters();
         this.renderBlogPosts();
     } catch (error) {
         console.error('Error loading blog data:', error);
     }
+}
 
-    const loadMoreBtn = document.getElementById('load-more-posts');
-    loadMoreBtn.addEventListener('click', () => {
-        this.loadMorePosts();
+async loadBlogData() {
+    const localEntries = this.readStoredBlogEntries();
+    if (localEntries.length > 0) {
+        return localEntries;
+    }
+
+    try {
+        const response = await fetch('data/blog.json');
+        const data = await response.json();
+        const normalized = this.normalizeBlogEntries(data);
+        if (normalized.length > 0) {
+            localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(normalized));
+        }
+        return normalized;
+    } catch (error) {
+        console.error('Could not load blog.json:', error);
+        return [];
+    }
+}
+
+readStoredBlogEntries() {
+    try {
+        const raw = localStorage.getItem(BLOG_STORAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return this.normalizeBlogEntries(parsed);
+    } catch (error) {
+        console.error('Could not parse stored blog entries:', error);
+        return [];
+    }
+}
+
+normalizeBlogEntries(entries) {
+    if (!Array.isArray(entries)) return [];
+
+    const normalized = entries.map((entry) => {
+        const timestamp = this.toIsoTimestamp(entry.timestamp || entry.date);
+        const title = String(entry.title || '').trim();
+        const excerpt = String(entry.excerpt || '').trim();
+        const author = String(entry.author || 'Unknown').trim();
+        const tags = Array.isArray(entry.tags)
+            ? [...new Set(entry.tags.map((tag) => String(tag).trim()).filter(Boolean))]
+            : [];
+
+        if (!title || !excerpt) return null;
+
+        return {
+            id: String(entry.id || this.slugify(title)),
+            title,
+            excerpt,
+            author,
+            tags,
+            timestamp,
+            date: timestamp.slice(0, 10)
+        };
+    }).filter(Boolean);
+
+    return normalized.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+}
+
+toIsoTimestamp(value) {
+    const parsed = value ? new Date(value) : new Date();
+    const validDate = Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+    return validDate.toISOString();
+}
+
+slugify(value) {
+    return String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 48) || `blog-${Date.now()}`;
+}
+
+initBlogFilters() {
+    const searchInput = document.getElementById('blog-search');
+    const tagSelect = document.getElementById('blog-tag-filter');
+    const authorSelect = document.getElementById('blog-member-filter');
+    if (!searchInput || !tagSelect || !authorSelect) return;
+
+    const allTags = [...new Set(this.blogData.flatMap((entry) => entry.tags || []))].sort((a, b) => a.localeCompare(b));
+    const allAuthors = [...new Set(this.blogData.map((entry) => entry.author).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+
+    tagSelect.innerHTML = `<option value="">All tags</option>${allTags.map((tag) => `<option value="${escapeHtml(tag)}">${escapeHtml(tag)}</option>`).join('')}`;
+    authorSelect.innerHTML = `<option value="">All members</option>${allAuthors.map((author) => `<option value="${escapeHtml(author)}">${escapeHtml(author)}</option>`).join('')}`;
+
+    searchInput.addEventListener('input', (event) => {
+        this.blogFilters.search = String(event.target.value || '').toLowerCase();
+        this.renderBlogPosts();
+    });
+
+    tagSelect.addEventListener('change', (event) => {
+        this.blogFilters.tag = String(event.target.value || '');
+        this.renderBlogPosts();
+    });
+
+    authorSelect.addEventListener('change', (event) => {
+        this.blogFilters.author = String(event.target.value || '');
+        this.renderBlogPosts();
+    });
+}
+
+getFilteredBlogEntries() {
+    return this.blogData.filter((entry) => {
+        const searchTerm = this.blogFilters.search;
+        const tagFilter = this.blogFilters.tag;
+        const authorFilter = this.blogFilters.author;
+
+        const matchesSearch = !searchTerm
+            || entry.title.toLowerCase().includes(searchTerm)
+            || entry.excerpt.toLowerCase().includes(searchTerm)
+            || entry.tags.some((tag) => tag.toLowerCase().includes(searchTerm));
+        const matchesTag = !tagFilter || entry.tags.includes(tagFilter);
+        const matchesAuthor = !authorFilter || entry.author === authorFilter;
+
+        return matchesSearch && matchesTag && matchesAuthor;
     });
 }
 
@@ -451,11 +575,11 @@ renderBlogEntry(blog) {
 
     blogCard.innerHTML = `
         <div class="card-body">
-            <h2 class="card-title text-xl mb-2">${blog.title}</h2>
-            <p class="text-sm text-gray-500 mb-1">${blog.date} by ${blog.author}</p>
-            <p class="mb-2">${blog.excerpt}</p>
+            <h2 class="card-title text-xl mb-2">${escapeHtml(blog.title)}</h2>
+            <p class="text-sm text-gray-500 mb-1">${escapeHtml(blog.date)} by ${escapeHtml(blog.author)}</p>
+            <div class="blog-excerpt-scroll mb-2">${escapeHtml(blog.excerpt)}</div>
             <div class="flex flex-wrap gap-1">
-                ${blog.tags.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+                ${blog.tags.map(tag => `<span class="tech-tag">${escapeHtml(tag)}</span>`).join('')}
             </div>
         </div>
     `;
@@ -464,19 +588,28 @@ renderBlogEntry(blog) {
 
 renderBlogPosts() {
     const blogContainer = document.getElementById('blog-posts');
+    if (!blogContainer) return;
     blogContainer.innerHTML = '';
 
-    this.blogData.slice(0, this.visibleBlogPosts).forEach(entry => {
+    const visibleEntries = this.getFilteredBlogEntries().slice(0, 3);
+
+    if (visibleEntries.length === 0) {
+        const emptyCard = document.createElement('div');
+        emptyCard.className = 'card bg-base-100 shadow-md blog-card';
+        emptyCard.innerHTML = `
+            <div class="card-body">
+                <p class="opacity-70">No blog entries match your filters.</p>
+            </div>
+        `;
+        blogContainer.appendChild(emptyCard);
+        return;
+    }
+
+    visibleEntries.forEach(entry => {
         const blogCard = this.renderBlogEntry(entry);
         blogContainer.appendChild(blogCard);
     });
 }
-
-
-    loadMorePosts() {
-        this.visibleBlogPosts += 3;
-        this.renderBlogPosts();
-    }
 
     // Animation Module
     initAnimations() {

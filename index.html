@@ -24,6 +24,7 @@
                     <li><a href="#projects" class="nav-link">Projects</a></li>
                     <li><a href="#team" class="nav-link">Team</a></li>
                     <li><a href="#blog" class="nav-link">Blog</a></li>
+                    <li><a href="/manage">Manage</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
             </div>
@@ -37,6 +38,7 @@
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#team" class="nav-link">Team</a></li>
                 <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="/manage">Manage</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </div>
@@ -123,15 +125,38 @@
                 <h2 class="text-4xl font-bold mb-4 gaming-text">Dev Blog</h2>
                 <p class="text-lg opacity-70">Insights from our development journey and AI collaboration</p>
             </div>
-            
+
+            <div class="blog-filters card bg-base-100 shadow-md mb-6">
+                <div class="card-body">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="form-control w-full">
+                            <div class="label"><span class="label-text">Search</span></div>
+                            <input id="blog-search" type="text" class="input input-bordered w-full" placeholder="Search title or text">
+                        </label>
+                        <label class="form-control w-full">
+                            <div class="label"><span class="label-text">Tag</span></div>
+                            <select id="blog-tag-filter" class="select select-bordered w-full">
+                                <option value="">All tags</option>
+                            </select>
+                        </label>
+                        <label class="form-control w-full">
+                            <div class="label"><span class="label-text">Member</span></div>
+                            <select id="blog-member-filter" class="select select-bordered w-full">
+                                <option value="">All members</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <div id="blog-posts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Blog posts will be dynamically loaded here -->
             </div>
-            
+
             <div class="text-center mt-8">
-                <button class="btn btn-primary" id="load-more-posts">
-                    <i class="fas fa-plus mr-2"></i>Load More Posts
-                </button>
+                <a href="/manage" class="btn btn-primary">
+                    <i class="fas fa-pen mr-2"></i>Manage Blog Entries
+                </a>
             </div>
         </div>
     </section>

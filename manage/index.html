@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoxPur Studios - Manage Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-base-100 text-base-content min-h-screen">
+    <main class="container mx-auto px-4 py-10 manage-page">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center justify-between gap-3 mb-6">
+                <h1 class="text-3xl font-bold gaming-text">Manage Blog</h1>
+                <a href="/" class="btn btn-outline btn-sm"><i class="fas fa-home mr-2"></i>Back Home</a>
+            </div>
+
+            <section id="manage-login" class="card bg-base-200 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title">Protected Access</h2>
+                    <p class="opacity-70">Enter password to manage blog entries.</p>
+                    <form id="manage-login-form" class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3">
+                        <input id="manage-password" type="password" class="input input-bordered w-full" placeholder="Password" required>
+                        <button type="submit" class="btn btn-primary">Unlock</button>
+                    </form>
+                    <p id="manage-login-status" class="text-error min-h-[1.25rem]"></p>
+                </div>
+            </section>
+
+            <section id="manage-app" class="hidden">
+                <div class="card bg-base-200 shadow-xl mb-6">
+                    <div class="card-body">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                            <h2 class="card-title">Create or Edit Entry</h2>
+                            <button id="toggle-edit-list" type="button" class="btn btn-outline btn-sm">Edit Existing Blogs</button>
+                        </div>
+
+                        <div id="edit-list-panel" class="hidden card bg-base-100 shadow-sm mb-4">
+                            <div class="card-body">
+                                <label class="form-control w-full">
+                                    <div class="label"><span class="label-text">Select Title</span></div>
+                                    <select id="existing-blog-select" class="select select-bordered w-full">
+                                        <option value="">Select a blog title</option>
+                                    </select>
+                                </label>
+                                <div class="card-actions justify-end mt-3">
+                                    <button id="load-selected-blog" type="button" class="btn btn-primary btn-sm">Load Selected</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="blog-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input id="editing-blog-id" type="hidden">
+
+                            <label class="form-control w-full">
+                                <div class="label"><span class="label-text">Team Member</span></div>
+                                <select id="blog-author" class="select select-bordered w-full" required></select>
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label"><span class="label-text">Timestamp</span></div>
+                                <input id="blog-timestamp" type="datetime-local" class="input input-bordered w-full" required>
+                            </label>
+
+                            <label class="form-control w-full md:col-span-2">
+                                <div class="label"><span class="label-text">Title</span></div>
+                                <input id="blog-title" type="text" class="input input-bordered w-full" required>
+                            </label>
+
+                            <label class="form-control w-full md:col-span-2">
+                                <div class="label"><span class="label-text">Blog Entry</span></div>
+                                <textarea id="blog-excerpt" class="textarea textarea-bordered min-h-[180px]" required></textarea>
+                            </label>
+
+                            <div class="md:col-span-2">
+                                <div class="card bg-base-100 shadow-sm">
+                                    <div class="card-body">
+                                        <h3 class="font-semibold">Tags</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3">
+                                            <div class="flex gap-2">
+                                                <select id="existing-tag-select" class="select select-bordered w-full">
+                                                    <option value="">Use existing tag</option>
+                                                </select>
+                                                <button id="add-existing-tag" type="button" class="btn btn-outline">Add</button>
+                                            </div>
+                                            <div class="flex gap-2">
+                                                <input id="new-tag-input" type="text" class="input input-bordered w-full" placeholder="Add new tag">
+                                                <button id="add-new-tag" type="button" class="btn btn-outline">Add</button>
+                                            </div>
+                                        </div>
+                                        <div id="selected-tags" class="selected-tags mt-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2 flex flex-wrap gap-3 justify-end">
+                                <button id="clear-form" type="button" class="btn btn-ghost">Clear</button>
+                                <button type="submit" class="btn btn-primary">Save Entry</button>
+                            </div>
+                            <p id="form-status" class="md:col-span-2 min-h-[1.25rem] text-success"></p>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body">
+                        <h2 class="card-title">Current Entries</h2>
+                        <div id="entries-summary" class="opacity-70"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script type="module" src="../js/manage.js"></script>
+</body>
+</html>
