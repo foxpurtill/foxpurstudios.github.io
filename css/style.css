@@ -484,6 +484,15 @@ html {
     background: rgba(15, 23, 42, 0.25);
 }
 
+#contactForm select {
+    color: rgba(241, 245, 249, 0.9);
+}
+
+#contactForm select option {
+    color: rgba(241, 245, 249, 0.9);
+    background-color: #0f172a;
+}
+
 #contactForm textarea {
     min-height: 7rem;
     resize: vertical;
