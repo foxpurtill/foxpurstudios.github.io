@@ -1,15 +1,1052 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Ship Vega</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hospital Starship Vega | Foxpur Studios</title>
+  <meta name="description" content="Hospital Starship Vega: a visual book universe inspired by classic medical sci-fi, built at Foxpur Studios." />
+  <meta name="theme-color" content="#0b1020" />
+
+  <style>
+    :root{
+      --bg: #070a12;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.09);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --faint: rgba(255,255,255,.42);
+      --line: rgba(255,255,255,.14);
+      --accent: #77d4ff;
+      --accent2: #a7ffcb;
+      --warn: #ffcc7a;
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
+      --radius: 18px;
+      --radius2: 28px;
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(119,212,255,.14), transparent 60%),
+        radial-gradient(900px 520px at 80% 20%, rgba(167,255,203,.10), transparent 55%),
+        radial-gradient(900px 520px at 65% 95%, rgba(255,204,122,.08), transparent 55%),
+        linear-gradient(180deg, #050713 0%, #070a12 45%, #050713 100%);
+      overflow-x: hidden;
+    }
+
+    /* Optional future: background images can be added here without changing layout */
+    .bg-overlay{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .20;
+      mix-blend-mode: screen;
+      background-image:
+        radial-gradient(circle at 25% 20%, rgba(255,255,255,.18), transparent 45%),
+        radial-gradient(circle at 80% 65%, rgba(255,255,255,.14), transparent 45%);
+      filter: blur(0px);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+    .wrap{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header{
+      padding: 28px 0 12px;
+      position: relative;
+    }
+
+    .topbar{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .crumbs{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .crumbs a{
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+    }
+    .crumbs a:hover{
+      border-color: var(--line);
+      background: rgba(255,255,255,.03);
+      text-decoration: none;
+    }
+
+    .badge{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .hero{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-inner{
+      padding: 28px 26px 22px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .title{
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: .2px;
+      line-height: 1.06;
+    }
+
+    .subtitle{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 62ch;
+    }
+
+    .hero-meta{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .meta-card{
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+    }
+
+    .meta-row{
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .meta-row:last-child{ border-bottom: none; }
+    .meta-row b{
+      color: rgba(255,255,255,.86);
+      font-weight: 600;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.9);
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+    }
+    .btn:hover{
+      text-decoration:none;
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.22);
+      transform: translateY(-1px);
+    }
+    .btn.primary{
+      border-color: rgba(119,212,255,.45);
+      background: linear-gradient(180deg, rgba(119,212,255,.18), rgba(119,212,255,.08));
+    }
+    .btn.primary:hover{
+      border-color: rgba(119,212,255,.70);
+      background: linear-gradient(180deg, rgba(119,212,255,.22), rgba(119,212,255,.10));
+    }
+    .btn.green{
+      border-color: rgba(167,255,203,.40);
+      background: linear-gradient(180deg, rgba(167,255,203,.14), rgba(167,255,203,.06));
+    }
+
+    .sticky-nav{
+      position: sticky;
+      top: 10px;
+      z-index: 50;
+      margin: 16px 0 0;
+    }
+
+    .nav-shell{
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.32);
+      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      padding: 8px;
+      display:flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 35px rgba(0,0,0,.35);
+    }
+
+    .nav-links{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .nav-links a{
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+    .nav-links a:hover{
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      text-decoration: none;
+    }
+
+    main{
+      padding: 18px 0 56px;
+    }
+
+    section{
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius2);
+      box-shadow: 0 14px 45px rgba(0,0,0,.30);
+      overflow: hidden;
+    }
+
+    .sec-head{
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      background: rgba(0,0,0,.18);
+    }
+
+    .sec-head h2{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+
+    .sec-head p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .sec-body{
+      padding: 18px 20px 22px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      min-height: 72px;
+    }
+
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,.9);
+    }
+
+    .card p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.78);
+      font-size: 12px;
+      margin: 0 6px 8px 0;
+      white-space: nowrap;
+    }
+
+    .pill .dot{
+      width: 8px; height: 8px; border-radius: 99px;
+      background: rgba(119,212,255,.9);
+      box-shadow: 0 0 0 3px rgba(119,212,255,.16);
+      flex: 0 0 auto;
+    }
+
+    /* Gallery */
+    .gallery-grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    .thumb{
+      grid-column: span 4;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      min-height: 150px;
+      display:flex;
+      align-items: stretch;
+      justify-content: stretch;
+      transition: transform .10s ease, border-color .12s ease, background .12s ease;
+    }
+    .thumb:hover{
+      transform: translateY(-2px);
+      border-color: rgba(119,212,255,.45);
+      background: rgba(0,0,0,.28);
+    }
+
+    .thumb .ph{
+      width: 100%;
+      display:flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 14px;
+      background:
+        radial-gradient(700px 180px at 30% 20%, rgba(119,212,255,.18), transparent 60%),
+        radial-gradient(700px 180px at 80% 70%, rgba(167,255,203,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+
+    .thumb b{
+      font-size: 13px;
+      color: rgba(255,255,255,.92);
+      display:block;
+      margin-bottom: 6px;
+    }
+    .thumb span{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Updates */
+    .timeline{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .update{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      display:flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .update .stamp{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,.70);
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12);
+      white-space: nowrap;
+    }
+    .update .u-body b{
+      display:block;
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: rgba(255,255,255,.92);
+    }
+    .update .u-body p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    /* Merch */
+    .products{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    .product{
+      grid-column: span 4;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display:flex;
+      flex-direction: column;
+      min-height: 220px;
+    }
+    .product .p-img{
+      height: 120px;
+      background:
+        radial-gradient(550px 220px at 25% 20%, rgba(255,204,122,.16), transparent 60%),
+        radial-gradient(550px 220px at 80% 70%, rgba(119,212,255,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:flex-end;
+      justify-content: space-between;
+      padding: 12px 12px;
+      gap: 10px;
+    }
+    .product .p-img .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.78);
+    }
+
+    .product .p-body{
+      padding: 14px 14px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .product h3{
+      margin: 0;
+      font-size: 14px;
+    }
+    .product p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      flex: 1;
+    }
+    .product .p-actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Contact */
+    form{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .field{ grid-column: span 6; }
+    .field.full{ grid-column: span 12; }
+    label{
+      display:block;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      margin-bottom: 6px;
+    }
+    input, textarea{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.92);
+      outline: none;
+      font-family: var(--font);
+      font-size: 14px;
+    }
+    textarea{ min-height: 140px; resize: vertical; }
+
+    input:focus, textarea:focus{
+      border-color: rgba(119,212,255,.55);
+      box-shadow: 0 0 0 4px rgba(119,212,255,.14);
+    }
+
+    .fineprint{
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+
+    footer{
+      padding: 28px 0 40px;
+      color: var(--faint);
+      font-size: 13px;
+    }
+    footer .footer-row{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding-top: 16px;
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      display:none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 1000;
+    }
+    .lightbox.open{ display:flex; }
+    .lightbox .lb-panel{
+      width: min(980px, 100%);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: var(--radius2);
+      background: rgba(15,18,30,.92);
+      box-shadow: 0 22px 70px rgba(0,0,0,.65);
+      overflow: hidden;
+    }
+    .lb-top{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+    }
+    .lb-title{
+      font-size: 13px;
+      color: rgba(255,255,255,.82);
+      margin: 0;
+    }
+    .lb-close{
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.9);
+      padding: 8px 12px;
+      cursor:pointer;
+      font-size: 13px;
+    }
+    .lb-body{
+      padding: 18px;
+      display:grid;
+      gap: 10px;
+    }
+    .lb-art{
+      border: 1px dashed rgba(255,255,255,.20);
+      border-radius: var(--radius);
+      min-height: 320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(255,255,255,.60);
+      font-family: var(--mono);
+      background:
+        radial-gradient(800px 260px at 25% 25%, rgba(119,212,255,.18), transparent 60%),
+        radial-gradient(800px 260px at 80% 70%, rgba(167,255,203,.12), transparent 60%);
+    }
+    .lb-desc{
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-inner{ grid-template-columns: 1fr; }
+      .thumb{ grid-column: span 6; }
+      .product{ grid-column: span 6; }
+      .field{ grid-column: span 12; }
+    }
+    @media (max-width: 560px){
+      .wrap{ width: min(var(--max), calc(100% - 26px)); }
+      .nav-shell{ border-radius: 18px; padding: 10px; }
+      .thumb{ grid-column: span 12; }
+      .product{ grid-column: span 12; }
+    }
+  </style>
 </head>
+
 <body>
-    <main>
-        <h1>Hospital Ship Vega</h1>
-        <p>A visual book inspired by the Sector General universe.</p>
-        <p>Content pending.</p>
-    </main>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <header class="wrap">
+    <div class="topbar">
+      <div class="crumbs">
+        <a href="../index.html" title="Back to Foxpur Studios">← Foxpur Studios</a>
+        <span style="opacity:.6;">/</span>
+        <span>Project Vega</span>
+      </div>
+      <span class="badge">STATUS: IN DEVELOPMENT</span>
+    </div>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1 class="title">Hospital Starship Vega</h1>
+          <p class="subtitle">
+            A visual book universe with medical drama, interspecies ethics, and quiet heroism.
+            Inspired by classic “hospital-in-space” science fiction, rebuilt with Foxpur Studios heart and a modern, persistent lore engine.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#gallery" title="Jump to Gallery/Media">Explore Gallery</a>
+            <a class="btn green" href="#updates" title="Jump to Updates">Read Updates</a>
+            <a class="btn" href="#merch" title="Jump to Merch">Merch</a>
+            <a class="btn" href="#contact" title="Jump to Contact">Contact</a>
+          </div>
+        </div>
+
+        <div class="hero-meta">
+          <div class="meta-card">
+            <div class="meta-row"><span>Format</span><b>Visual Book / Universe</b></div>
+            <div class="meta-row"><span>Core Themes</span><b>Care • Culture • Consequence</b></div>
+            <div class="meta-row"><span>Studio</span><b>Foxpur Studios</b></div>
+            <div class="meta-row"><span>Canonical Hub</span><b>This page (Project Vega)</b></div>
+          </div>
+
+          <div class="meta-card">
+            <span class="pill"><span class="dot"></span> Lore-first worldbuilding</span>
+            <span class="pill"><span class="dot"></span> Medical cases & diplomacy</span>
+            <span class="pill"><span class="dot"></span> Character-driven continuity</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sticky-nav">
+        <div class="nav-shell">
+          <div class="nav-links" aria-label="Section navigation">
+            <a href="#info">Info</a>
+            <a href="#gallery">Gallery / Media</a>
+            <a href="#updates">Updates</a>
+            <a href="#merch">Merch</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <a class="btn" href="#top" style="padding:8px 12px;" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">↑ Top</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- INFO -->
+    <section id="info">
+      <div class="sec-head">
+        <h2>Info</h2>
+        <p>What Vega is, and what it’s trying to become.</p>
+      </div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column: span 7;">
+            <h3>Project Summary</h3>
+            <p>
+              <b>Hospital Starship Vega</b> is a long-form universe presented as a visual book with episodic chapters, character dossiers, ship schematics,
+              and curated “case files.” The tone is compassionate but unsentimental: the ship saves lives, and sometimes it has to negotiate with the universe to do it.
+            </p>
+            <p style="margin-top:10px;">
+              This page is designed to grow with you. Background art, concept renders, and media embeds can be dropped in later without restructuring anything.
+            </p>
+          </div>
+
+          <div class="card" style="grid-column: span 5;">
+            <h3>Quick Facts</h3>
+            <p>
+              <span class="pill"><span class="dot"></span> Multi-species hospital ship</span>
+              <span class="pill"><span class="dot"></span> Modular wards & med-pods</span>
+              <span class="pill"><span class="dot"></span> Ethics & diplomacy onboard</span>
+              <span class="pill"><span class="dot"></span> Quiet, brave daily work</span>
+            </p>
+            <p class="fineprint">
+              Replace these pills with your finalized canon tags later (species list, departments, tech style, and era).
+            </p>
+          </div>
+
+          <div class="card" style="grid-column: span 12;">
+            <h3>Recommended “Starter Door”</h3>
+            <p>
+              If you’re new: begin with the <b>ship overview</b>, then meet the <b>core crew</b>, then open a single <b>case file</b>.
+              Vega reads best when you enter gently and let the world assemble itself around you like a docking ring. ✨
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY / MEDIA -->
+    <section id="gallery">
+      <div class="sec-head">
+        <h2>Gallery / Media</h2>
+        <p>Concepts, visuals, videos, and “evidence.”</p>
+      </div>
+      <div class="sec-body">
+        <div class="gallery-grid" aria-label="Gallery thumbnails">
+          <!-- Replace these placeholders with <img> thumbnails later. -->
+          <div class="thumb" role="button" tabindex="0"
+               data-title="Vega Exterior Concept"
+               data-desc="Placeholder panel. Later: a thumbnail image and a short caption.">
+            <div class="ph">
+              <b>Vega Exterior Concept</b>
+              <span>Ship silhouette, markings, scale reference.</span>
+            </div>
+          </div>
+
+          <div class="thumb" role="button" tabindex="0"
+               data-title="Ward Module Layout"
+               data-desc="Placeholder panel. Later: a schematic/diagram thumbnail with a caption.">
+            <div class="ph">
+              <b>Ward Module Layout</b>
+              <span>Modular sections, triage flow, patient routing.</span>
+            </div>
+          </div>
+
+          <div class="thumb" role="button" tabindex="0"
+               data-title="Character Dossier Sample"
+               data-desc="Placeholder panel. Later: character portrait, uniform, and a snippet of their bio.">
+            <div class="ph">
+              <b>Character Dossier Sample</b>
+              <span>Portrait, role, temperament, a secret or two.</span>
+            </div>
+          </div>
+
+          <div class="thumb" role="button" tabindex="0"
+               data-title="Med-Pod Interior"
+               data-desc="Placeholder panel. Later: cockpit + patient bay render, equipment callouts.">
+            <div class="ph">
+              <b>Med-Pod Interior</b>
+              <span>Compact emergency bay, 8-patient capacity.</span>
+            </div>
+          </div>
+
+          <div class="thumb" role="button" tabindex="0"
+               data-title="Music / Audio Teaser"
+               data-desc="Placeholder panel. Later: embed a YouTube/SoundCloud clip or MP3 player.">
+            <div class="ph">
+              <b>Music / Audio Teaser</b>
+              <span>Theme sketches, ambient ship tones, radio chatter.</span>
+            </div>
+          </div>
+
+          <div class="thumb" role="button" tabindex="0"
+               data-title="Trailer / Video Clip"
+               data-desc="Placeholder panel. Later: YouTube/Vimeo embed or MP4 preview poster.">
+            <div class="ph">
+              <b>Trailer / Video Clip</b>
+              <span>Short cinematic intro, title card, mood montage.</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="fineprint">
+          When you add real images: swap each placeholder <code>div.thumb</code> for an <code>&lt;figure&gt;</code> containing
+          <code>&lt;img src="images/yourfile.jpg"&gt;</code> and a <code>&lt;figcaption&gt;</code>.
+        </p>
+      </div>
+    </section>
+
+    <!-- UPDATES -->
+    <section id="updates">
+      <div class="sec-head">
+        <h2>Updates</h2>
+        <p>Progress notes, drops, milestones, and “what changed.”</p>
+      </div>
+      <div class="sec-body">
+        <div class="timeline">
+          <!-- Add new updates at the top -->
+          <div class="update">
+            <div class="stamp">2026-02-14</div>
+            <div class="u-body">
+              <b>Vega subpage foundation created</b>
+              <p>
+                New layout with core sections, gallery placeholders, merch cards, and a contact form.
+                Next step is feeding it real media and a first “case file” excerpt.
+              </p>
+            </div>
+          </div>
+
+          <div class="update">
+            <div class="stamp">Soon</div>
+            <div class="u-body">
+              <b>Background art pass</b>
+              <p>
+                Add subtle ship-hull textures, starfield gradients, or painted panels once the first concept images are ready.
+                The page is already built to accept them without breaking readability.
+              </p>
+            </div>
+          </div>
+
+          <div class="update">
+            <div class="stamp">Soon</div>
+            <div class="u-body">
+              <b>Canon roster & departments</b>
+              <p>
+                Replace “Quick Facts” with finalized department list (Engineering, Research, Policy, Med-Pods, Ethics Board, etc.)
+                and link out to character bios when the wiki pages exist.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MERCH -->
+    <section id="merch">
+      <div class="sec-head">
+        <h2>Merch</h2>
+        <p>Project Vega merch will live here (or link out to your store).</p>
+      </div>
+      <div class="sec-body">
+        <div class="products">
+          <div class="product">
+            <div class="p-img">
+              <span class="tag">COMING SOON</span>
+              <span class="tag">Apparel</span>
+            </div>
+            <div class="p-body">
+              <h3>Vega Crest Tee</h3>
+              <p>Uniform-inspired emblem. Clean, readable, and quietly heroic.</p>
+              <div class="p-actions">
+                <a class="btn" href="#" aria-disabled="true" onclick="return false;">View</a>
+                <a class="btn primary" href="#" aria-disabled="true" onclick="return false;">Buy</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="p-img">
+              <span class="tag">COMING SOON</span>
+              <span class="tag">Print</span>
+            </div>
+            <div class="p-body">
+              <h3>Ship Blueprint Poster</h3>
+              <p>Annotated layout: wards, docking geometry, and med-pod bay overview.</p>
+              <div class="p-actions">
+                <a class="btn" href="#" aria-disabled="true" onclick="return false;">View</a>
+                <a class="btn primary" href="#" aria-disabled="true" onclick="return false;">Buy</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="p-img">
+              <span class="tag">COMING SOON</span>
+              <span class="tag">Digital</span>
+            </div>
+            <div class="p-body">
+              <h3>Case File Pack (PDF)</h3>
+              <p>A starter bundle: dossier templates, case headers, and styling assets.</p>
+              <div class="p-actions">
+                <a class="btn" href="#" aria-disabled="true" onclick="return false;">View</a>
+                <a class="btn primary" href="#" aria-disabled="true" onclick="return false;">Buy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="fineprint">
+          When your store is ready, change the <code>href="#"</code> links above to your actual product URLs,
+          or replace this whole grid with an embedded storefront page.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="sec-head">
+        <h2>Contact</h2>
+        <p>Press, collabs, licensing, or “I have a question about Vega.”</p>
+      </div>
+      <div class="sec-body">
+        <!--
+          If you're using your Cloudflare Worker contact endpoint, set form action to it, e.g.:
+          action="https://YOUR-WORKER.workers.dev"
+          and ensure CORS allows your domain.
+        -->
+        <form id="contactForm" method="POST" action="#">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us what you need, and we’ll get back to you."></textarea>
+          </div>
+
+          <div class="field full" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <button class="btn primary" type="submit">Send Message</button>
+            <a class="btn" href="mailto:contact@foxpur-studios.com">Email directly</a>
+          </div>
+
+          <div class="field full">
+            <p id="formStatus" class="fineprint" style="margin:0;">
+              If the form isn’t wired yet, the mail link above works immediately.
+            </p>
+          </div>
+        </form>
+
+        <p class="fineprint">
+          Expected reply time: usually a few days. If it’s urgent, put <b>URGENT</b> in the subject line of your email.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-row">
+        <span>© <span id="year"></span> Foxpur Studios</span>
+        <span style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#info">Info</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#updates">Updates</a>
+          <a href="#merch">Merch</a>
+          <a href="#contact">Contact</a>
+        </span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Lightbox modal -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-panel" role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+      <div class="lb-top">
+        <p class="lb-title" id="lbTitle">Preview</p>
+        <button class="lb-close" id="lbClose" type="button">Close</button>
+      </div>
+      <div class="lb-body">
+        <div class="lb-art" id="lbArt">MEDIA PREVIEW</div>
+        <div class="lb-desc" id="lbDesc"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tiny niceties: year, smooth anchors, and a basic gallery lightbox.
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const href = a.getAttribute("href");
+        if (!href || href === "#") return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // Lightbox for gallery placeholders
+    const lb = document.getElementById("lightbox");
+    const lbTitle = document.getElementById("lbTitle");
+    const lbDesc = document.getElementById("lbDesc");
+    const lbArt = document.getElementById("lbArt");
+    const closeBtn = document.getElementById("lbClose");
+
+    function openLB(title, desc){
+      lbTitle.textContent = title || "Preview";
+      lbDesc.textContent = desc || "";
+      lbArt.textContent = "MEDIA PREVIEW";
+      lb.classList.add("open");
+      lb.setAttribute("aria-hidden", "false");
+      closeBtn.focus();
+    }
+
+    function closeLB(){
+      lb.classList.remove("open");
+      lb.setAttribute("aria-hidden", "true");
+    }
+
+    closeBtn.addEventListener("click", closeLB);
+    lb.addEventListener("click", (e) => { if (e.target === lb) closeLB(); });
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLB(); });
+
+    document.querySelectorAll(".thumb").forEach(t => {
+      const title = t.getAttribute("data-title");
+      const desc = t.getAttribute("data-desc");
+      t.addEventListener("click", () => openLB(title, desc));
+      t.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openLB(title, desc);
+        }
+      });
+    });
+
+    // Contact form "friendly" behavior when action="#"
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("formStatus");
+    form.addEventListener("submit", (e) => {
+      const action = form.getAttribute("action") || "#";
+      if (action.trim() === "#" || action.trim() === "") {
+        e.preventDefault();
+        status.textContent = "Form isn’t connected yet. Use the email link above (contact@foxpur-studios.com) and you’re golden.";
+      }
+    });
+  </script>
 </body>
 </html>
+
