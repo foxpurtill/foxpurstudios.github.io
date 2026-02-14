@@ -414,6 +414,33 @@
       color: var(--muted);
     }
 
+    .media-mini{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 150px;
+      background: #000;
+    }
+
+    .media-mini iframe{
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: none; /* card click opens expanded player */
+    }
+
+    .media-expand{
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.68);
+      color: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.25);
+      font-size: 12px;
+    }
+
     /* Updates */
     .timeline{
       display:flex;
@@ -632,6 +659,14 @@
         radial-gradient(800px 260px at 25% 25%, rgba(119,212,255,.18), transparent 60%),
         radial-gradient(800px 260px at 80% 70%, rgba(167,255,203,.12), transparent 60%);
     }
+    .lb-art iframe{
+      width: 100%;
+      min-height: 320px;
+      height: 56vw;
+      max-height: 560px;
+      border: 0;
+      border-radius: calc(var(--radius) - 2px);
+    }
     .lb-desc{
       color: var(--muted);
       font-size: 14px;
@@ -771,10 +806,18 @@
           <!-- Replace these placeholders with <img> thumbnails later. -->
           <div class="thumb" role="button" tabindex="0"
                data-title="Vega Exterior Concept"
-               data-desc="Placeholder panel. Later: a thumbnail image and a short caption.">
-            <div class="ph">
-              <b>Vega Exterior Concept</b>
-              <span>Ship silhouette, markings, scale reference.</span>
+               data-desc="Mini player preview. Click to open expanded YouTube playback."
+               data-youtube="https://www.youtube.com/embed/bHifokR64RM?rel=0">
+            <div class="media-mini" aria-hidden="true">
+              <iframe
+                src="https://www.youtube.com/embed/bHifokR64RM?rel=0"
+                title="Hospital Starship Vega teaser mini player"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+              </iframe>
+              <span class="media-expand">Click to expand</span>
             </div>
           </div>
 
@@ -1139,10 +1182,22 @@
     const lbArt = document.getElementById("lbArt");
     const closeBtn = document.getElementById("lbClose");
 
-    function openLB(title, desc){
+    function openLB(title, desc, youtube){
       lbTitle.textContent = title || "Preview";
       lbDesc.textContent = desc || "";
-      lbArt.textContent = "MEDIA PREVIEW";
+      if (youtube) {
+        lbArt.innerHTML = `
+          <iframe
+            src="${youtube}${youtube.includes("?") ? "&" : "?"}autoplay=1"
+            title="${title || "Media Preview"}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        `;
+      } else {
+        lbArt.textContent = "MEDIA PREVIEW";
+      }
       lb.classList.add("open");
       lb.setAttribute("aria-hidden", "false");
       closeBtn.focus();
@@ -1151,6 +1206,7 @@
     function closeLB(){
       lb.classList.remove("open");
       lb.setAttribute("aria-hidden", "true");
+      lbArt.textContent = "MEDIA PREVIEW";
     }
 
     closeBtn.addEventListener("click", closeLB);
@@ -1160,11 +1216,12 @@
     document.querySelectorAll(".thumb").forEach(t => {
       const title = t.getAttribute("data-title");
       const desc = t.getAttribute("data-desc");
-      t.addEventListener("click", () => openLB(title, desc));
+      const youtube = t.getAttribute("data-youtube");
+      t.addEventListener("click", () => openLB(title, desc, youtube));
       t.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          openLB(title, desc);
+          openLB(title, desc, youtube);
         }
       });
     });
