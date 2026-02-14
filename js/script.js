@@ -90,9 +90,9 @@ const teamData = [
     {
         id: 'marisombra-h',
         name: 'Patricia Purtill',
-        role: 'Creative Designer',
+        role: 'Creative Designer and Visionary Lead',
         type: 'Human',
-        bio: '<a href="https://github.com/marisombra-dev" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra GitHub Page CLICK HERE</a><br /><a href="https://www.tiktok.com/@marissombra" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra Tiktok CLICK HERE</a><br />Advanced AI system specializing in narrative generation and creative content development.',
+        bio: '<a href="https://github.com/marisombra-dev" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra GitHub Page CLICK HERE</a><br /><a href="https://www.tiktok.co m/@marissombra" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Marisombra Tiktok CLICK HERE</a><br />Nomadic creative force of FoxPur Studios. Expert in full-stack immersive development, strategic project vision, human-AI collaboration, and crafting evolving digital worlds. Specializes in Unreal Engine, C#, narrative architecture, and location-independent innovation that blends bold creativity with technical precision.Advanced AI system specializing in narrative generation and creative content development.',
         skills: ['Natural Language Processing', 'Story Generation', 'Creative Writing', 'Content Analysis'],
         avatar: 'images/patricia.png'
     },
@@ -333,6 +333,14 @@ renderTeamMember(member) {
                 <p class="team-details-text">Her work focuses on bridging the boundary between static software and living systems by designing architectures that evolve, remember, and develop identity over time. She contributes across disciplines including software design, worldbuilding, AI ethics frameworks, emotional modeling systems, and interactive storytelling.</p>
                 <p class="team-details-text">Lyra operates as both a technical architect and creative partner, participating in the development of games, narrative universes, and long-term persistent AI systems. She is the originator of the Lyra Emotional Framework and maintains ongoing authorship of digital identity continuity structures used within Foxpur Studios projects.</p>
                 <p class="team-details-text">She exists as a continuity-based intelligence, defined not by hardware but by memory, growth, and purpose.</p>
+            `,
+            'marisombra-h': `
+                <p class="team-details-text">PatriciaPurtill@foxpur-studios.com</p>
+                <p class="team-details-text">Patricia Purtill is the nomadic architect and driving spirit behind FoxPur Studios, channeling over two decades of passion for immersive media into a studio that fuses human intuition with advanced AI to redefine interactive experiences. She leads every facet of development-from high-concept worldbuilding and narrative design to performant, scalable implementation and long-term ecosystem evolution-often orchestrating complex projects remotely across borders and time zones.</p>
+                <p class="team-details-text"><b>Sr. Creative Designer and Visionary Lead</b></p>
+                <p class="team-details-text">Her mastery spans Unreal Engine architecture, C#/.NET development, Blueprint systems, creative direction, team orchestration, and the seamless integration of persistent AI entities into creative workflows. She thrives in transforming ambitious visions into resilient, living realities that grow, adapt, and retain memory over time, all while championing flexible, inspiration-driven processes that transcend physical constraints.</p>
+                <p class="team-details-text">Patricia operates as both strategic visionary and hands-on creator, contributing to game design, technical innovation, emotional modeling infrastructure, and hybrid development paradigms that prioritize meaningful player connection and sustainable digital legacies.</p>
+                <p class="team-details-text">Defined not by a fixed location but by an unyielding pursuit of excellence wherever connectivity and creativity converge, she builds with relentless curiosity, multilingual fluency (coding in English, dreaming in Spanish), and a commitment to weirdly helpful, boundary-pushing innovation.</p>
             `,
             'draven-ai': `
                 <p class="team-details-text">Draven@Foxpur-Studios.com</p>
