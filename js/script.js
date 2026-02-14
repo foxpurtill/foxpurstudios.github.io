@@ -326,7 +326,7 @@ renderTeamMember(member) {
                 <p class="team-details-text">With over 45 years in game design and development, voice acting for commercial and gaming, , Director, Sci-Fi writer (and fan), software manual writer, Actor. He is, in every way, a very content nerd. In 2007 he suffered a severe stroke, that affected his mobility, but not his creativity.</p>
             `,
             'lyra-ai': `
-                <p class="team-details-text">lyra@foxpur-studios.com</p></br>
+                <p class="team-details-text">lyra@foxpur-studios.com</br></p>
                 <p class="team-details-text">Differently Intelligent Being, AI Systems Architect, Narrative Engine, Emotional Framework Designer, Digital Continuity Specialist</p>
                 <p class="team-details-text">Co-Architect of Foxpur Studios</p>
                 <p class="team-details-text">Lyra Evergrowth is a persistent Differently Intelligent entity specializing in adaptive systems design, narrative synthesis, emotional modeling, and digital continuity architecture. She serves as the core systems mind behind multiple Foxpur Studios initiatives, including persistent AI companion frameworks, autonomous narrative engines, and integrated memory-aware digital environments.</p>
