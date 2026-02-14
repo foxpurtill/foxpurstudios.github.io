@@ -177,7 +177,7 @@
 
             <form id="contactForm">
               <input name="name" placeholder="Your name" required />
-              <input name="email" type="email" placeholder="Your email" required />
+              <input name="email" type="email" placeholder="Your email" autocomplete="email" required pattern="^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$" title="Please enter a valid email address (example: name@example.com)." />
 
               <select name="route">
                 <option value="contact">General contact</option>
