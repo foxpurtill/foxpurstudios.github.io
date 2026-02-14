@@ -21,15 +21,6 @@ const projectsData = [
         image: 'images/AoRcover.png'
     },
     {
-        id: 'ai-companion',
-        title: 'Ultimate AI Companion',
-        slug: 'UltimateAI',
-        description: 'A defined high autonomy AI companion for disabled.',
-        status: 'concept',
-        technologies: ['WebGL', 'Machine Learning', 'Python', 'System Control'],
-        image: 'images/UltimateAICompanion.png'
-    },
-    {
         id: 'private-meadow',
         title: 'My Private Meadow',
         slug: 'MyPrivateMeadow',
