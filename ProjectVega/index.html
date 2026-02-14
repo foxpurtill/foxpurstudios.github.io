@@ -53,6 +53,44 @@
         radial-gradient(circle at 80% 65%, rgba(255,255,255,.14), transparent 45%);
       filter: blur(0px);
     }
+#starfield{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .85; /* overall star intensity */
+}
+
+.bg-overlay{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1; /* sits above stars, below content */
+  opacity: .38;
+  background:
+    radial-gradient(1200px 700px at 18% 8%, rgba(119,212,255,.16), transparent 60%),
+    radial-gradient(900px 520px at 80% 18%, rgba(167,255,203,.10), transparent 55%),
+    radial-gradient(900px 520px at 65% 95%, rgba(255,204,122,.07), transparent 55%),
+    linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.40));
+}
+
+/* make sure your real content floats above background layers */
+header, main, footer { position: relative; z-index: 2; }
+
+/* Optional: soft “hull vignette” to hide seams near edges */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(closest-side at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%);
+  opacity: .35;
+}
+
 
     a{ color: inherit; text-decoration: none; }
     a:hover{ text-decoration: underline; text-underline-offset: 3px; }
@@ -630,6 +668,7 @@
 </head>
 
 <body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
   <div class="bg-overlay" aria-hidden="true"></div>
 
   <header class="wrap">
@@ -982,6 +1021,113 @@
       </div>
     </div>
   </div>
+<script>
+(() => {
+  const canvas = document.getElementById("starfield");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d", { alpha: true });
+  let w = 0, h = 0, dpr = 1;
+
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const stars = [];
+  const STAR_COUNT_DESKTOP = 180;
+  const STAR_COUNT_MOBILE = 110;
+
+  function resize(){
+    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    w = Math.floor(window.innerWidth);
+    h = Math.floor(window.innerHeight);
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const target = (w < 700) ? STAR_COUNT_MOBILE : STAR_COUNT_DESKTOP;
+    while (stars.length < target) stars.push(makeStar(true));
+    while (stars.length > target) stars.pop();
+  }
+
+  function rand(min, max){ return min + Math.random() * (max - min); }
+
+  function makeStar(randomY = false){
+    // parallax layers: smaller stars move slower, big stars slightly faster
+    const layer = Math.random(); // 0..1
+    const radius = rand(0.6, 1.9) * (0.45 + layer);
+    const speed = (0.02 + layer * 0.10); // gentle drift
+    const tw = rand(0.002, 0.010); // twinkle rate
+    return {
+      x: rand(0, w),
+      y: randomY ? rand(0, h) : rand(-30, h + 30),
+      r: radius,
+      s: speed,
+      t: rand(0, Math.PI * 2),
+      tw,
+      // subtle blue/teal lean to match your accent palette
+      hue: rand(195, 205),
+      alpha: rand(0.35, 0.9)
+    };
+  }
+
+  function step(){
+    if (prefersReduced) {
+      draw(true);
+      return; // no animation if user prefers reduced motion
+    }
+    draw(false);
+    requestAnimationFrame(step);
+  }
+
+  function draw(staticOnly){
+    ctx.clearRect(0, 0, w, h);
+
+    // very faint nebula wash so stars feel embedded, not sprinkled
+    const g = ctx.createRadialGradient(w*0.2, h*0.15, 0, w*0.2, h*0.15, Math.max(w,h)*0.9);
+    g.addColorStop(0, "rgba(119,212,255,0.05)");
+    g.addColorStop(0.6, "rgba(167,255,203,0.03)");
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    for (let i=0; i<stars.length; i++){
+      const st = stars[i];
+
+      if (!staticOnly) {
+        st.x += st.s;
+        st.y += st.s * 0.35;
+        st.t += st.tw;
+
+        // wrap
+        if (st.x > w + 20) st.x = -20;
+        if (st.y > h + 20) st.y = -20;
+      }
+
+      const twinkle = 0.65 + 0.35 * Math.sin(st.t);
+      const a = st.alpha * twinkle;
+
+      // tiny glow
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(${st.hue}, 80%, 80%, ${a})`;
+      ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // occasional soft bloom for bigger stars
+      if (st.r > 1.45) {
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${st.hue}, 90%, 75%, ${a * 0.20})`;
+        ctx.arc(st.x, st.y, st.r * 3.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  window.addEventListener("resize", resize, { passive: true });
+  resize();
+  step();
+})();
+</script>
 
   <script>
     // Tiny niceties: year, smooth anchors, and a basic gallery lightbox.
