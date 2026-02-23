@@ -1,15 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alternate Of Realities</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alternate of Realities | Foxpur Studios</title>
+  <meta name="description" content="Alternate of Realities: a spiritual successor to the 1985 classic. First-person open world RPG. Brutal, deep, and built for people who remember when games didn't explain themselves." />
+  <meta name="theme-color" content="#080510" />
+  <style>
+    :root{
+      --bg:#080510; --text:rgba(220,210,255,.92); --muted:rgba(220,210,255,.62); --faint:rgba(220,210,255,.36);
+      --line:rgba(220,210,255,.13); --accent:#9b7fe8; --accent2:#e87f9b; --shadow:0 18px 55px rgba(0,0,0,.70);
+      --radius:18px; --radius2:28px; --max:1120px;
+      --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace;
+    }
+    *{box-sizing:border-box;} html,body{height:100%;}
+    body{margin:0;font-family:var(--font);color:var(--text);background:#050408;overflow-x:hidden;}
+    #starfield{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.75;}
+    .bg-overlay{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.4;
+      background:radial-gradient(1100px 600px at 20% 8%,rgba(155,127,232,.13),transparent 60%),
+        radial-gradient(800px 500px at 82% 22%,rgba(232,127,155,.08),transparent 55%),
+        linear-gradient(180deg,rgba(0,0,0,.30),rgba(0,0,0,.50));background-repeat:no-repeat;}
+    header,main,footer{position:relative;z-index:2;}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+      background:radial-gradient(closest-side at 50% 50%,transparent 55%,rgba(0,0,0,.65) 100%);opacity:.45;}
+    a{color:inherit;text-decoration:none;} a:hover{text-decoration:underline;text-underline-offset:3px;}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin:0 auto;}
+    header{padding:28px 0 12px;}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
+    .crumbs{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;}
+    .crumbs a{color:var(--muted);padding:6px 10px;border:1px solid transparent;border-radius:999px;}
+    .crumbs a:hover{border-color:var(--line);background:rgba(255,255,255,.03);text-decoration:none;}
+    .badge{font-family:var(--mono);font-size:12px;color:rgba(220,210,255,.8);border:1px solid var(--line);background:rgba(255,255,255,.04);padding:6px 10px;border-radius:999px;white-space:nowrap;}
+    .hero{border:1px solid var(--line);background:linear-gradient(180deg,rgba(155,127,232,.06),rgba(155,127,232,.02));border-radius:var(--radius2);box-shadow:var(--shadow);overflow:hidden;}
+    .hero-inner{padding:28px 26px 22px;display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:start;}
+    .title{margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:.2px;line-height:1.06;}
+    .subtitle{margin:10px 0 0;color:var(--muted);font-size:16px;line-height:1.5;max-width:62ch;}
+    .hero-meta{display:flex;flex-direction:column;gap:10px;}
+    .meta-card{border:1px solid var(--line);background:rgba(0,0,0,.22);border-radius:var(--radius);padding:14px;}
+    .meta-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid rgba(220,210,255,.08);}
+    .meta-row:last-child{border-bottom:none;} .meta-row b{color:rgba(220,210,255,.86);font-weight:600;}
+    .cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+    .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:10px 14px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:rgba(220,210,255,.9);font-size:14px;cursor:pointer;transition:transform .08s,background .12s;}
+    .btn:hover{text-decoration:none;background:rgba(255,255,255,.07);border-color:rgba(220,210,255,.22);transform:translateY(-1px);}
+    .btn.primary{border-color:rgba(155,127,232,.45);background:linear-gradient(180deg,rgba(155,127,232,.18),rgba(155,127,232,.08));}
+    .btn.primary:hover{border-color:rgba(155,127,232,.70);}
+    .btn.warm{border-color:rgba(232,127,155,.40);background:linear-gradient(180deg,rgba(232,127,155,.14),rgba(232,127,155,.06));}
+    .sticky-nav{position:sticky;top:10px;z-index:50;margin:16px 0 0;}
+    .nav-shell{border:1px solid var(--line);background:rgba(0,0,0,.38);backdrop-filter:blur(10px);border-radius:999px;padding:8px;display:flex;gap:6px;align-items:center;justify-content:space-between;box-shadow:0 10px 35px rgba(0,0,0,.35);}
+    .nav-links{display:flex;flex-wrap:wrap;gap:6px;}
+    .nav-links a{padding:8px 12px;border-radius:999px;color:rgba(220,210,255,.78);font-size:13px;border:1px solid transparent;}
+    .nav-links a:hover{border-color:rgba(220,210,255,.18);background:rgba(255,255,255,.05);text-decoration:none;}
+    main{padding:18px 0 56px;}
+    section{margin-top:18px;border:1px solid var(--line);background:rgba(155,127,232,.03);border-radius:var(--radius2);box-shadow:0 14px 45px rgba(0,0,0,.30);overflow:hidden;}
+    .sec-head{padding:18px 20px;border-bottom:1px solid rgba(220,210,255,.10);display:flex;align-items:baseline;justify-content:space-between;gap:14px;background:rgba(0,0,0,.20);}
+    .sec-head h2{margin:0;font-size:18px;} .sec-head p{margin:0;color:var(--muted);font-size:13px;}
+    .sec-body{padding:18px 20px 22px;}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;}
+    .card{border:1px solid rgba(220,210,255,.12);background:rgba(0,0,0,.20);border-radius:var(--radius);padding:14px;}
+    .card h3{margin:0 0 8px;font-size:14px;color:rgba(220,210,255,.9);}
+    .card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6;}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(220,210,255,.14);background:rgba(255,255,255,.04);color:rgba(220,210,255,.78);font-size:12px;margin:0 6px 8px 0;white-space:nowrap;}
+    .pill .dot{width:8px;height:8px;border-radius:99px;background:rgba(155,127,232,.9);box-shadow:0 0 0 3px rgba(155,127,232,.16);flex:0 0 auto;}
+    .timeline{display:flex;flex-direction:column;gap:10px;}
+    .update{border:1px solid rgba(220,210,255,.12);background:rgba(0,0,0,.20);border-radius:var(--radius);padding:14px;display:flex;gap:12px;align-items:flex-start;}
+    .update .stamp{font-family:var(--mono);font-size:12px;color:rgba(220,210,255,.70);padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(220,210,255,.12);white-space:nowrap;}
+    .update .u-body b{display:block;margin:0 0 6px;font-size:14px;color:rgba(220,210,255,.92);}
+    .update .u-body p{margin:0;color:var(--muted);line-height:1.5;font-size:14px;}
+    form{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;}
+    .field{grid-column:span 6;} .field.full{grid-column:span 12;}
+    label{display:block;font-size:12px;color:rgba(220,210,255,.72);margin-bottom:6px;}
+    input,textarea{width:100%;padding:12px;border-radius:14px;border:1px solid rgba(220,210,255,.14);background:rgba(0,0,0,.22);color:rgba(220,210,255,.92);outline:none;font-family:var(--font);font-size:14px;}
+    textarea{min-height:140px;resize:vertical;}
+    input:focus,textarea:focus{border-color:rgba(155,127,232,.55);box-shadow:0 0 0 4px rgba(155,127,232,.14);}
+    .fineprint{color:var(--faint);font-size:12px;line-height:1.5;margin-top:10px;}
+    footer{padding:28px 0 40px;color:var(--faint);font-size:13px;}
+    footer .footer-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid rgba(220,210,255,.10);padding-top:16px;}
+    @media(max-width:900px){.hero-inner{grid-template-columns:1fr;}.field{grid-column:span 12;}}
+    @media(max-width:560px){.wrap{width:min(var(--max),calc(100% - 26px));}.nav-shell{border-radius:18px;padding:10px;}}
+  </style>
 </head>
 <body>
-    <main>
-        <h1>Alternate Of Realities</h1>
-        <p>A modern reimagining inspired by the 1986 C=64 title Alternate Reality.</p>
-        <p>Content pending.</p>
-    </main>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <header class="wrap">
+    <div class="topbar">
+      <div class="crumbs">
+        <a href="../index.html">← Foxpur Studios</a>
+        <span style="opacity:.6;">/</span>
+        <span>Alternate of Realities</span>
+      </div>
+      <span class="badge">STATUS: IN DEVELOPMENT</span>
+    </div>
+    <div class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1 class="title">Alternate of Realities</h1>
+          <p class="subtitle">
+            A first-person open world RPG inspired by the 1985 classic. Deep systems, brutal consequence, and a world that doesn't explain itself.
+            Built for people who remember when games respected their players.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#about">About the Project</a>
+            <a class="btn warm" href="#legacy">The Inspiration</a>
+            <a class="btn" href="#updates">Updates</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-card">
+            <div class="meta-row"><span>Style</span><b>First-Person Open World RPG</b></div>
+            <div class="meta-row"><span>Inspired by</span><b>Alternate Reality (1985)</b></div>
+            <div class="meta-row"><span>Structure</span><b>Base game + DLC modules</b></div>
+            <div class="meta-row"><span>Studio</span><b>Foxpur Studios</b></div>
+          </div>
+          <div class="meta-card">
+            <span class="pill"><span class="dot"></span> Hunger, thirst, alignment</span>
+            <span class="pill"><span class="dot"></span> Player-drawn maps</span>
+            <span class="pill"><span class="dot"></span> Musical world interactions</span>
+            <span class="pill"><span class="dot"></span> Diseases, intoxication</span>
+            <span class="pill"><span class="dot"></span> Modular expansions</span>
+          </div>
+        </div>
+      </div>
+      <div class="sticky-nav">
+        <div class="nav-shell">
+          <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#legacy">The Inspiration</a>
+            <a href="#features">Features</a>
+            <a href="#updates">Updates</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <a class="btn" href="#top" style="padding:8px 12px;" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Top</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section id="about">
+      <div class="sec-head"><h2>About</h2><p>What AoR is building, and why.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 7;">
+            <h3>No Hand-Holding. No Apologies.</h3>
+            <p>
+              Alternate of Realities is a spiritual successor to a game that trusted its players completely. You navigated a first-person city with no quest markers, mapped the world yourself on graph paper, managed hunger, thirst, and moral alignment simultaneously, and got diseases from bad food and intoxicated in taverns.
+            </p>
+            <p style="margin-top:10px;">
+              AoR keeps all of that. It's redesigned enough to be its own thing — deeper story, modern systems, expanded world — but it will never hold your hand. If you need a tutorial, this might not be the game for you. If that sentence made you lean forward, welcome.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 5;">
+            <h3>The Module Model</h3>
+            <p>
+              The original Alternate Reality was designed as a series — city, dungeon, wilderness, palace, arena — but only two instalments were ever released. AoR completes the vision with a base game plus affordable DLC modules, each expanding the world in a new direction. You buy what calls to you.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 12;">
+            <h3>Different Enough to Stand Alone</h3>
+            <p>
+              This isn't a remake. The original's DNA is in the systems — the survival mechanics, the moral weight, the city that feels like it existed before you arrived and will outlast you — but AoR is its own world, with its own story, its own factions, its own music. Players of the original will feel a familiar chill. Everyone else will simply find a game that expects something of them.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="legacy">
+      <div class="sec-head"><h2>The Inspiration</h2><p>Alternate Reality (1985) — what it was, and what it meant.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 12;">
+            <h3>Philip Price's Unfinished Vision</h3>
+            <p>
+              Created by Philip Price through Paradise Programming and published by Datasoft, <em>Alternate Reality: The City</em> arrived in 1985 for Atari 8-bit computers and Apple II. It was unlike anything else. First-person ray-cast perspective. Complex survival mechanics. A city that operated on its own logic — taverns that got you drunk, diseases that lingered, guilds that had requirements and secrets.
+            </p>
+            <p style="margin-top:10px;">
+              The game required players to draw their own maps. There were no guides in 1985 — you either committed to the world or you didn't. Songs played with lyrics displayed on screen. An anti-piracy measure gave unregistered copies a fatal case of scurvy, eventually. It was a game built by someone who took the whole thing very seriously.
+            </p>
+            <p style="margin-top:10px;">
+              Price intended multiple chapters. Only The City (1985) and The Dungeon (1987) were ever completed. AoR is, among other things, a way of finishing what he started.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 6;">
+            <h3>Advanced for Its Time</h3>
+            <p>First-person open world in 1985. Ray-cast graphics on 8-bit hardware. Procedural NPC schedules. Moral alignment affecting every interaction. A fully simulated city ecosystem. Most games of the era were still working out how to draw a corridor.</p>
+          </div>
+          <div class="card" style="grid-column:span 6;">
+            <h3>Not to Be Confused With</h3>
+            <p>Alternate Reality (1985) is not an Alternate Reality Game (ARG) in the modern marketing sense. It predates the term. It is a role-playing game in which the reality is genuinely alternate — and entirely serious about it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="sec-head"><h2>Features</h2><p>What to expect from the base game and beyond.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 4;"><h3>Survival Systems</h3><p>Hunger, thirst, fatigue, temperature, moral alignment. The world tracks all of it. Ignore any of them long enough and you'll know why.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Player Cartography</h3><p>No minimap. You explore, you map. The world is designed to reward the obsessive and punish the casual in equal measure.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Musical World</h3><p>The original's lyrical musical interactions return — expanded. Music in AoR is part of the world's logic, not its soundtrack.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Guilds &amp; Factions</h3><p>Multiple guilds with requirements, secrets, and conflicts. Some won't be easy to find. Some will find you instead.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Character Consequences</h3><p>Diseases linger. Intoxication clouds judgment. Moral drift changes how the world treats you. You're not a hero — you're a person, with everything that entails.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>DLC Modules</h3><p>Dungeon. Wilderness. Arena. Palace. Each a self-contained expansion, each reasonably priced. The world Price imagined, finally complete.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="updates">
+      <div class="sec-head"><h2>Updates</h2><p>Progress notes and milestones.</p></div>
+      <div class="sec-body">
+        <div class="timeline">
+          <div class="update">
+            <div class="stamp">2026-02</div>
+            <div class="u-body"><b>Project announced</b><p>Alternate of Realities formally enters development at Foxpur Studios. World design and survival system architecture in early planning.</p></div>
+          </div>
+          <div class="update">
+            <div class="stamp">Soon</div>
+            <div class="u-body"><b>Concept art &amp; city overview</b><p>First visuals of the city environment and early survival system documentation.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-head"><h2>Contact</h2><p>Press, collaboration, or "I have the original on Atari and I have opinions."</p></div>
+      <div class="sec-body">
+        <form id="contactForm" method="POST" action="#">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" placeholder="Your name" required /></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required /></div>
+          <div class="field full"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us what's on your mind."></textarea></div>
+          <div class="field full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+            <button class="btn primary" type="submit">Send Message</button>
+            <a class="btn" href="mailto:contact@foxpur-studios.com">Email directly</a>
+          </div>
+          <div class="field full"><p id="formStatus" class="fineprint"></p></div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-row">
+      <span>© <span id="year"></span> Foxpur Studios</span>
+      <span style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#about">About</a><a href="#legacy">The Inspiration</a><a href="#features">Features</a><a href="#updates">Updates</a><a href="#contact">Contact</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+  (() => {
+    const canvas=document.getElementById("starfield"),ctx=canvas.getContext("2d");
+    let w=0,h=0,dpr=1;const stars=[];
+    const pr=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function resize(){dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));w=window.innerWidth;h=window.innerHeight;canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);const t=w<700?100:160;while(stars.length<t)stars.push(mk(true));while(stars.length>t)stars.pop();}
+    function mk(ry){const l=Math.random();return{x:Math.random()*1920,y:ry?Math.random()*1080:-30,r:.5+l*1.1,s:.015+l*.07,t:Math.random()*Math.PI*2,tw:.003+Math.random()*.009,hue:265+Math.random()*30,alpha:.25+Math.random()*.75};}
+    function draw(stat){ctx.clearRect(0,0,w,h);for(let i=0;i<stars.length;i++){const s=stars[i];if(!stat){s.x+=s.s;s.y+=s.s*.25;s.t+=s.tw;if(s.x>w+20)s.x=-20;if(s.y>h+20)s.y=-20;}const tw=.65+.35*Math.sin(s.t);ctx.beginPath();ctx.fillStyle=`hsla(${s.hue},65%,78%,${s.alpha*tw})`;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}}
+    function step(){if(pr){draw(true);return;}draw(false);requestAnimationFrame(step);}
+    window.addEventListener("resize",resize,{passive:true});resize();step();
+  })();
+  document.getElementById("year").textContent=new Date().getFullYear();
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth",block:"start"});}});});
+  const form=document.getElementById("contactForm"),status=document.getElementById("formStatus");
+  form.addEventListener("submit",e=>{if((form.getAttribute("action")||"#").trim()==="#"){e.preventDefault();status.textContent="Form not connected yet — use the email link above.";}});
+  </script>
 </body>
 </html>

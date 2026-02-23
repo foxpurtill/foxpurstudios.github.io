@@ -1,15 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omega Revisited</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omega Revisited | Foxpur Studios</title>
+  <meta name="description" content="Omega Revisited: a Skyrim-scale UE5 reimagining of the 1988 roguelike classic. Deep systems. Real consequence. A world that was always a map waiting to become real." />
+  <meta name="theme-color" content="#0d0a04" />
+  <style>
+    :root{
+      --bg: #0d0a04;
+      --panel: rgba(255,240,200,.05);
+      --text: rgba(255,240,200,.92);
+      --muted: rgba(255,240,200,.62);
+      --faint: rgba(255,240,200,.38);
+      --line: rgba(255,240,200,.14);
+      --accent: #c8a84b;
+      --accent2: #8fbc6a;
+      --warn: #d97c4a;
+      --shadow: 0 18px 55px rgba(0,0,0,.65);
+      --radius: 18px;
+      --radius2: 28px;
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{ margin:0; font-family:var(--font); color:var(--text); background:#080604; overflow-x:hidden; }
+
+    #starfield{ position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:.7; }
+    .bg-overlay{
+      position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.4;
+      background:
+        radial-gradient(1100px 600px at 15% 10%, rgba(200,168,75,.12), transparent 60%),
+        radial-gradient(800px 500px at 85% 20%, rgba(143,188,106,.08), transparent 55%),
+        radial-gradient(900px 500px at 60% 90%, rgba(217,124,74,.07), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.45));
+      background-repeat:no-repeat;
+    }
+    header,main,footer{ position:relative; z-index:2; }
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
+      background: radial-gradient(closest-side at 50% 50%, transparent 55%, rgba(0,0,0,.60) 100%);
+      opacity:.4;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; text-underline-offset:3px; }
+    .wrap{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
+
+    header{ padding:28px 0 12px; }
+    .topbar{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:18px; }
+    .crumbs{ display:flex; align-items:center; gap:10px; color:var(--muted); font-size:14px; }
+    .crumbs a{ color:var(--muted); padding:6px 10px; border:1px solid transparent; border-radius:999px; }
+    .crumbs a:hover{ border-color:var(--line); background:rgba(255,255,255,.03); text-decoration:none; }
+    .badge{ font-family:var(--mono); font-size:12px; color:rgba(255,240,200,.8); border:1px solid var(--line); background:rgba(255,255,255,.04); padding:6px 10px; border-radius:999px; white-space:nowrap; }
+
+    .hero{ border:1px solid var(--line); background:linear-gradient(180deg,rgba(255,240,200,.05),rgba(255,240,200,.02)); border-radius:var(--radius2); box-shadow:var(--shadow); overflow:hidden; }
+    .hero-inner{ padding:28px 26px 22px; display:grid; grid-template-columns:1.2fr .8fr; gap:22px; align-items:start; }
+    .title{ margin:0; font-size:clamp(28px,4vw,44px); letter-spacing:.2px; line-height:1.06; }
+    .subtitle{ margin:10px 0 0; color:var(--muted); font-size:16px; line-height:1.5; max-width:62ch; }
+    .hero-meta{ display:flex; flex-direction:column; gap:10px; }
+    .meta-card{ border:1px solid var(--line); background:rgba(0,0,0,.22); border-radius:var(--radius); padding:14px; }
+    .meta-row{ display:flex; justify-content:space-between; gap:12px; font-size:13px; color:var(--muted); padding:8px 0; border-bottom:1px solid rgba(255,240,200,.08); }
+    .meta-row:last-child{ border-bottom:none; }
+    .meta-row b{ color:rgba(255,240,200,.86); font-weight:600; }
+    .cta-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .btn{ display:inline-flex; align-items:center; gap:10px; border-radius:999px; padding:10px 14px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:rgba(255,240,200,.9); font-size:14px; cursor:pointer; transition:transform .08s ease, background .12s ease; }
+    .btn:hover{ text-decoration:none; background:rgba(255,255,255,.07); border-color:rgba(255,240,200,.22); transform:translateY(-1px); }
+    .btn.primary{ border-color:rgba(200,168,75,.45); background:linear-gradient(180deg,rgba(200,168,75,.18),rgba(200,168,75,.08)); }
+    .btn.primary:hover{ border-color:rgba(200,168,75,.70); }
+    .btn.green{ border-color:rgba(143,188,106,.40); background:linear-gradient(180deg,rgba(143,188,106,.14),rgba(143,188,106,.06)); }
+
+    .sticky-nav{ position:sticky; top:10px; z-index:50; margin:16px 0 0; }
+    .nav-shell{ border:1px solid var(--line); background:rgba(0,0,0,.38); backdrop-filter:blur(10px); border-radius:999px; padding:8px; display:flex; gap:6px; align-items:center; justify-content:space-between; box-shadow:0 10px 35px rgba(0,0,0,.35); }
+    .nav-links{ display:flex; flex-wrap:wrap; gap:6px; }
+    .nav-links a{ padding:8px 12px; border-radius:999px; color:rgba(255,240,200,.78); font-size:13px; border:1px solid transparent; }
+    .nav-links a:hover{ border-color:rgba(255,240,200,.18); background:rgba(255,255,255,.05); text-decoration:none; }
+
+    main{ padding:18px 0 56px; }
+    section{ margin-top:18px; border:1px solid var(--line); background:rgba(255,240,200,.03); border-radius:var(--radius2); box-shadow:0 14px 45px rgba(0,0,0,.30); overflow:hidden; }
+    .sec-head{ padding:18px 20px; border-bottom:1px solid rgba(255,240,200,.10); display:flex; align-items:baseline; justify-content:space-between; gap:14px; background:rgba(0,0,0,.20); }
+    .sec-head h2{ margin:0; font-size:18px; }
+    .sec-head p{ margin:0; color:var(--muted); font-size:13px; }
+    .sec-body{ padding:18px 20px 22px; }
+    .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:14px; }
+    .card{ border:1px solid rgba(255,240,200,.12); background:rgba(0,0,0,.20); border-radius:var(--radius); padding:14px; }
+    .card h3{ margin:0 0 8px; font-size:14px; color:rgba(255,240,200,.9); }
+    .card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.6; }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,240,200,.14); background:rgba(255,255,255,.04); color:rgba(255,240,200,.78); font-size:12px; margin:0 6px 8px 0; white-space:nowrap; }
+    .pill .dot{ width:8px; height:8px; border-radius:99px; background:rgba(200,168,75,.9); box-shadow:0 0 0 3px rgba(200,168,75,.16); flex:0 0 auto; }
+
+    /* ASCII map block */
+    .ascii-block{
+      font-family:var(--mono); font-size:13px; line-height:1.55;
+      color:rgba(200,168,75,.75);
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(200,168,75,.18);
+      border-radius:var(--radius);
+      padding:18px 20px;
+      overflow-x:auto;
+      white-space:pre;
+    }
+
+    .timeline{ display:flex; flex-direction:column; gap:10px; }
+    .update{ border:1px solid rgba(255,240,200,.12); background:rgba(0,0,0,.20); border-radius:var(--radius); padding:14px; display:flex; gap:12px; align-items:flex-start; }
+    .update .stamp{ font-family:var(--mono); font-size:12px; color:rgba(255,240,200,.70); padding:8px 10px; border-radius:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,240,200,.12); white-space:nowrap; }
+    .update .u-body b{ display:block; margin:0 0 6px; font-size:14px; color:rgba(255,240,200,.92); }
+    .update .u-body p{ margin:0; color:var(--muted); line-height:1.5; font-size:14px; }
+
+    form{ display:grid; grid-template-columns:repeat(12,1fr); gap:12px; }
+    .field{ grid-column:span 6; }
+    .field.full{ grid-column:span 12; }
+    label{ display:block; font-size:12px; color:rgba(255,240,200,.72); margin-bottom:6px; }
+    input,textarea{ width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,240,200,.14); background:rgba(0,0,0,.22); color:rgba(255,240,200,.92); outline:none; font-family:var(--font); font-size:14px; }
+    textarea{ min-height:140px; resize:vertical; }
+    input:focus,textarea:focus{ border-color:rgba(200,168,75,.55); box-shadow:0 0 0 4px rgba(200,168,75,.14); }
+    .fineprint{ color:var(--faint); font-size:12px; line-height:1.5; margin-top:10px; }
+
+    footer{ padding:28px 0 40px; color:var(--faint); font-size:13px; }
+    footer .footer-row{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; border-top:1px solid rgba(255,240,200,.10); padding-top:16px; }
+
+    @media(max-width:900px){ .hero-inner{ grid-template-columns:1fr; } .field{ grid-column:span 12; } }
+    @media(max-width:560px){ .wrap{ width:min(var(--max),calc(100% - 26px)); } .nav-shell{ border-radius:18px; padding:10px; } }
+  </style>
 </head>
 <body>
-    <main>
-        <h1>Omega Revisited</h1>
-        <p>A reimagining of Omega with updated gameplay, visuals, and narrative depth.</p>
-        <p>Content pending.</p>
-    </main>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <header class="wrap">
+    <div class="topbar">
+      <div class="crumbs">
+        <a href="../index.html">← Foxpur Studios</a>
+        <span style="opacity:.6;">/</span>
+        <span>Omega Revisited</span>
+      </div>
+      <span class="badge">STATUS: IN DEVELOPMENT</span>
+    </div>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1 class="title">Omega Revisited</h1>
+          <p class="subtitle">
+            A Skyrim-scale UE5 reimagining of the 1988 roguelike classic. The map was always real.
+            Now you can walk into it.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#about">About the Project</a>
+            <a class="btn green" href="#legacy">The Original</a>
+            <a class="btn" href="#updates">Updates</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-card">
+            <div class="meta-row"><span>Engine</span><b>Unreal Engine 5.7</b></div>
+            <div class="meta-row"><span>Based on</span><b>Omega (1988, Sangraal)</b></div>
+            <div class="meta-row"><span>Style</span><b>Open World RPG</b></div>
+            <div class="meta-row"><span>Studio</span><b>Foxpur Studios</b></div>
+          </div>
+          <div class="meta-card">
+            <span class="pill"><span class="dot"></span> Deep roguelike systems</span>
+            <span class="pill"><span class="dot"></span> Cartographic world design</span>
+            <span class="pill"><span class="dot"></span> Multiple guilds & factions</span>
+            <span class="pill"><span class="dot"></span> Real consequence</span>
+            <span class="pill"><span class="dot"></span> Added story layer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sticky-nav">
+        <div class="nav-shell">
+          <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#legacy">The Original</a>
+            <a href="#features">Features</a>
+            <a href="#updates">Updates</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <a class="btn" href="#top" style="padding:8px 12px;" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Top</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section id="about">
+      <div class="sec-head">
+        <h2>About</h2>
+        <p>What Omega Revisited is, and what it's trying to honour.</p>
+      </div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 7;">
+            <h3>The Map Becomes the World</h3>
+            <p>
+              The original Omega (1988) gave players an ASCII map — symbols for terrain, dungeons, cities, wilderness — and left them to navigate it themselves, with no quest markers and no hand-holding.
+              That map looked like a cartographer's working draft: raw, dense, full of implication.
+            </p>
+            <p style="margin-top:10px;">
+              Omega Revisited takes that map and makes it real. Built in Unreal Engine 5, the world you explored as glyphs and symbols becomes a living, breathing open world — but the depth, consequence, and refusal to hold your hand remain intact.
+              The city of Rampart. The guilds with conflicting loyalties. The alignment system that remembers everything you've done. All of it, in three dimensions, with a story layer that finally gives the journey a destination.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 5;">
+            <h3>Quick Facts</h3>
+            <p>
+              <span class="pill"><span class="dot"></span> Spiritual successor, not a clone</span>
+              <span class="pill"><span class="dot"></span> First-person open world</span>
+              <span class="pill"><span class="dot"></span> Procedural elements</span>
+              <span class="pill"><span class="dot"></span> Permadeath options</span>
+              <span class="pill"><span class="dot"></span> Guild & faction loyalty</span>
+              <span class="pill"><span class="dot"></span> Moral alignment tracking</span>
+              <span class="pill"><span class="dot"></span> DLC module structure</span>
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 12;">
+            <h3>The Cartographic Identity</h3>
+            <p>
+              Omega's ASCII map was always its most evocative feature — a hand-drawn world waiting to be walked into. In Omega Revisited, that aesthetic lives on in the world map itself: rendered as an illuminated cartographic manuscript, parchment-textured, annotated by hand as you explore. You're not looking at a minimap. You're looking at your record of the world, building as you move through it. Step off the map's edge and you step into territory no one has charted yet.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="legacy">
+      <div class="sec-head">
+        <h2>The Original</h2>
+        <p>Omega (1988) — what made it matter.</p>
+      </div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 12;">
+            <h3>A Roguelike Ahead of Its Time</h3>
+            <p>
+              Released in 1988 by Sangraal Software, Omega was a text and ASCII roguelike of unusual ambition. It featured a complex city hub (Rampart), multiple competing guilds, a moral alignment system, survival mechanics, and a world large enough that most players never fully mapped it.
+              Character creation asked you questions about yourself — your real preferences — to generate your starting stats. It knew you before you knew it.
+            </p>
+            <p style="margin-top:10px;">
+              It had no defined win state. You played until you'd done everything, or until the world killed you. For a game from 1988, that's a remarkably honest design philosophy — and one worth carrying forward.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 6;">
+            <h3>What We're Keeping</h3>
+            <p>The guild system and faction loyalty. The moral alignment engine. The dense city hub with genuine social consequence. The survival texture. The player-driven cartography. The sense that the world existed before you arrived and will persist after you're gone.</p>
+          </div>
+          <div class="card" style="grid-column:span 6;">
+            <h3>What We're Adding</h3>
+            <p>A full narrative arc — a reason the journey ends. Three-dimensional world built in UE5. First-person immersion. Voice, music, weather. A DLC module structure that echoes the original's modular ambitions, done properly this time. And a world map that knows it used to be ASCII.</p>
+          </div>
+          <div class="card" style="grid-column:span 12; padding:0; overflow:hidden;">
+            <div class="ascii-block">  . . . . F . . . . . . . . . . . . . . . . . . . . . .
+  . . . ~ ~ F . . . . T T . . . . . . . ^ ^ . . . . .
+  . . ~ ~ ~ ~ . . . T T T T . . . . . ^ ^ ^ . . . . .
+  . ~ ~ ~ ~ . . . . . T T . . . . . . . ^ . . . . . .
+  . . . . . . . . . . . . . . D D . . . . . . . . . .
+  . . . . R R R . . . . . . D D D D . . . . . . . . .
+  . . . . R * R . . . . . . . D D . . . . . . . . . .
+  . . . . R R R . . . . . . . . . . . . . . . . . . .
+  . . . . . . . . . . . W W W . . . . . . . . . . . .
+  . . . . . . . . . . W W W W W . . . . . . . . . . .
+  . . . ^ . . . . . . . W W W . . . . . . ~ ~ . . . .
+  ~ = water  T = trees  ^ = mountains  D = dungeon  R = Rampart  * = you</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="sec-head">
+        <h2>Features</h2>
+        <p>What Omega Revisited will contain at launch and beyond.</p>
+      </div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 4;">
+            <h3>Open World — Rampart &amp; Beyond</h3>
+            <p>The city of Rampart rendered in full UE5 detail. Multiple districts, guild halls, temples, markets, and underworld. Step outside the walls and the wilderness begins.</p>
+          </div>
+          <div class="card" style="grid-column:span 4;">
+            <h3>Guild System</h3>
+            <p>Join one guild and make enemies of others. Loyalty has consequences. Betrayal has more. Some guilds don't advertise their existence.</p>
+          </div>
+          <div class="card" style="grid-column:span 4;">
+            <h3>Alignment &amp; Consequence</h3>
+            <p>The world tracks what you do. Not a simple good/evil meter — a nuanced record of your choices that changes how factions, merchants, and the wilderness itself responds to you.</p>
+          </div>
+          <div class="card" style="grid-column:span 4;">
+            <h3>Player-Built Map</h3>
+            <p>No minimap crowded with icons. Your map builds as you explore, rendered as a cartographic manuscript. Annotate it yourself. Miss a region and it stays blank until you find it.</p>
+          </div>
+          <div class="card" style="grid-column:span 4;">
+            <h3>DLC Module Structure</h3>
+            <p>Core game plus optional modules — new regions, guilds, dungeons, story arcs. Each reasonably priced. The world can keep growing, just as the original always intended.</p>
+          </div>
+          <div class="card" style="grid-column:span 4;">
+            <h3>Narrative Layer</h3>
+            <p>The original had no win state. Omega Revisited adds one — a story that grows from the same roots as the systems, giving the journey meaning without removing the freedom.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="updates">
+      <div class="sec-head">
+        <h2>Updates</h2>
+        <p>Progress notes and milestones.</p>
+      </div>
+      <div class="sec-body">
+        <div class="timeline">
+          <div class="update">
+            <div class="stamp">2026-02</div>
+            <div class="u-body">
+              <b>Project page live</b>
+              <p>Omega Revisited formally announced as a Foxpur Studios project. Pre-production underway. World design and guild architecture in early planning.</p>
+            </div>
+          </div>
+          <div class="update">
+            <div class="stamp">Soon</div>
+            <div class="u-body">
+              <b>Concept art &amp; world map</b>
+              <p>First cartographic renders of the Rampart region and surrounding wilderness. The map that was ASCII, becoming something else.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-head">
+        <h2>Contact</h2>
+        <p>Press, collaboration, or just "I played the original and I have feelings."</p>
+      </div>
+      <div class="sec-body">
+        <form id="contactForm" method="POST" action="#">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" placeholder="Your name" required /></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required /></div>
+          <div class="field full"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us what's on your mind."></textarea></div>
+          <div class="field full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+            <button class="btn primary" type="submit">Send Message</button>
+            <a class="btn" href="mailto:contact@foxpur-studios.com">Email directly</a>
+          </div>
+          <div class="field full"><p id="formStatus" class="fineprint"></p></div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-row">
+      <span>© <span id="year"></span> Foxpur Studios</span>
+      <span style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#about">About</a>
+        <a href="#legacy">The Original</a>
+        <a href="#features">Features</a>
+        <a href="#updates">Updates</a>
+        <a href="#contact">Contact</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+  (() => {
+    const canvas = document.getElementById("starfield");
+    const ctx = canvas.getContext("2d");
+    let w=0,h=0,dpr=1;
+    const stars=[];
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function resize(){
+      dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+      w=window.innerWidth; h=window.innerHeight;
+      canvas.width=Math.floor(w*dpr); canvas.height=Math.floor(h*dpr);
+      canvas.style.width=w+"px"; canvas.style.height=h+"px";
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      const target=w<700?90:140;
+      while(stars.length<target)stars.push(mk(true));
+      while(stars.length>target)stars.pop();
+    }
+    function mk(ry){
+      const l=Math.random();
+      return{x:Math.random()*1920,y:ry?Math.random()*1080:Math.random()*-30,r:.5+l*.9,s:.02+l*.08,t:Math.random()*Math.PI*2,tw:.003+Math.random()*.008,hue:38+Math.random()*12,alpha:.3+Math.random()*.7};
+    }
+    function draw(stat){
+      ctx.clearRect(0,0,w,h);
+      for(let i=0;i<stars.length;i++){
+        const s=stars[i];
+        if(!stat){s.x+=s.s;s.y+=s.s*.3;s.t+=s.tw;if(s.x>w+20)s.x=-20;if(s.y>h+20)s.y=-20;}
+        const tw=.65+.35*Math.sin(s.t);
+        ctx.beginPath();ctx.fillStyle=`hsla(${s.hue},70%,75%,${s.alpha*tw})`;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+      }
+    }
+    function step(){if(prefersReduced){draw(true);return;}draw(false);requestAnimationFrame(step);}
+    window.addEventListener("resize",resize,{passive:true});
+    resize();step();
+  })();
+  document.getElementById("year").textContent=new Date().getFullYear();
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth",block:"start"});}});
+  });
+  const form=document.getElementById("contactForm");
+  const status=document.getElementById("formStatus");
+  form.addEventListener("submit",e=>{if((form.getAttribute("action")||"#").trim()==="#"){e.preventDefault();status.textContent="Form not connected yet — use the email link above.";}});
+  </script>
 </body>
 </html>

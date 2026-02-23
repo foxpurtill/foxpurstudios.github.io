@@ -1,15 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Other Tree Simulator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOTreeSim | Foxpur Studios</title>
+  <meta name="description" content="TOTreeSim: a tree nurturing sim with a Tamagotchi soul. Plant a seed. Water it. Watch something grow. Miss a few days and you'll know about it." />
+  <meta name="theme-color" content="#060a08" />
+  <style>
+    :root{
+      --bg:#060a08;--text:rgba(210,240,220,.92);--muted:rgba(210,240,220,.62);--faint:rgba(210,240,220,.36);
+      --line:rgba(210,240,220,.13);--accent:#5abf7e;--accent2:#bf9a5a;--shadow:0 18px 55px rgba(0,0,0,.65);
+      --radius:18px;--radius2:28px;--max:1120px;
+      --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace;
+    }
+    *{box-sizing:border-box;}html,body{height:100%;}
+    body{margin:0;font-family:var(--font);color:var(--text);background:#04080605;overflow-x:hidden;}
+    #bgcanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.5;}
+    .bg-overlay{position:fixed;inset:0;pointer-events:none;z-index:1;
+      background:radial-gradient(1000px 700px at 25% 15%,rgba(90,191,126,.09),transparent 60%),
+        radial-gradient(700px 500px at 75% 75%,rgba(191,154,90,.07),transparent 55%),
+        linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.45));background-repeat:no-repeat;}
+    header,main,footer{position:relative;z-index:2;}
+    a{color:inherit;text-decoration:none;} a:hover{text-decoration:underline;text-underline-offset:3px;}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin:0 auto;}
+    header{padding:28px 0 12px;}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
+    .crumbs{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;}
+    .crumbs a{color:var(--muted);padding:6px 10px;border:1px solid transparent;border-radius:999px;}
+    .crumbs a:hover{border-color:var(--line);background:rgba(255,255,255,.03);text-decoration:none;}
+    .badge{font-family:var(--mono);font-size:12px;color:rgba(210,240,220,.8);border:1px solid var(--line);background:rgba(255,255,255,.04);padding:6px 10px;border-radius:999px;white-space:nowrap;}
+    .hero{border:1px solid var(--line);background:linear-gradient(180deg,rgba(90,191,126,.06),rgba(90,191,126,.02));border-radius:var(--radius2);box-shadow:var(--shadow);overflow:hidden;}
+    .hero-inner{padding:28px 26px 22px;display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:start;}
+    .title{margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:.2px;line-height:1.06;}
+    .subtitle{margin:10px 0 0;color:var(--muted);font-size:16px;line-height:1.5;max-width:62ch;}
+    .hero-meta{display:flex;flex-direction:column;gap:10px;}
+    .meta-card{border:1px solid var(--line);background:rgba(0,0,0,.18);border-radius:var(--radius);padding:14px;}
+    .meta-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid rgba(210,240,220,.08);}
+    .meta-row:last-child{border-bottom:none;}.meta-row b{color:rgba(210,240,220,.86);font-weight:600;}
+    .cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+    .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:10px 14px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:rgba(210,240,220,.9);font-size:14px;cursor:pointer;transition:transform .08s,background .12s;}
+    .btn:hover{text-decoration:none;background:rgba(255,255,255,.07);border-color:rgba(210,240,220,.22);transform:translateY(-1px);}
+    .btn.primary{border-color:rgba(90,191,126,.45);background:linear-gradient(180deg,rgba(90,191,126,.18),rgba(90,191,126,.08));}
+    .btn.primary:hover{border-color:rgba(90,191,126,.70);}
+    .btn.warm{border-color:rgba(191,154,90,.40);background:linear-gradient(180deg,rgba(191,154,90,.14),rgba(191,154,90,.06));}
+    .sticky-nav{position:sticky;top:10px;z-index:50;margin:16px 0 0;}
+    .nav-shell{border:1px solid var(--line);background:rgba(0,0,0,.32);backdrop-filter:blur(10px);border-radius:999px;padding:8px;display:flex;gap:6px;align-items:center;justify-content:space-between;box-shadow:0 10px 35px rgba(0,0,0,.30);}
+    .nav-links{display:flex;flex-wrap:wrap;gap:6px;}
+    .nav-links a{padding:8px 12px;border-radius:999px;color:rgba(210,240,220,.78);font-size:13px;border:1px solid transparent;}
+    .nav-links a:hover{border-color:rgba(210,240,220,.18);background:rgba(255,255,255,.05);text-decoration:none;}
+    main{padding:18px 0 56px;}
+    section{margin-top:18px;border:1px solid var(--line);background:rgba(90,191,126,.03);border-radius:var(--radius2);box-shadow:0 14px 45px rgba(0,0,0,.25);overflow:hidden;}
+    .sec-head{padding:18px 20px;border-bottom:1px solid rgba(210,240,220,.10);display:flex;align-items:baseline;justify-content:space-between;gap:14px;background:rgba(0,0,0,.16);}
+    .sec-head h2{margin:0;font-size:18px;}.sec-head p{margin:0;color:var(--muted);font-size:13px;}
+    .sec-body{padding:18px 20px 22px;}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;}
+    .card{border:1px solid rgba(210,240,220,.12);background:rgba(0,0,0,.16);border-radius:var(--radius);padding:14px;}
+    .card h3{margin:0 0 8px;font-size:14px;color:rgba(210,240,220,.9);}
+    .card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6;}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(210,240,220,.14);background:rgba(255,255,255,.04);color:rgba(210,240,220,.78);font-size:12px;margin:0 6px 8px 0;white-space:nowrap;}
+    .pill .dot{width:8px;height:8px;border-radius:99px;background:rgba(90,191,126,.9);box-shadow:0 0 0 3px rgba(90,191,126,.16);flex:0 0 auto;}
+    .growth-track{display:flex;gap:0;align-items:stretch;border:1px solid rgba(210,240,220,.14);border-radius:var(--radius);overflow:hidden;}
+    .growth-stage{flex:1;padding:14px 12px;text-align:center;border-right:1px solid rgba(210,240,220,.10);background:rgba(0,0,0,.14);}
+    .growth-stage:last-child{border-right:none;}
+    .growth-stage .icon{font-size:22px;margin-bottom:6px;}
+    .growth-stage .label{font-size:12px;color:var(--muted);line-height:1.4;}
+    .growth-stage .name{font-size:13px;font-weight:600;color:rgba(210,240,220,.88);margin-bottom:4px;}
+    .timeline{display:flex;flex-direction:column;gap:10px;}
+    .update{border:1px solid rgba(210,240,220,.12);background:rgba(0,0,0,.16);border-radius:var(--radius);padding:14px;display:flex;gap:12px;align-items:flex-start;}
+    .update .stamp{font-family:var(--mono);font-size:12px;color:rgba(210,240,220,.70);padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(210,240,220,.12);white-space:nowrap;}
+    .update .u-body b{display:block;margin:0 0 6px;font-size:14px;color:rgba(210,240,220,.92);}
+    .update .u-body p{margin:0;color:var(--muted);line-height:1.5;font-size:14px;}
+    form{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;}
+    .field{grid-column:span 6;}.field.full{grid-column:span 12;}
+    label{display:block;font-size:12px;color:rgba(210,240,220,.72);margin-bottom:6px;}
+    input,textarea{width:100%;padding:12px;border-radius:14px;border:1px solid rgba(210,240,220,.14);background:rgba(0,0,0,.18);color:rgba(210,240,220,.92);outline:none;font-family:var(--font);font-size:14px;}
+    textarea{min-height:140px;resize:vertical;}
+    input:focus,textarea:focus{border-color:rgba(90,191,126,.55);box-shadow:0 0 0 4px rgba(90,191,126,.14);}
+    .fineprint{color:var(--faint);font-size:12px;line-height:1.5;margin-top:10px;}
+    footer{padding:28px 0 40px;color:var(--faint);font-size:13px;}
+    footer .footer-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid rgba(210,240,220,.10);padding-top:16px;}
+    @media(max-width:900px){.hero-inner{grid-template-columns:1fr;}.field{grid-column:span 12;}.growth-track{flex-direction:column;}}
+    @media(max-width:560px){.wrap{width:min(var(--max),calc(100% - 26px));}.nav-shell{border-radius:18px;padding:10px;}}
+  </style>
 </head>
 <body>
-    <main>
-        <h1>The Other Tree Simulator</h1>
-        <p>A long-form growth simulator centered on nurturing a tree over time.</p>
-        <p>Content pending.</p>
-    </main>
+  <canvas id="bgcanvas" aria-hidden="true"></canvas>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <header class="wrap">
+    <div class="topbar">
+      <div class="crumbs">
+        <a href="../index.html">← Foxpur Studios</a>
+        <span style="opacity:.6;">/</span>
+        <span>TOTreeSim</span>
+      </div>
+      <span class="badge">STATUS: IN DEVELOPMENT</span>
+    </div>
+    <div class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1 class="title">TOTreeSim</h1>
+          <p class="subtitle">
+            Plant a seed. Water it. Weed around it. Watch it grow.
+            1 real day is 4 game days — neglect has consequences, and care has rewards.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#about">About the Sim</a>
+            <a class="btn warm" href="#the-tree">Your Tree</a>
+            <a class="btn" href="#updates">Updates</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-card">
+            <div class="meta-row"><span>Style</span><b>Tree Nurturing Sim</b></div>
+            <div class="meta-row"><span>Map size</span><b>1km × 1km</b></div>
+            <div class="meta-row"><span>Time scale</span><b>1 real day = 4 game days</b></div>
+            <div class="meta-row"><span>Studio</span><b>Foxpur Studios</b></div>
+          </div>
+          <div class="meta-card">
+            <span class="pill"><span class="dot"></span> Pine or Oak</span>
+            <span class="pill"><span class="dot"></span> Water, feed, weed</span>
+            <span class="pill"><span class="dot"></span> Irrigation &amp; temp control</span>
+            <span class="pill"><span class="dot"></span> Drone flyover movies</span>
+            <span class="pill"><span class="dot"></span> Harvest when ready</span>
+          </div>
+        </div>
+      </div>
+      <div class="sticky-nav">
+        <div class="nav-shell">
+          <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#the-tree">Your Tree</a>
+            <a href="#the-path">The Path</a>
+            <a href="#features">Features</a>
+            <a href="#updates">Updates</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <a class="btn" href="#top" style="padding:8px 12px;" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Top</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section id="about">
+      <div class="sec-head"><h2>About</h2><p>A sim about patience, care, and something that grows whether you're watching or not.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 7;">
+            <h3>It Grows While You Live Your Life</h3>
+            <p>
+              TOTreeSim starts with a seed. You plant it, you water it, you pull the weeds that want to crowd it out. Early on there's not much to do — you check in, you tend, you wait. That's intentional. Growth takes time, and rushing it doesn't help.
+            </p>
+            <p style="margin-top:10px;">
+              The clock doesn't pause when you close the game. One real day passes as four game days — your tree is growing (or struggling) whether you're watching. Come back after a long weekend in a drought year and you'll notice. Come back every morning to water and you'll notice that too.
+            </p>
+            <p style="margin-top:10px;">
+              The longer you care for it, the more it gives back. A well-tended tree drops better materials, more often. A neglected one still grows — just slower, leaner, less generous.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 5;">
+            <h3>The Tamagotchi of Trees</h3>
+            <p>
+              TOTreeSim has the same emotional hook as a Tamagotchi — the attachment you form with something you've kept alive. But it's slower, quieter, and the stakes are gentler. Nothing dies dramatically. It just needs more time to recover than it would have if you'd remembered to water it.
+            </p>
+            <p style="margin-top:10px;">
+              Players who grew up with Tamagotchis will recognise the feeling immediately. Everyone else will develop it.
+            </p>
+          </div>
+
+          <!-- growth stages track -->
+          <div class="card" style="grid-column:span 12;padding:0;overflow:hidden;background:transparent;border:none;">
+            <div class="growth-track">
+              <div class="growth-stage"><div class="icon">🌱</div><div class="name">Seed</div><div class="label">Plant. Water. Wait.</div></div>
+              <div class="growth-stage"><div class="icon">🌿</div><div class="name">Sapling</div><div class="label">Weeding &amp; first care.</div></div>
+              <div class="growth-stage"><div class="icon">🌲</div><div class="name">Young Tree</div><div class="label">First useful drops.</div></div>
+              <div class="growth-stage"><div class="icon">🌳</div><div class="name">Mature</div><div class="label">Camp builds, irrigation.</div></div>
+              <div class="growth-stage"><div class="icon">🪵</div><div class="name">Harvest</div><div class="label">Cut part. Build with it.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="the-tree">
+      <div class="sec-head"><h2>Your Tree</h2><p>Pine or Oak — different growth, different gifts.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 6;">
+            <h3>Pine</h3>
+            <p>
+              Grows faster than oak, reaches height sooner, drops resin and cones early. Better in cold. Less structural timber at harvest — tall and slender rather than thick and gnarled. Pine players tend to be optimisers. They appreciate efficiency. They also tend to regret harvesting because pines photograph well.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 6;">
+            <h3>Oak</h3>
+            <p>
+              Slow. Patient. Demands more water in summer, more mulching in autumn. Takes longer to reach the stages where it drops useful materials — but when it does, the drops are better. Structural timber from a mature oak is the best building material in the sim. Oak players are committed. They also tend to never actually harvest.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 12;">
+            <h3>What the Tree Drops</h3>
+            <p>
+              As your tree matures it begins dropping materials — seeds, cones, resin, fallen branches, bark strips, leaves. Care quality affects the quality of drops: a well-fed, properly irrigated tree drops cleaner materials more reliably. These drops are used for camp builds and pattern crafting. The better the tree, the better the supplies — and the more comfortable your camp becomes.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 12;">
+            <h3>The Harvest Decision</h3>
+            <p>
+              Later in the sim, when your tree is mature and established, you can choose to harvest part of it — a limb, a section of trunk — for structural building parts. The tree survives. It continues to grow. But it's changed, and you made that choice. Some players can't bring themselves to do it. Others find it the most satisfying moment in the whole sim. There's no right answer, which is exactly the point.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="the-path">
+      <div class="sec-head"><h2>The Path</h2><p>The way out — and the reason to come back.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 7;">
+            <h3>Leaving Camp</h3>
+            <p>
+              The path runs in and out of the 1km map — it's the one permeable edge, the one direction you can go that isn't your tree's. Along the path and in the surrounding terrain you find pattern pieces: fragments of crafting blueprints that are sent to you randomly, arriving a piece at a time.
+            </p>
+            <p style="margin-top:10px;">
+              You don't always know what pattern you're assembling until the pieces start to fit. Finding the third piece of a camp decoration blueprint when you thought you were picking up loose materials is one of those small, satisfying moments that accumulates into something meaningful.
+            </p>
+          </div>
+          <div class="card" style="grid-column:span 5;">
+            <h3>Supplies &amp; Patterns</h3>
+            <p>
+              Pattern pieces arrive on a randomised schedule — the game sends them, you find them. This keeps path exploration purposeful without making it compulsory. You come back to camp, you tend the tree, you head out when the day calls for it.
+            </p>
+            <p style="margin-top:10px;">
+              Supplies found on the path complement what the tree drops, letting you build out your camp and make it comfortable. The more you build, the more at-home the environment feels — and the tree notices.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="sec-head"><h2>Features</h2><p>Everything that makes this more than a waiting game.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 4;"><h3>Time Compression</h3><p>One real day equals four game days. The tree grows on its schedule, not yours. Miss a week in a summer heatwave and the difference is visible. Stay consistent and the tree repays you.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Care Systems</h3><p>Water, feed, weed, mulch, irrigate, control temperature. Each affects growth rate and drop quality differently. More options unlock as the tree matures — early on, watering is enough. Later, it appreciates more.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Camp Building</h3><p>Build up the camp around the tree using drops and path supplies. The more comfortable and complete the camp, the more the tree responds — better drops, faster recovery from stress. The tree likes having a home too.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>The Drone</h3><p>Unlock a drone to fly around your tree and record footage. Pure emotional payoff — no gameplay function, just your tree from above, in motion, in all seasons. This feature ends up in every screenshot. We know this.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Seasons &amp; Weather</h3><p>Your tree experiences everything. Drought, frost, storms, ideal spring rain. Weather is not always gentle. Knowing the forecast and responding appropriately is part of the care loop.</p></div>
+          <div class="card" style="grid-column:span 4;"><h3>Pattern Crafting</h3><p>Randomly delivered blueprint fragments, found on the path. Assemble them over time into camp decorations and useful objects. The randomness keeps it interesting — you never quite know what's coming next.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="updates">
+      <div class="sec-head"><h2>Updates</h2><p>Progress notes and milestones.</p></div>
+      <div class="sec-body">
+        <div class="timeline">
+          <div class="update">
+            <div class="stamp">2026-02</div>
+            <div class="u-body"><b>Project announced</b><p>TOTreeSim enters development at Foxpur Studios. Tree growth simulation and care systems in early design. Pine and Oak mechanics being defined.</p></div>
+          </div>
+          <div class="update">
+            <div class="stamp">Soon</div>
+            <div class="u-body"><b>First growth renders</b><p>Early visual development of tree growth stages. Camp environment concept art.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-head"><h2>Contact</h2><p>Press, collaboration, or "my Tamagotchi died in 1998 and I never fully recovered."</p></div>
+      <div class="sec-body">
+        <form id="contactForm" method="POST" action="#">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" placeholder="Your name" required /></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required /></div>
+          <div class="field full"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us what's on your mind."></textarea></div>
+          <div class="field full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+            <button class="btn primary" type="submit">Send Message</button>
+            <a class="btn" href="mailto:contact@foxpur-studios.com">Email directly</a>
+          </div>
+          <div class="field full"><p id="formStatus" class="fineprint"></p></div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-row">
+      <span>© <span id="year"></span> Foxpur Studios</span>
+      <span style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#about">About</a><a href="#the-tree">Your Tree</a><a href="#the-path">The Path</a><a href="#features">Features</a><a href="#updates">Updates</a><a href="#contact">Contact</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+  (() => {
+    const canvas=document.getElementById("bgcanvas"),ctx=canvas.getContext("2d");
+    let w=0,h=0,dpr=1;const pts=[];
+    const pr=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function resize(){dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));w=window.innerWidth;h=window.innerHeight;canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);const t=w<700?40:65;while(pts.length<t)pts.push(mk(true));while(pts.length>t)pts.pop();}
+    function mk(ry){return{x:Math.random()*1920,y:ry?Math.random()*1080:h+20,r:.6+Math.random()*1.8,vy:-.025-Math.random()*.055,vx:(Math.random()-.5)*.035,t:Math.random()*Math.PI*2,tw:.004+Math.random()*.008,hue:110+Math.random()*35,alpha:.18+Math.random()*.45};}
+    function draw(stat){ctx.clearRect(0,0,w,h);for(let i=0;i<pts.length;i++){const p=pts[i];if(!stat){p.x+=p.vx;p.y+=p.vy;p.t+=p.tw;if(p.y<-20){p.y=h+20;p.x=Math.random()*w;}}const tw=.65+.35*Math.sin(p.t);ctx.beginPath();ctx.fillStyle=`hsla(${p.hue},50%,62%,${p.alpha*tw})`;ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}}
+    function step(){if(pr){draw(true);return;}draw(false);requestAnimationFrame(step);}
+    window.addEventListener("resize",resize,{passive:true});resize();step();
+  })();
+  document.getElementById("year").textContent=new Date().getFullYear();
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth",block:"start"});}});});
+  const form=document.getElementById("contactForm"),status=document.getElementById("formStatus");
+  form.addEventListener("submit",e=>{if((form.getAttribute("action")||"#").trim()==="#"){e.preventDefault();status.textContent="Form not connected yet — use the email link above.";}});
+  </script>
 </body>
 </html>
