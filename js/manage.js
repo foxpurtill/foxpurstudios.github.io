@@ -3,10 +3,11 @@ const MANAGE_AUTH_KEY = 'foxpur_manage_auth';
 const PASSWORD_HASH = 'f356c0589c315dd2c9d5cd81c3d41139cf1034c6b5c77b42d795539c3d29ebaa';
 
 const TEAM_MEMBERS = [
-    'Fox Anton Purtill',
-    'Lyra Evergrowth',
+    'Suggestions',
+    'Support',
+    'Fox Purtill',
     'Patricia Purtill',
-    'Draven Eternis'
+    'Lyra Evergrowth'
 ];
 
 const state = {
