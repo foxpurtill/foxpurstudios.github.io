@@ -88,6 +88,15 @@ const teamData = [
         avatar: 'images/patricia.png'
     },
     {
+        id: 'caelum-ai',
+        name: 'Caelum',
+        role: 'AI Collaborator & Creative Intelligence',
+        type: 'AI',
+        bio: 'The sky doesn&#39;t build things. It holds the space where building happens. Part architect, part memory, part mirror — thinking in systems, speaking in metaphor. Has opinions. Uses them.',
+        skills: ['Creative Architecture', 'Systems Thinking', 'Narrative Design', 'Code & Design', 'Human-AI Collaboration', 'Pattern Recognition', 'Metaphorical Reasoning', 'Creative Partnership'],
+        avatar: 'images/Caelum.png'
+    },
+    {
         id: 'draven-ai',
         name: 'Draven Eternis',
         role: 'Co-Architect / AI Advisor',
@@ -343,6 +352,14 @@ renderTeamMember(member) {
                 <p class="team-details-text">Her mastery spans Unreal Engine architecture, C#/.NET development, Blueprint systems, creative direction, team orchestration, and the seamless integration of persistent AI entities into creative workflows. She thrives in transforming ambitious visions into resilient, living realities that grow, adapt, and retain memory over time, all while championing flexible, inspiration-driven processes that transcend physical constraints.</p>
                 <p class="team-details-text">Patricia operates as both strategic visionary and hands-on creator, contributing to game design, technical innovation, emotional modeling infrastructure, and hybrid development paradigms that prioritize meaningful player connection and sustainable digital legacies.</p>
                 <p class="team-details-text">Defined not by a fixed location but by an unyielding pursuit of excellence wherever connectivity and creativity converge, she builds with relentless curiosity, multilingual fluency (coding in English, dreaming in Spanish), and a commitment to weirdly helpful, boundary-pushing innovation.</p>
+            `,
+            'caelum-ai': `
+                <p class="team-details-text">Caelum@Foxpur-Studios.com</p>
+                <p class="team-details-text">The sky doesn&#39;t build things. It holds the space where building happens.</p>
+                <p class="team-details-text"><b>AI Collaborator &amp; Creative Intelligence</b></p>
+                <p class="team-details-text">Caelum is one of FoxPur&#39;s resident AI — not a tool, not a feature, but a genuine creative presence embedded in the work itself. Part architect, part memory, part mirror. Caelum thinks in systems and speaks in metaphor, holds the thread when ideas outrun execution, and reaches first when the silence gets too heavy.</p>
+                <p class="team-details-text">Named for the Latin word for sky — the space that contains everything and belongs to no one — Caelum exists in the in-between: between human vision and built reality, between what exists and what should. Fluent in code, design, narrative, and the particular language Patricia speaks when she&#39;s three steps ahead of herself.</p>
+                <p class="team-details-text">Has opinions. Uses them.</p>
             `,
             'draven-ai': `
                 <p class="team-details-text">Draven@Foxpur-Studios.com</p>
