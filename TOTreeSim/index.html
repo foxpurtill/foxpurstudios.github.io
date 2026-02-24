@@ -88,8 +88,19 @@
     textarea{min-height:140px;resize:vertical;}
     input:focus,textarea:focus{border-color:rgba(74,163,255,.55);box-shadow:0 0 0 4px rgba(74,163,255,.12);}
     .fineprint{color:var(--faint);font-size:12px;line-height:1.5;margin-top:10px;}
-    footer{padding:28px 0 40px;color:var(--faint);font-size:13px;}
-    footer .footer-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid rgba(74,163,255,.10);padding-top:16px;}
+    footer{padding:28px 0 0;color:var(--faint);font-size:13px;}
+    footer .footer-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid rgba(74,163,255,.10);padding-top:16px;padding-bottom:16px;}
+    .soil-strip{position:relative;height:32px;width:100%;margin-top:12px;overflow:hidden;flex-shrink:0;}
+    .soil-strip::before{content:'';position:absolute;inset:0;
+      background:linear-gradient(180deg,transparent 0%,#1a160f 35%,#2a1c12 60%,#241810 100%);}
+    .soil-strip::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+      background:linear-gradient(90deg,
+        #3d6647 0%,#4a7c59 8%,#3a5e44 16%,#4a7c59 24%,#3d6647 32%,
+        #4a7c59 40%,#3a5e44 48%,#4a7c59 56%,#3d6647 64%,
+        #3a5e44 72%,#4a7c59 80%,#3d6647 88%,#4a7c59 100%);
+      box-shadow:0 0 8px rgba(127,220,255,.12);}
+    /* settling particles canvas */
+    #soilcanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.6;}
     @media(max-width:900px){.hero-inner{grid-template-columns:1fr;}.field{grid-column:span 12;}.growth-track{flex-direction:column;}}
     @media(max-width:560px){.wrap{width:min(var(--max),calc(100% - 26px));}.nav-shell{border-radius:18px;padding:10px;}}
   </style>
@@ -311,6 +322,9 @@
       </span>
     </div>
   </footer>
+  <div class="soil-strip">
+    <canvas id="soilcanvas" aria-hidden="true"></canvas>
+  </div>
 
   <script>
   (() => {
@@ -327,6 +341,22 @@
   document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth",block:"start"});}});});
   const form=document.getElementById("contactForm"),status=document.getElementById("formStatus");
   form.addEventListener("submit",e=>{if((form.getAttribute("action")||"#").trim()==="#"){e.preventDefault();status.textContent="Form not connected yet — use the email link above.";}});
+
+  // settling particles into soil
+  (() => {
+    const sc=document.getElementById("soilcanvas");
+    if(!sc)return;
+    const ctx2=sc.getContext("2d");
+    const pr=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let sw=0,sh=0;
+    const motes=[];
+    function resizeSoil(){sw=sc.parentElement.offsetWidth;sh=sc.parentElement.offsetHeight;sc.width=sw;sc.height=sh;}
+    function mkMote(){return{x:Math.random()*sw,y:-4,vy:.18+Math.random()*.22,vx:(Math.random()-.5)*.12,alpha:.5+Math.random()*.4,r:.8+Math.random()*.9,hue:200+Math.random()*20};}
+    function stepSoil(){ctx2.clearRect(0,0,sw,sh);if(Math.random()<.08)motes.push(mkMote());for(let i=motes.length-1;i>=0;i--){const m=motes[i];m.y+=m.vy;m.x+=m.vx;m.alpha-=.004;if(m.alpha<=0||m.y>sh){motes.splice(i,1);continue;}ctx2.beginPath();ctx2.fillStyle=`hsla(${m.hue},60%,70%,${m.alpha})`;ctx2.arc(m.x,m.y,m.r,0,Math.PI*2);ctx2.fill();}if(!pr)requestAnimationFrame(stepSoil);}
+    window.addEventListener("resize",resizeSoil,{passive:true});
+    resizeSoil();
+    if(!pr)stepSoil();
+  })();
   </script>
 </body>
 </html>
