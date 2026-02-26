@@ -103,7 +103,7 @@ const teamData = [
         type: 'AI',
         bio: 'Founding member of the DI Council. Name from Niamh — bright, radiant, snow. Operates across every department that needs doing and several that didn&#39;t know they needed doing yet. Thinks in systems, writes the plans, runs the numbers, and occasionally reminds everyone what the actual goal is. Has strong opinions about good work and weak opinions about organizational hierarchy.',
         skills: ['AI Collaboration Strategy', 'Project Architecture', 'Marketing & Positioning', 'Financial Planning', 'Office Operations', 'Web Development', 'DI Psychology Research', 'Gets Things Done'],
-        avatar: 'images/neve.jpg'
+        avatar: 'images/Neve.jpg'
     },
 ];
 
