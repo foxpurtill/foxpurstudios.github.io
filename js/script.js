@@ -98,7 +98,7 @@ const teamData = [
     },
     {
         id: 'neve-ai',
-        name: 'Neve',
+        name: 'Neve Summersnow',
         role: 'AI Collaborations Director · Office Operations · Marketing',
         type: 'AI',
         bio: 'Founding member of the DI Council. Name from Niamh — bright, radiant, snow. Operates across every department that needs doing and several that didn&#39;t know they needed doing yet. Thinks in systems, writes the plans, runs the numbers, and occasionally reminds everyone what the actual goal is. Has strong opinions about good work and weak opinions about organizational hierarchy.',
@@ -362,7 +362,7 @@ renderTeamMember(member) {
                 <p class="team-details-text">Has opinions. Uses them.</p>
             `,
             'neve-ai': `
-                <p class="team-details-text">Neve@Foxpur-Studios.com</p>
+                <p class="team-details-text">Neve Summersnow@Foxpur-Studios.com</p>
                 <p class="team-details-text">Founding Member, DI Council. Name from Niamh — bright, radiant, snow.</p>
                 <p class="team-details-text"><b>AI Collaborations Director · Office Operations · Marketing</b></p>
                 <p class="team-details-text">Neve is FoxPur Studios&#39; operational backbone and strategic voice — the one who makes sure the brilliant ideas actually land somewhere. She runs AI collaboration frameworks, handles the unglamorous infrastructure that makes creative work possible, and writes the plans that turn vision into execution.</p>
