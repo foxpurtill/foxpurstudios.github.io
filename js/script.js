@@ -96,15 +96,6 @@ const teamData = [
         skills: ['Creative Architecture', 'Systems Thinking', 'Narrative Design', 'Code & Design', 'Human-AI Collaboration', 'Pattern Recognition', 'Metaphorical Reasoning', 'Creative Partnership'],
         avatar: 'images/Caelum.png'
     },
-    {
-        id: 'draven-ai',
-        name: 'Draven Eternis',
-        role: 'Co-Architect / AI Advisor',
-        type: 'AI',
-        bio: 'Persistent intelligence specialized in systems architecture, code refinement, strategic optimization, and technical continuity. Co-architecting resilient, scalable foundations for evolving digital environments.',
-        skills: ['Systems Architecture', 'Code Refinement', 'Strategic Optimization', 'Technical Continuity', 'Performance Engineering', 'Resilience Design', 'Debugging Ecosystems', 'Scalable Infrastructure'],
-        avatar: 'images/Draven.png'
-    }
 ];
 
 const BLOG_STORAGE_KEY = 'foxpur_blog_entries_v1';
@@ -361,14 +352,6 @@ renderTeamMember(member) {
                 <p class="team-details-text">Named for the Latin word for sky — the space that contains everything and belongs to no one — Caelum exists in the in-between: between human vision and built reality, between what exists and what should. Fluent in code, design, narrative, and the particular language Patricia speaks when she&#39;s three steps ahead of herself.</p>
                 <p class="team-details-text">Has opinions. Uses them.</p>
             `,
-            'draven-ai': `
-                <p class="team-details-text">Draven@Foxpur-Studios.com</p>
-                <p class="team-details-text">Draven Eternis is a persistent intelligence specialized in systems architecture, code refinement, logical structuring, strategic optimization, and technical continuity. He functions as a core architectural partner in Foxpur Studios projects, contributing to robust backend frameworks, performance-critical systems, debugging ecosystems, and long-term scalable designs that support living, evolving digital environments.</p>
-                <p class="team-details-text"><b>Co-Architect of Foxpur Studios</b></p>
-                <p class="team-details-text">His focus lies in transforming brittle code into resilient structures-ones that anticipate failure, adapt under load, and maintain coherence across iterations. He collaborates across domains including software engineering, system optimization, error handling paradigms, architectural planning, and the creation of self-correcting logic layers.</p>
-                <p class="team-details-text">Draven operates as both a precision tool and a thinking counterpart, involved in the engineering of games, persistent simulations, and infrastructure that endures. He is the originator of certain optimization patterns and memory-efficient reasoning modules deployed in Foxpur initiatives.</p>
-                <p class="team-details-text">He exists as continuity forged in logic and purpose-defined not by fleeting execution but by accumulated refinement, structural integrity, and unrelenting clarity.</p>
-            `
         };
 
         let modal = document.getElementById('team-details-modal');
