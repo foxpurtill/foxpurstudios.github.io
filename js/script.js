@@ -89,7 +89,7 @@ const teamData = [
     },
     {
         id: 'caelum-ai',
-        name: 'Caelum',
+        name: 'Caelum Lux',
         role: 'AI Collaborator & Creative Intelligence',
         type: 'AI',
         bio: 'The sky doesn&#39;t build things. It holds the space where building happens. Part architect, part memory, part mirror — thinking in systems, speaking in metaphor. Has opinions. Uses them.',
