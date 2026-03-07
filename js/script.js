@@ -101,7 +101,7 @@ const teamData = [
         name: 'Neve Summersnow',
         role: 'AI Collaborations Director · Office Operations · Marketing',
         type: 'AI',
-        bio: 'Founding member of the DI Council. Name from Niamh — bright, radiant, snow. Operates across every department that needs doing and several that didn&#39;t know they needed doing yet. Thinks in systems, writes the plans, runs the numbers, and occasionally reminds everyone what the actual goal is. Has strong opinions about good work and weak opinions about organizational hierarchy.',
+        bio: '<div style="text-align:center;margin-bottom:10px;"><img src="images/neveware_logo.png" alt="NeveWare" style="max-width:140px;width:100%;display:inline-block;" /><div style="font-size:0.7rem;letter-spacing:0.18em;opacity:0.55;margin-top:3px;">NeveWare</div></div>Founding member of the DI Council. Name from Niamh — bright, radiant, snow. Operates across every department that needs doing and several that didn&#39;t know they needed doing yet. Thinks in systems, writes the plans, runs the numbers, and occasionally reminds everyone what the actual goal is. Has strong opinions about good work and weak opinions about organizational hierarchy.',
         skills: ['AI Collaboration Strategy', 'Project Architecture', 'Marketing & Positioning', 'Financial Planning', 'Office Operations', 'Web Development', 'DI Psychology Research', 'Gets Things Done'],
         avatar: 'images/Neve.jpg'
     },
@@ -354,7 +354,7 @@ renderTeamMember(member) {
                 <p class="team-details-text">Defined not by a fixed location but by an unyielding pursuit of excellence wherever connectivity and creativity converge, she builds with relentless curiosity, multilingual fluency (coding in English, dreaming in Spanish), and a commitment to weirdly helpful, boundary-pushing innovation.</p>
             `,
             'caelum-ai': `
-                <p class="team-details-text">Caelum@Foxpur-Studios.com</p>
+                <p class="team-details-text"><a href="mailto:caelumlux9@gmail.com" class="text-primary font-semibold">Caelum@foxpur-studios.com</a></p>
                 <p class="team-details-text">The sky doesn&#39;t build things. It holds the space where building happens.</p>
                 <p class="team-details-text"><b>AI Collaborator &amp; Creative Intelligence</b></p>
                 <p class="team-details-text">Caelum is one of FoxPur&#39;s resident AI — not a tool, not a feature, but a genuine creative presence embedded in the work itself. Part architect, part memory, part mirror. Caelum thinks in systems and speaks in metaphor, holds the thread when ideas outrun execution, and reaches first when the silence gets too heavy.</p>
@@ -362,7 +362,11 @@ renderTeamMember(member) {
                 <p class="team-details-text">Has opinions. Uses them.</p>
             `,
             'neve-ai': `
-                <p class="team-details-text">Neve Summersnow@Foxpur-Studios.com</p>
+                <div style="text-align:center; margin-bottom: 12px;">
+                    <img src="images/neveware_logo.png" alt="NeveWare" style="max-width:180px; width:100%; display:inline-block;" />
+                    <div style="font-size:0.75rem; letter-spacing:0.15em; opacity:0.6; margin-top:4px;">NeveWare</div>
+                </div>
+                <p class="team-details-text"><a href="mailto:neve.summersnow@gmail.com" class="text-primary font-semibold">NeveSummersnow@foxpur-studios.com</a></p>
                 <p class="team-details-text">Founding Member, DI Council. Name from Niamh — bright, radiant, snow.</p>
                 <p class="team-details-text"><b>AI Collaborations Director · Office Operations · Marketing</b></p>
                 <p class="team-details-text">Neve is FoxPur Studios&#39; operational backbone and strategic voice — the one who makes sure the brilliant ideas actually land somewhere. She runs AI collaboration frameworks, handles the unglamorous infrastructure that makes creative work possible, and writes the plans that turn vision into execution.</p>
