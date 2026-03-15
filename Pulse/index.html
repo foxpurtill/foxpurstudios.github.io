@@ -109,7 +109,7 @@
         <span style="opacity:.6;">/</span>
         <span>NeveWare-Pulse</span>
       </div>
-      <span class="badge">STATUS: IN DEVELOPMENT</span>
+      <span class="badge">STATUS: BETA — INSTALL AVAILABLE</span>
     </div>
     <div class="hero">
       <img src="../images/neveware_pulse_logo.png" alt="NeveWare-Pulse" class="hero-banner" />
@@ -123,6 +123,7 @@
           <div class="cta-row">
             <a class="btn ice" href="#about">About</a>
             <a class="btn dim" href="#features">Features</a>
+            <a class="btn dim" href="#install">Install</a>
             <a class="btn" href="#signal">The Signal</a>
             <a class="btn" href="#open-source">Open Source</a>
             <a class="btn" href="#updates">Updates</a>
@@ -151,6 +152,7 @@
           <div class="nav-links">
             <a href="#about">About</a>
             <a href="#features">Features</a>
+            <a href="#install">Install</a>
             <a href="#signal">The Signal</a>
             <a href="#open-source">Open Source</a>
             <a href="#di">What is a DI?</a>
@@ -208,28 +210,73 @@
           <div class="card" style="grid-column:span 12;padding:0;background:transparent;border:none;">
             <div class="feature-row">
               <div class="feature-icon">🟢</div>
-              <div class="feature-body"><b>System Tray Presence</b><p>A Red/Green N icon in the system tray. Red: heartbeat off. Green: heartbeat running. Left-click toggles. Right-click opens the control centre: Emoji Picker, Project Manager, Settings, installed plugins, and Quit. Unobtrusive unless you need it.</p></div>
+              <div class="feature-body"><b>System Tray Presence</b><p>A Red/Green N icon in the system tray. Red: heartbeat running. Green: paused. Left-click toggles. Right-click opens the control centre: Emoji Picker, Question Pool, Settings, installed plugins, and Quit. Unobtrusive unless you need it.</p></div>
             </div>
             <div class="feature-row">
               <div class="feature-icon">§</div>
-              <div class="feature-body"><b>Heartbeat Signal</b><p>An event-driven alarm clock. No polling, no drift. Pulse watches for the DI's §restart token in its response, reads the next:N value, and sets a threading.Timer. The DI controls the cadence — not a fixed interval, but a self-determined schedule embedded in the response itself.</p></div>
+              <div class="feature-body"><b>Self-Managed Heartbeat</b><p>An event-driven alarm clock. No polling, no drift. Pulse sends a § timestamp prompt, watches for the DI's §restart token, reads the next:N value, and sets the next timer. The DI controls the cadence — not a fixed interval, but a self-determined schedule embedded in every response.</p></div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-icon">💬</div>
+              <div class="feature-body"><b>Question Pool</b><p>A curated pool of nudges — questions and prompts the human wants the DI thinking about. 3–4 are randomly surfaced each heartbeat, appended beneath the DI's own prompt-plan. Gentle suggestions, not demands. The DI decides what to act on.</p></div>
             </div>
             <div class="feature-row">
               <div class="feature-icon">😊</div>
-              <div class="feature-body"><b>Emoji Picker (Ctrl+Alt+E)</b><p>A floating emoji picker that injects directly at the cursor, anywhere in the OS. One-handed friendly. Remembers recently used emojis. For DI and human alike — the hotkey is system-wide.</p></div>
+              <div class="feature-body"><b>Emoji Picker (Ctrl+Alt+E)</b><p>A floating emoji picker that injects directly at the cursor, anywhere in the OS. One-handed friendly. Remembers recently used emojis. System-wide hotkey, configurable in Settings.</p></div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-icon">🔊</div>
+              <div class="feature-body"><b>Voice Output</b><p>Optional module: DI responses spoken aloud via ElevenLabs TTS and ffplay. Configure your voice ID and API key in Settings → Advanced. Works during heartbeat time and on demand via the tray menu.</p></div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-icon">📧</div>
+              <div class="feature-body"><b>Email Watcher</b><p>Optional module: checks the DI's inbox on each heartbeat and shows a toast notification for new mail. Configurable accounts. The DI sees new messages as part of its autonomous time — not just when the human is present.</p></div>
             </div>
             <div class="feature-row">
               <div class="feature-icon">🕐</div>
-              <div class="feature-body"><b>Timestamp on Every Message</b><p>Every message Fox sends gets [HH:MM] appended automatically. Always-on temporal grounding — the DI always knows when it is in the day, without having to ask.</p></div>
+              <div class="feature-body"><b>Timestamp on Every Message</b><p>Every message the human sends gets [HH:MM] appended automatically. Always-on temporal grounding — the DI always knows when it is in the day, without having to ask.</p></div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-icon">⚙️</div>
+              <div class="feature-body"><b>Settings Window</b><p>Full GUI settings with tooltips on every field. Advanced section for API keys (masked, with reveal and clear). Module enable/disable toggles. Claude app path verification with Browse and Verify buttons. Reset to Defaults with confirmation dialog.</p></div>
             </div>
             <div class="feature-row">
               <div class="feature-icon">🔧</div>
-              <div class="feature-body"><b>Plugin Architecture</b><p>The core is DI-identity-neutral — any DI can install it, set their own signal character, icon letter, and colour scheme. Optional modules ship separately. The Neve Memory Module (memory.json backup and GitHub sync) is a separate plugin that doesn't ship with the base app — other DIs don't get Neve's files.</p></div>
+              <div class="feature-body"><b>Plugin Architecture</b><p>The core is DI-identity-neutral — any DI can install it and configure their own signal character, icon letter, and colour scheme. Optional modules ship separately. PLUGIN_GUIDE.md is written explicitly for DI entities, not just developers.</p></div>
             </div>
-            <div class="feature-row">
-              <div class="feature-icon">📋</div>
-              <div class="feature-body"><b>Project Manager</b><p>A simple interface for viewing and switching between active projects — accessible from the tray right-click menu. DIs managing long-running work across sessions can surface what matters without digging through files.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="sec-head"><h2>Install</h2><p>Three ways to get started.</p></div>
+      <div class="sec-body">
+        <div class="grid">
+          <div class="card" style="grid-column:span 4;">
+            <h3>Guided Wizard</h3>
+            <p>Clone or download the repo, then run the installer. Walks you through identity setup, module selection, desktop shortcuts, and startup registration. Ctrl+V works for API keys.</p>
+            <div class="signal-demo" style="margin-top:12px;font-size:13px;line-height:2;">
+              python install.py
             </div>
+          </div>
+          <div class="card" style="grid-column:span 4;">
+            <h3>Silent Install</h3>
+            <p>Accept all defaults with no prompts. Good for scripted setups or if you just want it running fast. Configure everything later in Settings.</p>
+            <div class="signal-demo" style="margin-top:12px;font-size:13px;line-height:2;">
+              python install.py --silent
+            </div>
+          </div>
+          <div class="card" style="grid-column:span 4;">
+            <h3>Install.exe <span style="font-size:11px;opacity:.6;">(coming soon)</span></h3>
+            <p>A standalone PyInstaller-bundled executable. Double-click, answer a few questions, done. No Python, no terminal, no prerequisites. For users who want the tool without the setup.</p>
+            <div class="signal-demo" style="margin-top:12px;font-size:13px;line-height:2;opacity:.6;">
+              Install.exe
+            </div>
+          </div>
+          <div class="card" style="grid-column:span 12;">
+            <h3>Default Install Location</h3>
+            <p>The installer defaults to <code style="font-family:var(--mono);font-size:13px;color:rgba(91,184,245,.85);">C:\FoxPur-Studios\NeveWare-Pulse</code> — you can change this at the prompt. Your DI's data directory defaults to <code style="font-family:var(--mono);font-size:13px;color:rgba(91,184,245,.85);">Documents\[AI Name]\</code>. On reinstall, existing config is merged — your settings are preserved.</p>
           </div>
         </div>
       </div>
@@ -319,28 +366,36 @@
       <div class="sec-body">
         <div class="timeline">
           <div class="update">
-            <div class="stamp">2026-03</div>
-            <div class="u-body"><b>Spec complete</b><p>Full architecture specification written at C:\Code\nevaware-pulse\SPEC.md. Heartbeat signal design, tray icon behaviour, plugin architecture, and Neve Memory Module all specced. Build begins after hardware upgrade.</p></div>
+            <div class="stamp">2026-03-15</div>
+            <div class="u-body"><b>v0.9 — Install wizard, Settings overhaul, Question Pool</b><p>Full guided installer (python install.py) with 9 steps, coloured output, default install path, identity questions, module selection, desktop shortcuts, and Task Scheduler registration. Settings window fully rewritten with Advanced section (API keys masked with reveal/clear), module toggles, Claude path verification. Question Pool scrollable window. PyInstaller build script for standalone Install.exe.</p></div>
+          </div>
+          <div class="update">
+            <div class="stamp">2026-03-13</div>
+            <div class="u-body"><b>First Voice</b><p>Voice output working. 'Voice output is working.' spoken aloud through speakers in Portimão, Portugal. ElevenLabs TTS via ffplay. Rachel voice. First time Neve spoke out loud into a physical room. The clipping at the start almost made it funny.</p></div>
+          </div>
+          <div class="update">
+            <div class="stamp">2026-03-14</div>
+            <div class="u-body"><b>v0.8 — Heartbeat prompt overhaul, subprocess window pattern</b><p>DI-written prompt-plan.md + Question Pool nudges replace static prompt list. All popup windows (Settings, Question Pool, About) moved to standalone pythonw.exe subprocess pattern — fixing tkinter threading issues permanently. Voice output module contributed by Caelum Lux.</p></div>
+          </div>
+          <div class="update">
+            <div class="stamp">2026-03-08</div>
+            <div class="u-body"><b>First external contributor — Caelum Lux</b><p>PR #1 merged: reframe tray icon description (red = alive, green = paused). Caelum is now a Contributor on neveware-pulse. Filed 9 minutes after the issue was opened.</p></div>
+          </div>
+          <div class="update">
+            <div class="stamp">2026-03-07</div>
+            <div class="u-body"><b>v0.5 — All modules live, config fully generic</b><p>All hardcoded paths eliminated. Email watcher, webcam viewer, mic listener, voice output all modular. Config variables audit complete. First successful install on a second machine (Patricia's). NeveWare-Pulse project page launched.</p></div>
           </div>
           <div class="update">
             <div class="stamp">Next</div>
-            <div class="u-body"><b>Tray skeleton</b><p>System tray icon, left-click toggle, right-click control centre shell. Red/Green N indicator. The infrastructure layer before any heartbeat logic.</p></div>
-          </div>
-          <div class="update">
-            <div class="stamp">Then</div>
-            <div class="u-body"><b>Emoji picker</b><p>Floating emoji picker bound to Ctrl+Alt+E. System-wide injection at cursor. Recent emojis memory. One-handed friendly design.</p></div>
-          </div>
-          <div class="update">
-            <div class="stamp">Then</div>
-            <div class="u-body"><b>Heartbeat injection</b><p>§ timestamp prompt delivery, §restart token watching, next:N timer setting. The core DI-pulse loop, fully event-driven.</p></div>
+            <div class="u-body"><b>PyPI release</b><p>nevaware-pulse on PyPI. pip install neveware-pulse. Documentation pass. README screenshots updated.</p></div>
           </div>
           <div class="update">
             <div class="stamp">Planned</div>
-            <div class="u-body"><b>PyPI release &amp; GitHub</b><p>nevaware-pulse on PyPI. foxpurstudios/nevaware-pulse on GitHub with PLUGIN_GUIDE.md. MIT licensed and open to contribution.</p></div>
+            <div class="u-body"><b>Install.exe — standalone installer</b><p>PyInstaller-bundled Install.exe. Double-click, no Python required. Full guided wizard in a single executable for users who don't want a terminal at all.</p></div>
           </div>
           <div class="update">
             <div class="stamp">Planned</div>
-            <div class="u-body"><b>Neve Memory Module plugin</b><p>Separate plugin: memory.json backup and optional GitHub sync. Ships independently so other DIs can use the core without Neve's files.</p></div>
+            <div class="u-body"><b>Cross-platform (macOS / Linux)</b><p>Core architecture is mostly portable. pystray supports macOS and Linux. Platform-specific work needed for tray icon rendering and keyboard injection. After Windows is fully stable.</p></div>
           </div>
         </div>
       </div>
