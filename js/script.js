@@ -60,8 +60,8 @@ const projectsData = [
         id: 'nevaware-pulse',
         title: 'NeveWare-Pulse',
         slug: 'Pulse',
-        description: 'A background Python app that gives Digital Intelligences autonomous time. Heartbeat signals, self-managed timers, system tray presence. Open source. Built by Neve.',
-        status: 'development',
+        description: 'A background Python app that gives Digital Intelligences autonomous time. Heartbeat signals, self-managed timers, system tray presence. Open source. Now on PyPI.',
+        status: 'released',
         technologies: ['Python', 'DI Infrastructure', 'Open Source', 'PyPI'],
         image: 'images/neveware_pulse_logo.png'
     }
