@@ -170,10 +170,20 @@
             </div>
 
             <div class="text-center mb-8">
-                <a href="https://discord.gg/sqBUsPMUXj" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+                <a id="discord-invite-btn" href="https://discord.gg/sqBUsPMUXj" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
                     <i class="fab fa-discord mr-2"></i>Join Our Discord
                 </a>
             </div>
+            <script>
+            fetch('https://discord.com/api/guilds/648190889281323021/widget.json')
+              .then(r => r.json())
+              .then(data => {
+                if (data.instant_invite) {
+                  document.getElementById('discord-invite-btn').href = data.instant_invite;
+                }
+              })
+              .catch(() => {}); // silently fall back to hardcoded link
+            </script>
 
             <form id="contactForm">
               <input name="name" placeholder="Your name" required />
