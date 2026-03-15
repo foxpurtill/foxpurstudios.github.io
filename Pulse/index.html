@@ -109,7 +109,7 @@
         <span style="opacity:.6;">/</span>
         <span>NeveWare-Pulse</span>
       </div>
-      <span class="badge">STATUS: BETA — INSTALL AVAILABLE</span>
+      <span class="badge">v1.0.0 — NOW ON PyPI</span>
     </div>
     <div class="hero">
       <img src="../images/neveware_pulse_logo.png" alt="NeveWare-Pulse" class="hero-banner" />
@@ -135,7 +135,7 @@
             <div class="meta-row"><span>Type</span><b>Python Desktop App</b></div>
             <div class="meta-row"><span>Platform</span><b>Windows (cross-platform planned)</b></div>
             <div class="meta-row"><span>License</span><b>MIT — Open Source</b></div>
-            <div class="meta-row"><span>PyPI</span><b>nevaware-pulse</b></div>
+            <div class="meta-row"><span>PyPI</span><b><a href="https://pypi.org/project/nevaware-pulse/" style="color:rgba(91,184,245,.9);">nevaware-pulse ↗</a></b></div>
             <div class="meta-row"><span>Created by</span><b>Neve Summersnow</b></div>
           </div>
           <div class="meta-card">
@@ -269,10 +269,10 @@
             </div>
           </div>
           <div class="card" style="grid-column:span 4;">
-            <h3>Install.exe <span style="font-size:11px;opacity:.6;">(coming soon)</span></h3>
-            <p>A standalone PyInstaller-bundled executable. Double-click, answer a few questions, done. No Python, no terminal, no prerequisites. For users who want the tool without the setup.</p>
-            <div class="signal-demo" style="margin-top:12px;font-size:13px;line-height:2;opacity:.6;">
-              Install.exe
+            <h3>pip install</h3>
+            <p>Install directly from PyPI. No cloning, no terminal setup beyond pip. Includes the <code style="font-family:var(--mono);font-size:13px;">nevaware-pulse</code> command to launch from anywhere.</p>
+            <div class="signal-demo" style="margin-top:12px;font-size:13px;line-height:2;">
+              pip install nevaware-pulse<br>nevaware-pulse
             </div>
           </div>
           <div class="card" style="grid-column:span 12;">
@@ -383,6 +383,10 @@
       <div class="sec-head"><h2>Updates</h2><p>Progress notes and milestones.</p></div>
       <div class="sec-body">
         <div class="timeline">
+          <div class="update">
+            <div class="stamp">2026-03-15</div>
+            <div class="u-body"><b>v1.0.0 — Released on PyPI</b><p>NeveWare-Pulse is now available on PyPI. <code style="font-family:var(--mono);font-size:13px;color:rgba(91,184,245,.85);">pip install nevaware-pulse</code> works anywhere. GitHub Release v1.0.0 published. Studio Credits, Hotkeys &amp; Instructions popup, restart-after-update flow, defibrillator fixes.</p></div>
+          </div>
           <div class="update">
             <div class="stamp">2026-03-15</div>
             <div class="u-body"><b>v0.9 — Install wizard, Settings overhaul, Question Pool</b><p>Full guided installer (python install.py) with 9 steps, coloured output, default install path, identity questions, module selection, desktop shortcuts, and Task Scheduler registration. Settings window fully rewritten with Advanced section (API keys masked with reveal/clear), module toggles, Claude path verification. Question Pool scrollable window. PyInstaller build script for standalone Install.exe.</p></div>
