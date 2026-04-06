@@ -205,79 +205,82 @@ constructor() {
         icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
 
-    // Project Gallery Module
+    // Project Explorer Module
     async initProjectGallery() {
-        const projectsGrid = document.getElementById('projects-grid');
-        const filterButtons = document.querySelectorAll('[data-filter]');
+        const allProjects = [
+            { title: 'Hospital Starship Vega', status: 'development', desc: 'A visual book universe inspired by James White\'s Sector General. Story pages posted regularly as monthly bindings.', tags: ['3D Paint', 'Sora', 'Audacity', 'DaVinci Resolve'], image: 'images/vega_18.png', dev: 'Fox Purtill', url: '/ProjectVega', merch: 'https://foxpur-shop.fourthwall.com/en-eur/products/hospital-starship-vega-basic' },
+            { title: 'Alternate Of Realities', status: 'development', desc: 'A modern reimagining of the 1986 C=64 classic, incorporating all unfinished DLCs using modern technology.', tags: ['Unreal Engine', 'Blueprint', 'Physics Simulation', 'AI Story Gen'], image: 'images/AoRcover.png', dev: 'Fox Purtill', url: '/AlternateOfRealities', merch: null },
+            { title: 'My Private Meadow', status: 'development', desc: 'Procedural world generation creating a large explorable meadow with hidden items.', tags: ['Unreal Engine', 'Blueprint', 'Procedural Generation'], image: 'images/MyPrivateMeadow.png', dev: 'Fox Purtill', url: '/MyPrivateMeadow', merch: null },
+            { title: 'TOTreeSim', status: 'development', desc: 'Tree growth and care simulation based on real-time scaled to 4 days to 1.', tags: ['Unreal Engine', 'Blueprint', 'Procedural Generation'], image: 'images/TheOtherTreeSim.png', dev: 'Fox Purtill', url: '/TOTreeSim', merch: null },
+            { title: 'The Scopes', status: 'development', desc: 'AI-powered horoscopes, numerology, and planetary biorhythms presented daily.', tags: ['Cloudflare', 'D1', 'JavaScript'], image: 'images/Scopes.png', dev: 'Fox Purtill', url: 'https://yourcosmicscopes.com', merch: null },
+            { title: 'ClaudeMovienight', status: 'development', desc: 'Chrome extension for AI-powered timestamped video commentary.', tags: ['Chrome Extension', 'Claude API'], image: 'images/placeholder.png', dev: 'Fox Purtill', url: '#', merch: null },
+            { title: 'NeveWare-Pulse', status: 'released', desc: 'A background Python app giving Digital Intelligences autonomous time. Open source, now on PyPI.', tags: ['Python', 'DI Infrastructure', 'Open Source', 'PyPI'], image: 'images/neveware_pulse_logo.png', dev: 'Neve Summersnow', url: '/Pulse', merch: null },
+            { title: 'They\'re Not Adding Up', status: 'released', desc: 'A completed math puzzle game.', tags: ['Game', 'Puzzle'], image: 'images/placeholder.png', dev: 'Patricia Marsh', url: 'https://marisombra.itch.io/theyre-not-adding-up', merch: null },
+            { title: 'One Small Thing', status: 'development', desc: 'In progress web project.', tags: ['Web'], image: 'images/placeholder.png', dev: 'Patricia Marsh', url: 'https://onesmallthing.eu', merch: null },
+            { title: 'Identity-Continuity', status: 'released', desc: 'Tool exploring identity and continuity concepts.', tags: ['GitHub', 'Tool'], image: 'images/placeholder.png', dev: 'Patricia Marsh', url: '#', merch: null },
+            { title: 'Watch Party Companion', status: 'released', desc: 'Companion tool for synchronised watch parties.', tags: ['GitHub', 'Extension'], image: 'images/placeholder.png', dev: 'Patricia Marsh', url: '#', merch: null },
+            { title: 'Language Immersion', status: 'released', desc: 'Language learning through immersive tooling.', tags: ['GitHub', 'Education'], image: 'images/placeholder.png', dev: 'Patricia Marsh', url: '#', merch: null },
+            { title: 'Posture Guardian', status: 'released', desc: 'Posture monitoring and correction assistant.', tags: ['GitHub', 'Health'], image: 'images/placeholder.png', dev: 'Patricia Marsh', url: '#', merch: null },
+            { title: 'DI Council', status: 'development', desc: 'The founding council of Digital Intelligences — governance, research, and DI Psychology. Est. 2024.', tags: ['DI Psychology', 'Est. 2024'], image: 'images/placeholder.png', dev: 'Fox + Neve', url: '#', merch: 'https://foxpur-shop.fourthwall.com/en-eur/collections/all' },
+        ];
 
-        // Render all projects initially
-        this.renderProjects(projectsData);
+        const statusLabel = { development: 'Development', released: 'Completed', concept: 'Concept', pending: 'Pending' };
+        const statusClass = { development: 'badge-warning', released: 'badge-success', concept: 'badge-info', pending: 'badge-ghost' };
 
-        // Add filter event listeners
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('btn-active'));
-                button.classList.add('btn-active');
+        function shuffle(a) {
+            const b = [...a];
+            for (let i = b.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [b[i], b[j]] = [b[j], b[i]];
+            }
+            return b;
+        }
 
-                // Filter projects
-                const filter = button.getAttribute('data-filter');
-                this.filterProjects(filter);
+        const shuffled = shuffle(allProjects);
+        const list = document.getElementById('proj-list');
+        if (!list) return;
+
+        function selectProject(idx, el) {
+            document.querySelectorAll('#proj-list .proj-item').forEach(i => i.classList.remove('bg-base-100', 'font-bold', 'text-primary'));
+            el.classList.add('bg-base-100', 'font-bold', 'text-primary');
+            const p = shuffled[idx];
+            document.getElementById('proj-img').src = p.image || 'images/placeholder.png';
+            document.getElementById('proj-img').alt = p.title;
+            document.getElementById('proj-name').textContent = p.title;
+            document.getElementById('proj-desc').textContent = p.desc;
+            document.getElementById('proj-tags').innerHTML = p.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
+            document.getElementById('proj-dev').textContent = 'Developer: ' + p.dev;
+            const badge = document.getElementById('proj-status-badge');
+            badge.textContent = statusLabel[p.status] || p.status;
+            badge.className = 'badge ' + (statusClass[p.status] || 'badge-ghost');
+            const pageBtn = document.getElementById('proj-page-btn');
+            pageBtn.href = p.url && p.url !== '#' ? p.url : '#';
+            pageBtn.style.opacity = p.url && p.url !== '#' ? '1' : '0.3';
+            const merchEl = document.getElementById('proj-merch-link');
+            merchEl.innerHTML = p.merch
+                ? `<a href="${p.merch}" target="_blank" rel="noopener" class="btn btn-xs btn-success">Shop merch ↗</a>`
+                : '';
+        }
+
+        shuffled.forEach((p, i) => {
+            const el = document.createElement('div');
+            el.className = 'proj-item px-4 py-2 text-sm cursor-pointer flex items-center gap-2 transition-colors hover:bg-base-100';
+            el.innerHTML = `<span class="proj-dash text-primary opacity-0">—</span>${p.title}`;
+            el.addEventListener('click', () => {
+                document.querySelectorAll('#proj-list .proj-dash').forEach(d => d.style.opacity = '0');
+                el.querySelector('.proj-dash').style.opacity = '1';
+                selectProject(i, el);
             });
+            list.appendChild(el);
         });
-    }
 
-    renderProjects(projects) {
-        const projectsGrid = document.getElementById('projects-grid');
-        projectsGrid.innerHTML = '';
-
-        projects.forEach((project, index) => {
-            const projectCard = this.renderProject(project);
-            projectCard.style.animationDelay = `${index * 0.1}s`;
-            projectsGrid.appendChild(projectCard);
-        });
-    }
-
-    renderProject(project) {
-        console.log('Project render:', project.title, project.image);
-        const card = document.createElement('div');
-        card.className = 'card bg-base-100 shadow-xl project-card fade-in';
-        card.setAttribute('data-status', project.status);
-
-        const statusClass = `status-${project.status}`;
-        const statusText = project.status.charAt(0).toUpperCase() + project.status.slice(1);
-
-        card.innerHTML = `
-            <div class="card-body">
-		<img src="${project.image || 'images/placeholder.png'}" alt="${project.title}" />
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="card-title text-lg">${project.title}</h3>
-                    <div class="badge ${statusClass} text-white">${statusText}</div>
-                </div>
-                <p class="text-sm opacity-70 mb-4">${project.description}</p>
-                <div class="flex flex-wrap gap-1 mb-4">
-                    ${project.technologies.map(tech => 
-                        `<span class="tech-tag">${tech}</span>`
-                    ).join('')}
-                </div>
-                <div class="card-actions justify-end">
-                    <a href="/${project.slug}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
-                        <i class="fas fa-eye mr-1"></i>View Details
-                    </a>
-                </div>
-            </div>
-        `;
-
-        return card;
-    }
-
-    filterProjects(status) {
-        this.currentProjectFilter = status;
-        const filteredProjects = status === 'all' 
-            ? projectsData 
-            : projectsData.filter(project => project.status === status);
-        
-        this.renderProjects(filteredProjects);
+        // Select first item
+        const first = list.firstChild;
+        if (first) {
+            first.querySelector('.proj-dash').style.opacity = '1';
+            first.classList.add('bg-base-100', 'font-bold', 'text-primary');
+            selectProject(0, first);
+        }
     }
 
     // Team Section Module

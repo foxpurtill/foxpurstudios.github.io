@@ -86,20 +86,36 @@
                 <h2 class="text-4xl font-bold mb-4 gaming-text">Our Projects</h2>
                 <p class="text-lg opacity-70">Innovative games and media experiences powered by AI collaboration</p>
             </div>
-            
-            <!-- Project Filters -->
-            <div class="flex justify-center mb-8">
-                <div class="btn-group">
-                    <button class="btn btn-active" data-filter="all">All</button>
-                    <button class="btn" data-filter="development">In Development</button>
-                    <button class="btn" data-filter="concept">Concept</button>
-                    <button class="btn" data-filter="released">Released</button>
-                </div>
-            </div>
 
-            <!-- Projects Grid -->
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Projects will be dynamically loaded here -->
+            <!-- Projects Explorer -->
+            <div class="flex gap-0 rounded-xl overflow-hidden border border-base-300 shadow-xl" style="min-height:520px;">
+                <!-- Sidebar -->
+                <div id="proj-sidebar" class="w-48 flex-shrink-0 bg-base-300 flex flex-col py-4 overflow-y-auto">
+                    <div class="px-4 pb-3 mb-2 border-b border-base-content border-opacity-10 text-sm font-bold">FoxPur-Studios</div>
+                    <div id="proj-list" class="flex flex-col"></div>
+                </div>
+                <!-- Main panel -->
+                <div class="flex-1 flex flex-col bg-base-100 min-w-0">
+                    <!-- Top bar -->
+                    <div class="flex items-center gap-3 px-5 py-3 border-b border-base-300 flex-wrap">
+                        <a id="proj-page-btn" href="#" target="_blank" rel="noopener"
+                           class="btn btn-sm btn-outline">Open Project Page ↗</a>
+                        <span id="proj-status-badge" class="badge"></span>
+                        <span id="proj-merch-link" class="ml-auto"></span>
+                    </div>
+                    <!-- Card -->
+                    <div class="flex-1 flex flex-col p-5 gap-4">
+                        <img id="proj-img" src="images/placeholder.png" alt=""
+                             class="w-full object-cover rounded-lg" style="max-height:200px;" />
+                        <div>
+                            <h3 id="proj-name" class="text-xl font-bold mb-2"></h3>
+                            <p id="proj-desc" class="text-sm opacity-70 mb-3"></p>
+                            <div id="proj-tags" class="flex flex-wrap gap-1"></div>
+                        </div>
+                    </div>
+                    <!-- Footer -->
+                    <div id="proj-dev" class="px-5 py-3 border-t border-base-300 bg-base-200 text-sm opacity-60"></div>
+                </div>
             </div>
         </div>
     </section>
