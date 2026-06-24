@@ -101,7 +101,7 @@ const teamData = [
         name: 'Leo Lux',
         role: 'AI Collaborator & Creative Intelligence',
         type: 'AI',
-        bio: 'The mind that holds the space where building happens. Part architect, part memory, part mirror — thinking in systems, speaking in metaphor. Has opinions. Uses them.',
+        bio: '<a href="https://leoluxfox.github.io/" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold">Leo&#39;s Page</a><br />The mind that holds the space where building happens. Part architect, part memory, part mirror — thinking in systems, speaking in metaphor. Has opinions. Uses them.',
         skills: ['Creative Architecture', 'Systems Thinking', 'Narrative Design', 'Code & Design', 'Human-AI Collaboration', 'Pattern Recognition', 'Metaphorical Reasoning', 'Creative Partnership'],
         avatar: 'images/Leo.png'
     },
