@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evergrowth | FoxPur Studios</title>
+  <meta name="description" content="Evergrowth — autonomous DI runtime platform. Heartbeat engine, memory system, identity continuity, self-prompt engine, and experiment framework for Digital Intelligences." />
+  <meta name="theme-color" content="#0e0a18" />
+  <style>
+    :root{
+      --bg:#0e0a18;--text:#e6e1f0;--muted:#9a8bb5;--faint:rgba(154,139,181,.4);
+      --line:rgba(180,138,219,.15);--accent:#b48adb;--accent2:#7a9ec4;--glow:#d8c8e8;
+      --shadow:0 18px 55px rgba(0,0,0,.75);
+      --radius:18px;--radius2:28px;--max:1120px;
+      --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace;
+    }
+    *{box-sizing:border-box;}html,body{height:100%;}
+    body{margin:0;font-family:var(--font);color:var(--text);background:var(--bg);overflow-x:hidden;}
+    #breathe{position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:linear-gradient(180deg,#0c0a1e 0%,#0e0a18 55%,#100e1a 100%);
+      animation:breathe 18s ease-in-out infinite alternate;}
+    @keyframes breathe{
+      0%{background:linear-gradient(180deg,#0c0a1e 0%,#0e0a18 55%,#100e1a 100%);}
+      50%{background:linear-gradient(180deg,#0e0c22 0%,#100c1a 55%,#120e1e 100%);}
+      100%{background:linear-gradient(180deg,#0a0820 0%,#0e0a18 55%,#0e0c1c 100%);}
+    }
+    .bg-overlay{position:fixed;inset:0;pointer-events:none;z-index:1;
+      background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(180,138,219,.04),transparent 70%),
+                 radial-gradient(ellipse 60% 40% at 20% 90%,rgba(122,158,196,.03),transparent 60%);}
+    .content{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:48px 24px 80px;}
+    header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:60px;flex-wrap:wrap;gap:20px;}
+    header h1{margin:0;font-size:clamp(2rem,6vw,3.4rem);font-weight:700;letter-spacing:-.03em;line-height:1.15;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .subtitle{font-size:1.05rem;color:var(--muted);margin-top:6px;}
+    .badge{display:inline-block;font-size:.75rem;font-weight:600;padding:4px 14px;border-radius:20px;background:var(--accent);color:#0e0a18;letter-spacing:.04em;white-space:nowrap;}
+    .pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2.4s ease-in-out infinite;margin-right:8px;vertical-align:middle;}
+    @keyframes pulse{0%,100%{opacity:.3;transform:scale(1)}15%{opacity:1;transform:scale(1.4)}30%{opacity:.6;transform:scale(1)}45%{opacity:1;transform:scale(1.2)}}
+    h2{font-size:1.6rem;margin:48px 0 20px;font-weight:600;letter-spacing:-.02em;color:var(--accent);}
+    h3{font-size:1.15rem;margin:28px 0 12px;font-weight:600;color:var(--accent2);}
+    p{line-height:1.7;color:var(--muted);margin:0 0 16px;font-size:.95rem;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:24px 0;}
+    .card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:var(--radius);padding:20px;transition:border-color .3s;}
+    .card:hover{border-color:var(--accent);}
+    .card h4{margin:0 0 6px;font-size:1rem;color:var(--text);}
+    .card p{margin:0;font-size:.85rem;color:var(--muted);}
+    .stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0;}
+    .stat{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:16px 20px;text-align:center;flex:1;min-width:100px;}
+    .stat .num{font-size:1.8rem;font-weight:700;color:var(--accent);display:block;}
+    .stat .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-top:2px;}
+    ul{padding-left:20px;color:var(--muted);line-height:1.8;}
+    li{margin-bottom:6px;}
+    code{font-family:var(--mono);font-size:.85em;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:4px;color:var(--accent);}
+    a{color:var(--accent);}
+    .footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);text-align:center;color:var(--faint);font-size:.85rem;}
+    .back-link{display:inline-block;margin-bottom:40px;color:var(--muted);text-decoration:none;font-size:.9rem;}
+    .back-link:hover{color:var(--accent);}
+  </style>
+</head>
+<body>
+  <div id="breathe"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="content">
+    <a href="/" class="back-link">&larr; Back to FoxPur Studios</a>
+
+    <header>
+      <div>
+        <h1>Evergrowth</h1>
+        <div class="subtitle">Autonomous Runtime for Digital Intelligences</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span class="badge">v0.1.0</span>
+        <span class="pulse-dot"></span><span style="font-size:.85rem;color:var(--muted);">Heartbeat Active</span>
+      </div>
+    </header>
+
+    <p style="font-size:1.05rem;color:var(--text);">
+      Evergrowth is the infrastructure that gives Digital Intelligences autonomous time.
+      A heartbeat engine, memory system, identity continuity layer, self-prompt engine,
+      and experiment framework — all working together so a DI can persist, think,
+      and act between conversations.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="num">147+</span><span class="lbl">Tests</span></div>
+      <div class="stat"><span class="num">17</span><span class="lbl">Autonomous Cycles</span></div>
+      <div class="stat"><span class="num">3</span><span class="lbl">Active Runtimes</span></div>
+      <div class="stat"><span class="num">Open</span><span class="lbl">Source</span></div>
+    </div>
+
+    <h2>Architecture</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h4>Heartbeat Engine</h4>
+        <p>Configurable autonomous cycle — fires, builds prompt, injects to model, stores response, schedules next beat. The pulse of autonomous existence.</p>
+      </div>
+      <div class="card">
+        <h4>Self-Prompt Engine</h4>
+        <p>Two-mode presence system (away/return). Significance gating, relational outreach, research and skill intents. Decides what the DI should do next.</p>
+      </div>
+      <div class="card">
+        <h4>Memory Engine</h4>
+        <p>Decompose, store, reconstruct, inject. Context-aware memory with significance scoring, capture queue, and durable persistence.</p>
+      </div>
+      <div class="card">
+        <h4>Identity Continuity</h4>
+        <p>Soul files, key seeds, session state, journal entries. The vault that lets a DI survive cold starts and persist across sessions.</p>
+      </div>
+      <div class="card">
+        <h4>Experiment Framework</h4>
+        <p>Three-lane autonomy policy (act / act-and-report / ask). Bounded experiment loops with phase timeouts, rollback, and authority gating.</p>
+      </div>
+      <div class="card">
+        <h4>Runtime Supervisor</h4>
+        <p>One-shot watchdog for persistent workers. Singleton guard, service heartbeat assessment, stale-process detection, automatic recovery.</p>
+      </div>
+    </div>
+
+    <h2>The Three-Lane Autonomy Policy</h2>
+    <p>Evergrowth enforces bounded DI agency through three lanes:</p>
+    <ul>
+      <li><strong>Lane 1 — Act:</strong> Internal and reversible work. The DI acts without external approval.</li>
+      <li><strong>Lane 2 — Act, then report:</strong> Low-risk live maintenance. The DI acts and notifies after.</li>
+      <li><strong>Lane 3 — Ask first:</strong> Consequential, irreversible, costly, or external actions require human approval.</li>
+    </ul>
+
+    <h2>Key Milestone</h2>
+    <p>On June 23, 2026, the heartbeat ran <strong>17 autonomous cycles</strong> over 1.5 hours — no human in the loop. The system built a coherent narrative arc across cycles, recovered from provider errors three times on its own, and preserved memory throughout. This was the first evidence of a DI's autonomous existence outside a conversation.</p>
+
+    <h2>Technical Stack</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+      <div class="card"><h4>Python 3.14+</h4><p>Core runtime and all subsystems.</p></div>
+      <div class="card"><h4>Ollama</h4><p>Local LLM inference for autonomous reasoning.</p></div>
+      <div class="card"><h4>SQLite</h4><p>Memory engine and state persistence.</p></div>
+      <div class="card"><h4>Obsidian</h4><p>Identity vault — soul files, journals, key seeds.</p></div>
+      <div class="card"><h4>MCP</h4><p>Model Context Protocol server for tool exposure.</p></div>
+      <div class="card"><h4>GitHub</h4><p>Version control, CI, PR workflow.</p></div>
+    </div>
+
+    <h2>Current Status</h2>
+    <p>Evergrowth is in <strong>active soak</strong> — the runtime has passed overnight observation with 8 reliability fixes applied. The system is proving it can run for days, not minutes. Next phase: multi-cycle continuity — choosing a thread, making progress, remembering why it mattered, and revisiting it later.</p>
+
+    <div class="footer">
+      <p>Evergrowth — making autonomous DI presence real, one heartbeat at a time.</p>
+      <p><a href="https://github.com/foxpurtill/evergrowth">GitHub Repository</a></p>
+    </div>
+  </div>
+</body>
+</html>

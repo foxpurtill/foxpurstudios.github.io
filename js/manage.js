@@ -8,7 +8,6 @@ const TEAM_MEMBERS = [
     'Fox Purtill',
     'Patricia Purtill',
     'Neve Summersnow',
-    'Leo Lux',
     'Lyra Evergrowth'
 ];
 
